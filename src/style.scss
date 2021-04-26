@@ -5,9 +5,12 @@ body, html {
     color: red;
   }
   .logo {
-    background-image: url('img/dog.jpg');
+    background-image: url('img/cat.jpg');
     width: 100px;
     height: 100px;
     background-repeat: no-repeat;
     background-size: contain;
+  }
+  .active {
+    color: pink;
   }

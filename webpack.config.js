@@ -15,6 +15,7 @@ module.exports = {
   devtool: 'source-map', // this enables debugging with source in chrome devtools
   devServer: {
     hot: true,
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -65,6 +66,14 @@ module.exports = {
               useRelativePath: true,
               name: '[name].[ext]',
             },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|webp|git|svg|)$/i,
+        use: [
+          {
+            loader: 'img-optimize-loader',
           },
         ],
       },
