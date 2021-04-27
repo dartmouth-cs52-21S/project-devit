@@ -6,7 +6,7 @@
   "scripts": {
     "test": "eslint src",
     "start": "NODE_ENV=development webpack serve",
-    "build": "npm run clean; NODE_ENV=production webpack --color",
+    "build": "npm run clean; NODE_ENV=production webpack --color; cp -f _redirects dist/",
     "clean": "rimraf dist"
   },
   "repository": {
