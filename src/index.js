@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router, Route, Switch, NavLink,
 } from 'react-router-dom';
-// import Nav from './components/nav';
 import Welcome from './components/welcome';
 import About from './components/about';
 import Test from './components/test';
