@@ -1,0 +1,36 @@
+body, html {
+    font-family: "Roboto", sans-serif;
+    background: #F0F4EF;
+    height: 100%;
+    color: #0D1821;
+  }
+
+  nav{
+    background-color: #344966;
+    a{
+      text-decoration: none;
+      color: #F0F4EF;
+      font-size: 1.5rem;
+    }
+  }
+
+  li{
+    cursor: pointer;
+    list-style: none;
+  }
+  ul{
+    width: 100vw;
+    display: flex;
+    align-content: space-between;
+    flex-direction: row;
+    padding: 0;
+
+    li{
+      padding: 30px;
+      
+    }
+  }
+
+  .active {
+    color: #E6AACE;
+  }
