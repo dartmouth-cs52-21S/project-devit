@@ -34,3 +34,34 @@ body, html {
   .active {
     color: #E6AACE;
   }
+
+  .post-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-around;
+  }
+
+  .post{
+    height: 400px;
+    width: 300px;
+    background-color: #BFCC94;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    
+    h1{
+      color: #344966;
+      margin: 0;
+    }
+    #tags{
+      color: #E6AACE;
+    }
+    img{
+      height: 70%;
+      width: 70%;
+    }
+    svg {
+      padding: 5px;
+    }
+  }
