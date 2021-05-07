@@ -7,16 +7,19 @@ export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
   FETCH_POST: 'FETCH_POST',
   DELETE_POST: 'DELETE_POST',
+  NEW_POST: 'NEW_POST',
 };
 
 export function fetchPosts() {
   console.log('in action creator fetching posts');
   return (dispatch) => {
     axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+      console.log('i made it through get request and fetched');
       dispatch({ type: ActionTypes.FETCH_POSTS, payload: response.data });
     })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        throw new Error(error);
+        // dispatch({ type: ActionTypes.ERROR_SET, error });
       });
   };
 }
@@ -25,10 +28,11 @@ export function createPost(post, history) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/posts${API_KEY}`, post).then((response) => {
       history.push('/');
-      dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
+      dispatch({ type: ActionTypes.NEW_POST, payload: response.data });
     })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        throw new Error(error);
+        // dispatch({ type: ActionTypes.ERROR_SET, error });
       });
   };
 }
@@ -39,7 +43,8 @@ export function updatePost(post) {
       dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
     })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        throw new Error(error);
+        // dispatch({ type: ActionTypes.ERROR_SET, error });
       });
   };
 }
@@ -50,20 +55,25 @@ export function fetchPost(id) {
       dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
     })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        throw new Error(error);
+        // dispatch({ type: ActionTypes.ERROR_SET, error });
       });
   };
 }
 
 export function deletePost(id, history) {
   console.log('in action creator deleting post', id);
+  console.log('url', `${ROOT_URL}/posts/${id}${API_KEY}`);
   return (dispatch) => {
+    console.log('did dispatch return?');
     axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
+      console.log('i made it through axios');
       history.push('/');
       dispatch({ type: ActionTypes.DELETE_POST, payload: response.data });
     })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        throw new Error(error);
+        // dispatch({ type: ActionTypes.ERROR_SET, error });
       });
   };
 }

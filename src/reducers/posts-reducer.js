@@ -10,9 +10,11 @@ const PostsReducer = (state = initialState, action) => {
     case ActionTypes.FETCH_POSTS:
       return { all: action.payload, current: state.current };
     case ActionTypes.FETCH_POST:
-      return { all: [...state.current, action.payload], current: action.payload };
+      return { all: state.all, current: action.payload };
     case ActionTypes.DELETE_POST:
-      return { all: action.payload, current: state.current };
+      return { all: state.posts.filter((item) => item !== action.payload), current: state.current };
+    case ActionTypes.NEW_POST:
+      return { all: [...state.all, action.payload], current: action.payload };
     default:
       return state;
   }

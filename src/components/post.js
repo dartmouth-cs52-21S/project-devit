@@ -6,6 +6,11 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { fetchPost, deletePost, updatePost } from '../actions/index';
 
 const Post = (props) => {
+  const deleteP = () => {
+    console.log('trying to delete');
+    props.deletePost(props.post.id, props.history);
+  };
+
   return (
     <div className="post">
       <h1>{props.post.title}</h1>
@@ -13,15 +18,14 @@ const Post = (props) => {
       <img src={props.post.coverUrl} alt="post gif" />
       <p id="tags">#{props.post.tags}</p>
       <FontAwesomeIcon icon={faEdit} />
-      <FontAwesomeIcon icon={faTrash} onClick={() => deletePost(props.post.id, props.history)} />
+      <FontAwesomeIcon icon={faTrash} onClick={deleteP} />
     </div>
+
   );
 };
 
-function mapStateToProps(reduxState) {
-  return {
-    currentPost: reduxState.posts.current,
-  };
-}
+const mapStateToProps = (reduxState) => ({
+  current: reduxState.posts.current,
+});
 
 export default connect(mapStateToProps, { fetchPost, deletePost, updatePost })(Post);
