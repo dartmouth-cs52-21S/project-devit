@@ -13,7 +13,7 @@ const Post = (props) => {
         <img src={props.post.coverUrl} alt="post gif" />
         <p id="tags">#{props.post.tags}</p>
       </div>
-      <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostAll(props.post.id)} />
+      <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostAll(props.post.id)} size="2x" />
     </div>
 
   );

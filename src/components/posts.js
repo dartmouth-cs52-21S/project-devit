@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import Alert from 'react-bootstrap/Alert';
 import { fetchPosts } from '../actions/index';
 import Post from './post';
 
@@ -15,6 +16,7 @@ const Posts = (props) => {
   return (
     <div>
       <h1>All Posts</h1>
+      {props.error.message !== undefined ? <Alert variant="danger">{props.error.message}</Alert> : <div />}
       <div className="post-container">{postItems}</div>
     </div>
   );
@@ -22,6 +24,7 @@ const Posts = (props) => {
 
 const mapStateToProps = (reduxState) => ({
   posts: reduxState.posts.all,
+  error: reduxState.posts.error,
 });
 
 export default connect(mapStateToProps, { fetchPosts })(Posts);

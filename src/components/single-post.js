@@ -15,11 +15,9 @@ const SinglePost = (props) => {
 
   useEffect(() => {
     props.fetchPost(id);
-    console.log('use effect', id);
   }, [id]);
 
   const editMode = () => {
-    console.log('set true');
     setEditing(true);
   };
 
@@ -34,8 +32,6 @@ const SinglePost = (props) => {
     setEditing(false);
   };
 
-  console.log('single post ', props);
-
   return (
     <div>
       {editing
@@ -46,8 +42,8 @@ const SinglePost = (props) => {
             Cover URL: <input type="text" value={coverEdit} onChange={(e) => setCoverEdit(e.target.value)} />
             Tags:<input type="text" value={tagsEdit} onChange={(e) => setTagsEdit(e.target.value)} />
             <button type="button" onClick={submitEdits}> Submit </button>
-            <FontAwesomeIcon icon={faEdit} onClick={editMode} />
-            <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostSingular(props.current.id, props.history)} />
+            <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
+            <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostSingular(props.current.id, props.history)} size="2x" />
           </div>
         )
         : (
@@ -57,8 +53,8 @@ const SinglePost = (props) => {
             <img src={props.current.coverUrl} alt="cover pic" />
             <p id="tags">#{props.current.tags}</p>
             <div id="icons">
-              <FontAwesomeIcon icon={faEdit} onClick={editMode} />
-              <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostSingular(props.current.id, props.history)} />
+              <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
+              <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostSingular(props.current.id, props.history)} size="2x" />
             </div>
           </div>
         )}

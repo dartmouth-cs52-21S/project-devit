@@ -5,9 +5,9 @@ import {
 import Posts from './components/posts';
 import NewPost from './components/new-post';
 import SinglePost from './components/single-post';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = (props) => {
-  console.log('app is rendering');
   return (
     <Router>
       <div>
