@@ -37,9 +37,11 @@ export function createPost(post, history) {
   };
 }
 
-export function updatePost(post) {
+export function updatePost(post, id) {
+  console.log('updating woo hoo');
   return (dispatch) => {
-    axios.put(`${ROOT_URL}/posts/${post.id}${API_KEY}`, post).then((response) => {
+    axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, post).then((response) => {
+      console.log('response updae', response.data);
       dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
     })
       .catch((error) => {

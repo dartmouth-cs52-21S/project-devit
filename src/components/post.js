@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { fetchPost, deletePostAll, updatePost } from '../actions/index';
 
 const Post = (props) => {
@@ -13,7 +13,6 @@ const Post = (props) => {
         <img src={props.post.coverUrl} alt="post gif" />
         <p id="tags">#{props.post.tags}</p>
       </div>
-      <FontAwesomeIcon icon={faEdit} />
       <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostAll(props.post.id)} />
     </div>
 

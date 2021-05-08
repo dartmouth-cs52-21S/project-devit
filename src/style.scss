@@ -36,15 +36,27 @@ body, html {
     color: #E6AACE;
   }
 
+  h1{
+    text-align: center;
+  }
   .post-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-content: space-around;
   }
+  button{
+    padding: 20px;
+    background-color: #E6AACE;
+    color: #344966;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    align-self: center;
+  }
 
   .post{
-    height: 400px;
+    height: 350px;
     width: 300px;
     background-color: #BFCC94;
     padding: 20px;
@@ -58,10 +70,11 @@ body, html {
     }
     #tags{
       color: #E6AACE;
+      background-color: #344966;
     }
     img{
       height: 70%;
-      width: 80%;
+      width: 100%;
     }
     svg {
       padding: 5px;
@@ -91,15 +104,7 @@ body, html {
     input{
       line-height: 1.5rem;
     }
-    button{
-      padding: 20px;
-      background-color: #E6AACE;
-      color: #344966;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 10px;
-      align-self: center;
-    }
+
   }
 
   .single-post{
@@ -115,8 +120,8 @@ body, html {
       font-size: 2.5rem;
     }
     img{
-      max-height: 50vh;
-      max-width: 30vw;
+      max-height: 60vh;
+      max-width: 40vw;
       align-self: center;
     }
     p, span{
@@ -128,4 +133,10 @@ body, html {
     #icons{
       align-self: center;
     }
+    input, textarea{
+      width: 80vw;
+      line-height: 1.2rem;
+      align-self: center;
+    }
+
   }
