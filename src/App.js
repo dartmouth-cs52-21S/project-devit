@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import Posts from './components/posts';
 import NewPost from './components/new-post';
-import Post from './components/post';
+import SinglePost from './components/single-post';
 
 const App = (props) => {
   console.log('app is rendering');
@@ -20,7 +20,7 @@ const App = (props) => {
         <Switch>
           <Route exact path="/" component={Posts} />
           <Route path="/posts/new" component={NewPost} />
-          <Route path="/posts/:postID" component={Post} />
+          <Route path="/posts/:postID" component={SinglePost} />
           <Route render={() => (<div>post not found </div>)} />
         </Switch>
       </div>

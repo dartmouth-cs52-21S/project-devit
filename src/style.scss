@@ -3,6 +3,7 @@ body, html {
     background: #F0F4EF;
     height: 100%;
     color: #0D1821;
+    margin: 0;
   }
 
   nav{
@@ -49,6 +50,7 @@ body, html {
     padding: 20px;
     margin: 10px;
     border-radius: 10px;
+    cursor: pointer;
     
     h1{
       color: #344966;
@@ -59,9 +61,71 @@ body, html {
     }
     img{
       height: 70%;
-      width: 70%;
+      width: 80%;
     }
     svg {
       padding: 5px;
+    }
+  }
+
+  .new-post{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    h1{
+      align-self: center;
+    }
+    ul{
+      flex-direction: column;
+    }
+    li{
+      flex-direction: row;
+      align-self: center;
+    }
+    h2{
+      color: #344966;
+      margin: 10px;
+      display: inline;
+    }
+    input{
+      line-height: 1.5rem;
+    }
+    button{
+      padding: 20px;
+      background-color: #E6AACE;
+      color: #344966;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      align-self: center;
+    }
+  }
+
+  .single-post{
+    background-color: #BFCC94;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    h1{
+      color: #344966;
+      margin: 0;
+      align-self: center;
+      font-size: 2.5rem;
+    }
+    img{
+      max-height: 50vh;
+      max-width: 30vw;
+      align-self: center;
+    }
+    p, span{
+      align-self: center;
+    }
+    svg {
+      padding: 5px;
+    }
+    #icons{
+      align-self: center;
     }
   }

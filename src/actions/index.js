@@ -61,15 +61,38 @@ export function fetchPost(id) {
   };
 }
 
-export function deletePost(id, history) {
-  console.log('in action creator deleting post', id);
-  console.log('url', `${ROOT_URL}/posts/${id}${API_KEY}`);
+export function deletePostSingular(id, history) {
+  console.log('in action creator deleting post singluar', id);
   return (dispatch) => {
-    console.log('did dispatch return?');
-    axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
-      console.log('i made it through axios');
+    axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`).then(() => {
       history.push('/');
-      dispatch({ type: ActionTypes.DELETE_POST, payload: response.data });
+    })
+      .catch((error) => {
+        throw new Error(error);
+        // dispatch({ type: ActionTypes.ERROR_SET, error });
+      });
+    axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+      const newPosts = response.data.filter((item) => item.id !== id);
+      dispatch({ type: ActionTypes.FETCH_POSTS, payload: newPosts });
+    })
+      .catch((error) => {
+        throw new Error(error);
+        // dispatch({ type: ActionTypes.ERROR_SET, error });
+      });
+  };
+}
+
+export function deletePostAll(id) {
+  console.log('in action creator deleting post all', id);
+  return (dispatch) => {
+    axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
+      .catch((error) => {
+        throw new Error(error);
+        // dispatch({ type: ActionTypes.ERROR_SET, error });
+      });
+    axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+      const newPosts = response.data.filter((item) => item.id !== id);
+      dispatch({ type: ActionTypes.FETCH_POSTS, payload: newPosts });
     })
       .catch((error) => {
         throw new Error(error);

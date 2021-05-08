@@ -6,11 +6,10 @@ import Post from './post';
 const Posts = (props) => {
   useEffect(() => {
     props.fetchPosts();
-  });
+  }, []);
 
-  const postItems = props.posts.map((post, id) => {
-    // eslint-disable-next-line react/no-array-index-key
-    return <Post post={post} key={id} onClick={() => props.history.push(`/post/${post.id}`)} />;
+  const postItems = props.posts.map((post) => {
+    return <Post post={post} key={post.id} onClick={() => props.history.push(`/posts/${post.id}`)} />;
   });
 
   return (
