@@ -15,7 +15,11 @@ const SinglePost = (props) => {
 
   useEffect(() => {
     props.fetchPost(id);
-  }, [id]);
+    setTitleEdit(props.current.title);
+    setTextEdit(props.current.content);
+    setCoverEdit(props.current.coverUrl);
+    setTagsEdit(props.current.tags);
+  }, [props.current]);
 
   const editMode = () => {
     setEditing(true);
