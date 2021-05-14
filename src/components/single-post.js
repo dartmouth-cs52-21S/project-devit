@@ -12,6 +12,7 @@ const SinglePost = (props) => {
   const [titleEdit, setTitleEdit] = useState(props.current.title);
   const [coverEdit, setCoverEdit] = useState(props.current.coverUrl);
   const [tagsEdit, setTagsEdit] = useState(props.current.tags);
+  let tags;
 
   useEffect(() => {
     props.fetchPost(id);
@@ -20,6 +21,8 @@ const SinglePost = (props) => {
     setCoverEdit(props.current.coverUrl);
     setTagsEdit(props.current.tags);
   }, [props.current.title]);
+
+  if (props.current.tags) { tags = props.current.tags.map((tag) => { return (<span key={tag}>#{tag} </span>); }); }
 
   const editMode = () => {
     setEditing(true);
@@ -55,7 +58,7 @@ const SinglePost = (props) => {
             <h1>{props.current.title}</h1>
             <span><ReactMarkdown>{props.current.content || ''}</ReactMarkdown></span>
             <img src={props.current.coverUrl} alt="cover pic" />
-            <p id="tags">#{props.current.tags}</p>
+            <p id="tags">{tags}</p>
             <div id="icons">
               <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
               <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostSingular(props.current.id, props.history)} size="2x" />
