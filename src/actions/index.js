@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ROOT_URL = 'https://platform-api-lab-5.herokuapp.com/api/';
+const ROOT_URL = 'https://platform-api-lab-5.herokuapp.com/api';
 const API_KEY = '';
 
 export const ActionTypes = {
