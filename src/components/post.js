@@ -6,9 +6,10 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { fetchPost, deletePostAll, updatePost } from '../actions/index';
 
 const Post = (props) => {
-  let tags = '';
+  let tags;
   if (props.post.tags) {
-    tags = props.post.tags.map((tag) => { return (<span key={tag}>#{tag} </span>); });
+    const tagsList = props.post.tags.split(' ');
+    tags = tagsList.map((tag) => { return (<span key={tag}>#{tag} </span>); });
   }
 
   return (

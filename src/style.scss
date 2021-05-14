@@ -138,5 +138,10 @@ body, html {
       line-height: 1.2rem;
       align-self: center;
     }
+    ul, li{
+      list-style-type: disc;
+      flex-direction: column;
+      padding: 10px;
+    }
 
   }

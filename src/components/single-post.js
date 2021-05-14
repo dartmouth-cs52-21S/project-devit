@@ -12,7 +12,8 @@ const SinglePost = (props) => {
   const [titleEdit, setTitleEdit] = useState(props.current.title);
   const [coverEdit, setCoverEdit] = useState(props.current.coverUrl);
   const [tagsEdit, setTagsEdit] = useState(props.current.tags);
-  let tags;
+  const [commentsEdit, setCommentsEdit] = useState(props.current.comments);
+  let tags, comments;
 
   useEffect(() => {
     props.fetchPost(id);
@@ -20,9 +21,11 @@ const SinglePost = (props) => {
     setTextEdit(props.current.content);
     setCoverEdit(props.current.coverUrl);
     setTagsEdit(props.current.tags);
+    setCommentsEdit(props.current.comments);
   }, [props.current.title]);
 
-  if (props.current.tags) { tags = props.current.tags.map((tag) => { return (<span key={tag}>#{tag} </span>); }); }
+  if (props.current.tags) { tags = props.current.tags.split(' ').map((tag) => { return (<span key={tag}>#{tag} </span>); }); }
+  if (props.current.comments) { comments = props.current.comments.split(',').map((com) => { return (<li key={com}>{com} </li>); }); }
 
   const editMode = () => {
     setEditing(true);
@@ -34,6 +37,7 @@ const SinglePost = (props) => {
       tags: tagsEdit,
       content: textEdit,
       coverUrl: coverEdit,
+      comments: commentsEdit,
     };
     props.updatePost(post, props.current.id);
     setEditing(false);
@@ -48,6 +52,7 @@ const SinglePost = (props) => {
             Content: <textarea value={textEdit} onChange={(e) => setTextEdit(e.target.value)} />
             Cover URL: <input type="text" value={coverEdit} onChange={(e) => setCoverEdit(e.target.value)} />
             Tags:<input type="text" value={tagsEdit} onChange={(e) => setTagsEdit(e.target.value)} />
+            Comments: <textarea value={commentsEdit} onChange={(e) => setCommentsEdit(e.target.value)} />
             <button type="button" onClick={submitEdits}> Submit </button>
             <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
             <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostSingular(props.current.id, props.history)} size="2x" />
@@ -59,6 +64,8 @@ const SinglePost = (props) => {
             <span><ReactMarkdown>{props.current.content || ''}</ReactMarkdown></span>
             <img src={props.current.coverUrl} alt="cover pic" />
             <p id="tags">{tags}</p>
+            <h3>Comments:</h3>
+            <ul>{comments}</ul>
             <div id="icons">
               <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
               <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostSingular(props.current.id, props.history)} size="2x" />
