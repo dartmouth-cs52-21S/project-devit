@@ -19,7 +19,7 @@ const SinglePost = (props) => {
     setTextEdit(props.current.content);
     setCoverEdit(props.current.coverUrl);
     setTagsEdit(props.current.tags);
-  }, [props.current]);
+  }, [props.current.title]);
 
   const editMode = () => {
     setEditing(true);

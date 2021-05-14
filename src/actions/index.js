@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ROOT_URL = 'http://localhost:9090/api';
-const API_KEY = '?key=l_maechling';
+const API_KEY = '';
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
