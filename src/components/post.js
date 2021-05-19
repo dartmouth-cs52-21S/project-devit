@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { withRouter } from 'react-router-dom';
 import { fetchPost, deletePostAll, updatePost } from '../actions/index';
 
 const Post = (props) => {
@@ -29,4 +30,4 @@ const mapStateToProps = (reduxState) => ({
   current: reduxState.posts.current,
 });
 
-export default connect(mapStateToProps, { fetchPost, deletePostAll, updatePost })(Post);
+export default withRouter(connect(mapStateToProps, { fetchPost, deletePostAll, updatePost })(Post));

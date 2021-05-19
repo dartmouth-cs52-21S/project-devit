@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { createPost } from '../actions/index';
 
 const NewPost = (props) => {
@@ -35,4 +36,4 @@ const NewPost = (props) => {
   );
 };
 
-export default connect(null, { createPost })(NewPost);
+export default withRouter(connect(null, { createPost })(NewPost));

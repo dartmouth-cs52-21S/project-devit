@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
+import { withRouter } from 'react-router-dom';
 import { fetchPosts } from '../actions/index';
 import Post from './post';
 
@@ -27,4 +28,4 @@ const mapStateToProps = (reduxState) => ({
   error: reduxState.posts.error,
 });
 
-export default connect(mapStateToProps, { fetchPosts })(Posts);
+export default withRouter(connect(mapStateToProps, { fetchPosts })(Posts));

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { withRouter } from 'react-router-dom';
 import { fetchPost, deletePostSingular, updatePost } from '../actions/index';
 
 const SinglePost = (props) => {
@@ -66,6 +67,7 @@ const SinglePost = (props) => {
             <p id="tags">{tags}</p>
             <h3>Comments:</h3>
             <ul>{comments}</ul>
+            <h3>Author: {props.current.author ? props.current.author.author : ''} </h3>
             <div id="icons">
               <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
               <FontAwesomeIcon icon={faTrash} onClick={() => props.deletePostSingular(props.current.id, props.history)} size="2x" />
@@ -80,4 +82,4 @@ const mapStateToProps = (reduxState) => ({
   current: reduxState.posts.current,
 });
 
-export default connect(mapStateToProps, { fetchPost, deletePostSingular, updatePost })(SinglePost);
+export default withRouter(connect(mapStateToProps, { fetchPost, deletePostSingular, updatePost })(SinglePost));
