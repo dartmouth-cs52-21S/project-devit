@@ -36,6 +36,7 @@ _TODO: how to deploy the project_
 ### Deploying the Client
 
 _DevIt_ is hosted on Netlify using continuous deployment on the `master` branch.
+[netlify link](https://unruffled-cori-57c482.netlify.app/)
 
 ### Deploying the Server
 
