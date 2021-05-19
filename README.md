@@ -8,6 +8,10 @@
 
 _TODO: short project description, some sample screenshots or mockups_
 
+### Project Description
+
+Devit is a community platform focused on facilitating connections between developers, desginers and innovators. The platform aims at forming teams to help budding designers and engineers gain project experience as well as to help innovators' ideas come to life. The platform consists of a Project page where users are able to post project ideas as well as join onto exisiting projects. Devit also provides a platform for users to keep track of their projects and earn badges as they make more progress. 
+
 ![Find a Project Mockup](./images/mockups/find_a_project.png)
 
 ## Architecture
