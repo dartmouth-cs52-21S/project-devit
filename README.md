@@ -14,6 +14,11 @@ Devit is a community platform focused on facilitating connections between develo
 
 ![Find a Project Mockup](./images/mockups/find_a_project.png)
 
+### Complete figma mockup 
+
+[Figma mockup](https://www.figma.com/file/6sZtOJFTGTyQ3ugzVtJsVW/HiFi-Sketches?node-id=0%3A1)
+
+
 ## Architecture
 
 _TODO: descriptions of code organization and tools and libraries used_
