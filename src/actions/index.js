@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const ROOT_URL = 'https://platform-api-lab-5.herokuapp.com/api';
-// const ROOT_URL = 'http://localhost:9090/api';
+// const ROOT_URL = 'heroku';
+const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
@@ -106,7 +106,7 @@ export function signinUser({ email, password }, history) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
       history.push('/');
-      dispatch({ type: ActionTypes.AUTH_USER });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       localStorage.setItem('token', response.data.token);
     })
       .catch((error) => {
@@ -120,7 +120,7 @@ export function signupUser({ email, password, author }, history) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, { email, password, author }).then((response) => {
       history.push('/');
-      dispatch({ type: ActionTypes.AUTH_USER });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       localStorage.setItem('token', response.data.token);
     })
       .catch((error) => {
