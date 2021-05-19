@@ -37,9 +37,14 @@ _TODO: how to deploy the project_
 
 _DevIt_ is hosted on Netlify using continuous deployment on the `master` branch.
 
+[devit-21s.netlify.app](devit-21s.netlify.app)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/333af860-cc70-4ceb-8ffb-729bd4cba9be/deploy-status)](https://app.netlify.com/sites/devit-21s/deploys)
+
 ### Deploying the Server
 
 The _DevIt API_ is hosted on Netlify using continuous deployment on the `master` branch of the [_DevIt API_ repository](https://github.com/dartmouth-cs52-21S/project-api-devit).
+
 
 ## Authors
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const ROOT_URL = 'heroku';
-const ROOT_URL = 'http://localhost:9090/api';
+const ROOT_URL = 'https://devit-api-development.herokuapp.com/api';
+// const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
