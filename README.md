@@ -42,6 +42,8 @@ _DevIt_ is hosted on Netlify using continuous deployment on the `master` branch.
 
 The _DevIt API_ is hosted on Netlify using continuous deployment on the `master` branch of the [_DevIt API_ repository](https://github.com/dartmouth-cs52-21S/project-api-devit).
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/333af860-cc70-4ceb-8ffb-729bd4cba9be/deploy-status)](https://app.netlify.com/sites/unruffled-cori-57c482/deploys)
+
 ## Authors
 
 - [Lily Maechling](https://github.com/lilymaechling)
