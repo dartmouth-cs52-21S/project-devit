@@ -51,7 +51,7 @@ const SinglePost = () => {
           <div className="single-post">
             <h1>{post.title}</h1>
             <span><ReactMarkdown>{post.content || ''}</ReactMarkdown></span>
-            <h3>Author: {post.author ? post.author : ''} </h3>
+            <h3>{`Author: ${post.author ? post.author.author : ''} `}</h3>
             <div id="icons">
               <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
               <FontAwesomeIcon icon={faTrash} onClick={() => dispatch(deletePostSingular(postID, history))} size="2x" />
