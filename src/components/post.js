@@ -21,7 +21,7 @@ const Post = ({ post }) => {
   return (
     <div className="post">
       <Link to={`/posts/${post.id}`}><h1>{post.title}</h1></Link>
-      <img src={post.coverUrl} alt="post gif" />
+      {/* <img src={post.coverUrl} alt="post gif" /> */}
       <p id="tags">{tags}</p>
       <FontAwesomeIcon icon={faTrash} onClick={() => dispatch(deletePostSingular(post.id, history))} size="2x" />
     </div>

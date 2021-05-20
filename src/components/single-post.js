@@ -38,7 +38,6 @@ const SinglePost = () => {
       title: post.title,
       tags: post.tags,
       content: post.content,
-      coverUrl: post.cover,
       comments: post.comments,
     };
 
@@ -53,7 +52,7 @@ const SinglePost = () => {
           <div className="single-post">
             Title: <input type="text" value={post.title} onChange={(e) => setPost({ ...post, title: e.target.value })} />
             Content: <textarea value={post.content} onChange={(e) => setPost({ ...post, text: e.target.value })} />
-            Cover URL: <input type="text" value={post.coverUrl} onChange={(e) => setPost({ ...post, coverUrl: e.target.value })} />
+            {/* Cover URL: <input type="text" value={post.coverUrl} onChange={(e) => setPost({ ...post, coverUrl: e.target.value })} /> */}
             Tags:<input type="text" value={post.tags} onChange={(e) => setPost({ ...post, tags: e.target.value })} />
             Comments: <textarea value={post.comments} onChange={(e) => setPost({ ...post, comments: e.target.value })} />
             <button type="button" onClick={submitEdits}> Submit </button>
@@ -65,7 +64,7 @@ const SinglePost = () => {
           <div className="single-post">
             <h1>{post.title}</h1>
             <span><ReactMarkdown>{post.content || ''}</ReactMarkdown></span>
-            <img src={post.coverUrl} alt="cover pic" />
+            {/* <img src={post.coverUrl} alt="cover pic" /> */}
             <p id="tags">{tags}</p>
             <h3>Comments:</h3>
             <ul>{comments}</ul>
