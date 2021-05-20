@@ -1,22 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { signoutUser } from '../actions/index';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Profile = (props) => {
-  console.log(props);
+import { signoutUser } from '../store/actions/index';
+
+import { selectAuthenticated, selectUser } from '../store/selectors';
+
+const Profile = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const user = useSelector(selectUser);
+  const authenticated = useSelector(selectAuthenticated);
+
   return (
     <div>
       <h1>This is the Profile Page.</h1>
-      <h2>{props.user && props.authed ? `Welcome, ${props.user.author}` : 'Please check you are logged in properly.'}</h2>
-      {props.authed ? <button type="button" onClick={() => props.signoutUser(props.history)}>Sign Out</button> : <div />}
+      <h2>{user && authenticated ? `Welcome, ${user.author}` : 'Please check you are logged in properly.'}</h2>
+      {authenticated ? <button type="button" onClick={() => dispatch(signoutUser(history))}>Sign Out</button> : <div />}
     </div>
   );
 };
 
-const mapStateToProps = (reduxState) => ({
-  authed: reduxState.auth.authenticated,
-  user: reduxState.auth.user,
-});
-
-export default withRouter(connect(mapStateToProps, { signoutUser })(Profile));
+export default Profile;
