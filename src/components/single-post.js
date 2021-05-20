@@ -6,12 +6,9 @@ import ReactMarkdown from 'react-markdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { fetchPost, deletePostSingular, updatePost } from '../store/actions';
-// import { selectCurrentPost } from '../store/selectors';
 
 const SinglePost = () => {
-  // const currentPost = useSelector(selectCurrentPost);
   const [post, setPost] = useState({});
-  console.log('post:', post);
   const [editing, setEditing] = useState(false);
 
   const { postID } = useParams();
