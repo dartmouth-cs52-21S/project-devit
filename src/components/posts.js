@@ -1,31 +1,29 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import Alert from 'react-bootstrap/Alert';
-import { withRouter } from 'react-router-dom';
-import { fetchPosts } from '../actions/index';
-import Post from './post';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Posts = (props) => {
+import Alert from 'react-bootstrap/Alert';
+import { fetchPosts } from '../store/actions';
+import Post from './post';
+import { selectAllPosts, selectError } from '../store/selectors';
+
+const Posts = () => {
+  const dispatch = useDispatch();
+  const posts = useSelector(selectAllPosts);
+  const error = useSelector(selectError);
+
   useEffect(() => {
-    props.fetchPosts();
+    dispatch(fetchPosts());
   }, []);
 
-  const postItems = props.posts.map((post) => {
-    return <Post post={post} key={post.id} onClick={() => props.history.push(`/posts/${post.id}`)} />;
-  });
+  if (!posts) return null;
 
   return (
     <div>
       <h1>All Posts</h1>
-      {props.error.message !== undefined ? <Alert variant="danger">{props.error.message}</Alert> : <div />}
-      <div className="post-container">{postItems}</div>
+      {error.message && <Alert variant="danger">{error.message}</Alert>}
+      <div className="post-container">{posts.map((post) => <Post key={post.id} post={post} />)}</div>
     </div>
   );
 };
 
-const mapStateToProps = (reduxState) => ({
-  posts: reduxState.posts.all,
-  error: reduxState.posts.error,
-});
-
-export default withRouter(connect(mapStateToProps, { fetchPosts })(Posts));
+export default Posts;

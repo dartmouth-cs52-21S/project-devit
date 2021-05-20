@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { createPost } from '../actions/index';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-const NewPost = (props) => {
+import { createPost } from '../store/actions';
+
+const NewPost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const makePost = () => {
     const post = {
       title,
       content,
     };
-    props.createPost(post, props.history);
+    dispatch(createPost(post, history));
   };
 
   return (
@@ -27,4 +31,4 @@ const NewPost = (props) => {
   );
 };
 
-export default withRouter(connect(null, { createPost })(NewPost));
+export default NewPost;

@@ -1,11 +1,15 @@
 import React from 'react';
-import {
-  NavLink, withRouter,
-} from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signoutUser } from '../actions/index';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signoutUser } from '../store/actions';
 
-const NavBar = (props) => {
+import { selectAuthenticated } from '../store/selectors';
+
+const NavBar = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const authenticated = useSelector(selectAuthenticated);
+
   return (
     <nav>
       <ul>
@@ -13,14 +17,10 @@ const NavBar = (props) => {
         <li><NavLink to="/posts/new">New Post</NavLink></li>
         <li><NavLink to="/signin">Sign In</NavLink></li>
         <li><NavLink to="/profile">Profile</NavLink></li>
-        <li>{props.authed ? <button type="button" onClick={() => props.signoutUser(props.history)}>Sign Out</button> : <div />}</li>
+        <li>{authenticated ? <button type="button" onClick={() => dispatch(signoutUser(history))}>Sign Out</button> : <div />}</li>
       </ul>
     </nav>
   );
 };
 
-const mapStateToProps = (state) => ({
-  authed: state.auth.authenticated,
-});
-
-export default withRouter(connect(mapStateToProps, { signoutUser })(NavBar));
+export default NavBar;

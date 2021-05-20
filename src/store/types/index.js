@@ -1,0 +1,12 @@
+const ActionTypes = {
+  FETCH_POSTS: 'FETCH_POSTS',
+  FETCH_POST: 'FETCH_POST',
+  DELETE_POST: 'DELETE_POST',
+  NEW_POST: 'NEW_POST',
+  ERROR_SET: 'ERROR_SET',
+  AUTH_USER: 'AUTH_USER',
+  DEAUTH_USER: 'DEAUTH_USER',
+  AUTH_ERROR: 'AUTH_ERROR',
+};
+
+export default ActionTypes;

@@ -10,7 +10,7 @@ import SignIn from './components/sign-in';
 import PrivateRoute from './components/private-route';
 import Profile from './components/profile';
 
-const App = (props) => {
+const App = () => {
   return (
     <Router>
       <div>
@@ -18,7 +18,7 @@ const App = (props) => {
         <Switch>
           <Route exact path="/" component={Posts} />
           <PrivateRoute path="/posts/new" component={NewPost} />
-          <Route path="/posts/:postID" component={SinglePost} />
+          <Route exact path="/posts/:postID" component={SinglePost} />
           <Route path="/signin" component={SignIn} />
           <Route path="/profile" component={Profile} />
           <Route render={() => (<div>post not found </div>)} />
