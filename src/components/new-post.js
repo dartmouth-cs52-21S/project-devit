@@ -7,9 +7,6 @@ import { createPost } from '../store/actions';
 const NewPost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  // const [coverUrl, setCoverUrl] = useState('');
-  const [tags, setTags] = useState('');
-  const [comments, setComments] = useState('');
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -17,10 +14,7 @@ const NewPost = () => {
   const makePost = () => {
     const post = {
       title,
-      // coverUrl,
-      tags,
       content,
-      comments,
     };
     dispatch(createPost(post, history));
   };
@@ -31,9 +25,6 @@ const NewPost = () => {
       <ul>
         <li><h2>Title: </h2><input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /></li>
         <li><h2>Content: </h2><textarea type="text" value={content} onChange={(e) => setContent(e.target.value)} /></li>
-        {/* <li><h2>Cover Url:</h2> <input type="text" value={coverUrl} onChange={(e) => setCoverUrl(e.target.value)} /> </li> */}
-        <li><h2>Tags: </h2><input type="text" value={tags} onChange={(e) => setTags(e.target.value)} /></li>
-        <li><h2>Comments: </h2><textarea type="text" value={comments} onChange={(e) => setComments(e.target.value)} /></li>
       </ul>
       <button type="submit" onClick={makePost}>Submit</button>
     </div>
