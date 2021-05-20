@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { createPost } from '../actions/index';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-const NewPost = (props) => {
+import { createPost } from '../store/actions';
+
+const NewPost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [cover, setCover] = useState('');
+  const [coverUrl, setCoverUrl] = useState('');
   const [tags, setTags] = useState('');
   const [comments, setComments] = useState('');
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const makePost = () => {
     const post = {
       title,
-      coverUrl: cover,
+      coverUrl,
       tags,
       content,
       comments,
     };
-    props.createPost(post, props.history);
+    dispatch(createPost(post, history));
   };
 
   return (
@@ -27,7 +31,7 @@ const NewPost = (props) => {
       <ul>
         <li><h2>Title: </h2><input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /></li>
         <li><h2>Content: </h2><textarea type="text" value={content} onChange={(e) => setContent(e.target.value)} /></li>
-        <li><h2>Cover Url:</h2> <input type="text" value={cover} onChange={(e) => setCover(e.target.value)} /> </li>
+        <li><h2>Cover Url:</h2> <input type="text" value={coverUrl} onChange={(e) => setCoverUrl(e.target.value)} /> </li>
         <li><h2>Tags: </h2><input type="text" value={tags} onChange={(e) => setTags(e.target.value)} /></li>
         <li><h2>Comments: </h2><textarea type="text" value={comments} onChange={(e) => setComments(e.target.value)} /></li>
       </ul>
@@ -36,4 +40,4 @@ const NewPost = (props) => {
   );
 };
 
-export default withRouter(connect(null, { createPost })(NewPost));
+export default NewPost;

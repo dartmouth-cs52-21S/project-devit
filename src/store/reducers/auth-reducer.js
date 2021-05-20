@@ -1,4 +1,4 @@
-import { ActionTypes } from '../actions';
+import ActionTypes from '../types';
 
 const initialState = {
   authenticated: false,
