@@ -18,16 +18,16 @@ const App = () => {
         <Banner />
         <main className="main-section">
           <Sidebar />
-          <Switch>
-            <div className="current-page">
+          <div className="current-page">
+            <Switch>
               <Route exact path="/" component={Posts} />
               <PrivateRoute path="/posts/new" component={NewPost} />
               <Route exact path="/posts/:postID" component={SinglePost} />
               <Route path="/signin" component={SignIn} />
               <Route path="/profile" component={Profile} />
-              <Route component={ErrorNotFound} />
-            </div>
-          </Switch>
+              <Route path="*" component={ErrorNotFound} />
+            </Switch>
+          </div>
         </main>
       </div>
     </Router>

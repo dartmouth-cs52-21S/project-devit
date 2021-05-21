@@ -1,14 +1,35 @@
 $sidebar-width: 300px;
+$sidebar-width-collapsed: 50px;
 $nav-button-padding: 1.25rem;
 
 .sidebar {
+  @include transition;
   width: $sidebar-width;
   height: calc(100vh - #{$banner-height});
   background-color: $gray-900;
-  padding-top: 3rem;
+  padding-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-x: auto;
+
+  &.collapsed {
+    width: calc(#{$sidebar-width-collapsed} + #{$sm});
+    
+    .sidebar__nav-link-label {
+      transform: scale(0, 1);
+      width: 100%;
+      opacity: 0;
+
+      &.collapse-label {
+        display: none;
+      }
+    }
+
+    .icon {
+      margin: 0;
+    }
+  }
 
   &__nav-links {
     @include center;
@@ -60,6 +81,11 @@ $nav-button-padding: 1.25rem;
   }
 
   &__nav-link-label {
+    transition: 
+      opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s,
+      scale 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+    white-space: nowrap;
+    transform-origin: left;
     color: $devit-white;
     margin: 0;
     padding: 0;
@@ -71,6 +97,10 @@ $nav-button-padding: 1.25rem;
     @include transition;
     justify-content: space-between;
     padding: $nav-button-padding;
+
+    &:focus {
+      box-shadow: none;
+    }
 
     &:hover {
       background-color: $devit-black;
