@@ -8,7 +8,16 @@
 
 _TODO: short project description, some sample screenshots or mockups_
 
+### Project Description
+
+Devit is a community platform focused on facilitating connections between developers, desginers and innovators. The platform aims at forming teams to help budding designers and engineers gain project experience as well as to help innovators' ideas come to life. The platform consists of a Project page where users are able to post project ideas as well as join onto exisiting projects. Devit also provides a platform for users to keep track of their projects and earn badges as they make more progress. 
+
 ![Find a Project Mockup](./images/mockups/find_a_project.png)
+
+### Complete figma mockup 
+
+[Figma mockup](https://www.figma.com/file/6sZtOJFTGTyQ3ugzVtJsVW/HiFi-Sketches?node-id=0%3A1)
+
 
 ## Architecture
 
@@ -37,9 +46,14 @@ _TODO: how to deploy the project_
 
 _DevIt_ is hosted on Netlify using continuous deployment on the `master` branch.
 
+[devit-21s.netlify.app](devit-21s.netlify.app)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/333af860-cc70-4ceb-8ffb-729bd4cba9be/deploy-status)](https://app.netlify.com/sites/devit-21s/deploys)
+
 ### Deploying the Server
 
 The _DevIt API_ is hosted on Netlify using continuous deployment on the `master` branch of the [_DevIt API_ repository](https://github.com/dartmouth-cs52-21S/project-api-devit).
+
 
 ## Authors
 
