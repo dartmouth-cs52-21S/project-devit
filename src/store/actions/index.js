@@ -2,10 +2,11 @@ import axios from 'axios';
 
 import ActionTypes from '../types';
 
-// const ROOT_URL = 'https://devit-api-development.herokuapp.com/api';
-// const ROOT_URL = 'http://localhost:9090/api';
-
 const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090/api';
+
+export const toggleSidebar = () => ({
+  type: ActionTypes.TOGGLE_SIDEBAR,
+});
 
 export function fetchPosts() {
   return (dispatch) => {
