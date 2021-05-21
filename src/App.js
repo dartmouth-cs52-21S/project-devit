@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Posts from './components/posts';
 import NewPost from './components/new-post';
 import SinglePost from './components/single-post';
-import SignIn from './components/sign-in';
+import SignIn from './components/SignIn';
 import PrivateRoute from './components/private-route';
 import Profile from './components/profile';
 import Banner from './components/Banner';
