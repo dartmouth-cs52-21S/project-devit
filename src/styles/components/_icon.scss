@@ -1,0 +1,36 @@
+$sm: 0.5rem;
+$md: 1rem;
+$lg: 1.5rem;
+
+.icon {
+  @include center;
+  line-height: 1;
+  margin: 0 0.25rem;
+
+  &.sm {
+    // width: $sm;
+    font-size: $sm;
+
+    svg {
+      width: unset !important;
+    }
+  }
+
+  &.md {
+    // width: $md;
+    font-size: $md;
+
+    svg {
+      width: unset !important;
+    }
+  }
+
+  &.lg {
+    // width: $lg;
+    font-size: $lg;
+
+    svg {
+      width: unset !important;
+    }
+  }
+}

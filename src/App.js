@@ -8,6 +8,7 @@ import SignIn from './components/sign-in';
 import PrivateRoute from './components/private-route';
 import Profile from './components/profile';
 import Banner from './components/Banner';
+import Sidebar from './components/Sidebar';
 import ErrorNotFound from './components/ErrorNotFound';
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
       <div>
         <Banner />
         <main className="main-section">
+          <Sidebar />
           <Switch>
             <Route exact path="/" component={Posts} />
             <PrivateRoute path="/posts/new" component={NewPost} />
