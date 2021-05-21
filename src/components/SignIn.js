@@ -13,7 +13,6 @@ const SignIn = () => {
   return (
     <div className="sign-in">
       <div className="container">
-        {/* <img src="../../images/logo/devit_logo_light.png" alt="DevIt Logo" /> */}
         <Logo />
         <ul>
           <li><h2>Email<span id="red">*</span> </h2></li>
@@ -22,7 +21,8 @@ const SignIn = () => {
           <li><input type="password" value={password} onChange={(e) => setPassword(e.target.value)} /></li>
           <li><button type="button" onClick={() => dispatch(signinUser({ email, password }, history))}>Sign In</button></li>
         </ul>
-        <p>Do not have an account? <span id="underline">Sign Up</span></p>
+
+        <p>Do not have an account? <span id="underline" role="button" tabIndex={0} onClick={() => history.push('/signup')}>Sign Up</span></p>
       </div>
     </div>
   );

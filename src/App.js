@@ -9,6 +9,7 @@ import PrivateRoute from './components/private-route';
 import Profile from './components/profile';
 import Banner from './components/Banner';
 import ErrorNotFound from './components/ErrorNotFound';
+import SignUp from './components/SignUp';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <PrivateRoute path="/posts/new" component={NewPost} />
             <Route exact path="/posts/:postID" component={SinglePost} />
             <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
             <Route path="/profile" component={Profile} />
             <Route component={ErrorNotFound} />
           </Switch>
