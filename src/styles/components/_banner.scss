@@ -15,6 +15,15 @@
     display: block;
     width: 130px;
 
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      border-color: transparent;
+      box-shadow: none;
+    }
+
     svg {
       display: flex;
     }
