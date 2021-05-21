@@ -1,18 +1,18 @@
 import ActionTypes from '../types';
 
 const initialState = {
-  authenticated: false,
+  isAuthenticated: false,
   user: {},
 };
 
 const AuthReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.AUTH_USER:
-      return { authenticated: true, user: action.payload };
+      return { isAuthenticated: true, user: action.payload };
     case ActionTypes.DEAUTH_USER:
-      return { authenticated: false, user: {} };
+      return { isAuthenticated: false, user: {} };
     case ActionTypes.AUTH_ERROR:
-      return { authenticated: false, user: state.user };
+      return { isAuthenticated: false, user: state.user };
     default:
       return state;
   }

@@ -3,12 +3,12 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signoutUser } from '../store/actions';
 
-import { selectAuthenticated } from '../store/selectors';
+import { selectisAuthenticated } from '../store/selectors';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const authenticated = useSelector(selectAuthenticated);
+  const isAuthenticated = useSelector(selectisAuthenticated);
 
   return (
     <nav>
@@ -17,7 +17,7 @@ const NavBar = () => {
         <li><NavLink to="/posts/new">New Post</NavLink></li>
         <li><NavLink to="/signin">Sign In</NavLink></li>
         <li><NavLink to="/profile">Profile</NavLink></li>
-        <li>{authenticated ? <button type="button" onClick={() => dispatch(signoutUser(history))}>Sign Out</button> : <div />}</li>
+        <li>{isAuthenticated ? <button type="button" onClick={() => dispatch(signoutUser(history))}>Sign Out</button> : <div />}</li>
       </ul>
     </nav>
   );

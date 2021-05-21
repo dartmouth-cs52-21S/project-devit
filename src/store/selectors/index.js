@@ -4,7 +4,7 @@ export const selectCurrentPost = (state) => state.posts.current;
 export const selectError = (state) => state.posts.error;
 
 // Auth Reducer
-export const selectAuthenticated = (state) => state.auth.authenticated;
+export const selectisAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectUser = (state) => state.auth.user;
 
 // Sidebar Reducer
