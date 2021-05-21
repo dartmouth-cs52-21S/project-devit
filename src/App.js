@@ -9,6 +9,7 @@ import SinglePost from './components/single-post';
 import SignIn from './components/sign-in';
 import PrivateRoute from './components/private-route';
 import Profile from './components/profile';
+import NewIdea from './components/new-idea';
 
 const App = (props) => {
   return (
@@ -20,6 +21,7 @@ const App = (props) => {
           <Route path="/posts/:postID" component={SinglePost} />
           <Route path="/signin" component={SignIn} />
           <Route path="/profile" component={Profile} />
+          <Route path="/newidea" component={NewIdea} />
           <Route render={() => (<div>post not found </div>)} />
         </Switch>
       </div>

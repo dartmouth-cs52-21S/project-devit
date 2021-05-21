@@ -2,7 +2,6 @@ body, html {
     font-family: "Roboto", sans-serif;
     background: #F0F4EF;
     height: 100%;
-    color: #0D1821;
     margin: 0;
   }
 
@@ -45,15 +44,7 @@ body, html {
     flex-wrap: wrap;
     align-content: space-around;
   }
-  button{
-    padding: 20px;
-    background-color: #E6AACE;
-    color: #344966;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 10px;
-    align-self: center;
-  }
+
 
   .post{
     height: 400px;
@@ -228,5 +219,76 @@ $devit-black: #111111;
       background-color: $devit-black;
     }
 
+  }
+}
+
+#new-idea{
+  background-color: #6C6C6C;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  color: $devit-white;
+
+  input{
+    width: 35%;
+    height: 8%;
+    font-size: 40px;
+    background-color: $devit-gray;
+    
+  }
+  h1{
+    align-self: flex-start;
+  }
+  p{
+    background-color: $devit-gray;
+    border-radius: 20px;
+    margin-right: 20px;
+    padding: 20px;
+  }
+  .selector{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    button{
+      background-color: $devit-gray;
+      padding: 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50%;
+      color: $devit-white;
+      width: 60px;
+
+    }
+    button:hover{
+      cursor: pointer;
+    }
+  }
+  .selector-container{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    align-self: start;
+    margin-left: 30vw;
+  }
+  .buttons{
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+  button{
+    width: 200px;
+    height: 60px;
+    border: none;
+    color: $devit-white;
+  }
+  button.save{
+    background-color: $devit-gray;
+  }
+  button.review{
+    background-color: $devit-orange;
   }
 }
