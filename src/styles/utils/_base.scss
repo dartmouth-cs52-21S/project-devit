@@ -1,0 +1,74 @@
+// Base Styles
+html,
+body,
+#root {
+  min-height: calc(100vh - $banner-height);
+  position: relative;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+body {
+  @include ff-body;
+}
+
+:focus {
+  border-color: $devit-orange;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba($devit-orange, 0.25);
+}
+
+::selection,
+::-moz-selection {
+  color: $devit-black;
+  background-color: $devit-orange;
+}
+
+body {
+  @include ff-body;
+  color: $devit-white;
+  background-color: $gray-900;
+  position: relative;
+  min-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover::after {
+    transform: scale(1, 1);
+    transform-origin: 100%;
+  }
+
+  &::after {
+    @include transition;
+    content: "";
+    position: absolute;
+    bottom: -0.1em;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scale(0, 1);
+    transform-origin: 0;
+  }
+
+  &:visited {
+    color: $devit-orange;
+    text-decoration: none;
+  }
+}
