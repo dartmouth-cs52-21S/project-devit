@@ -1,0 +1,21 @@
+$button-height: 2.8rem;
+
+.button {
+  @include ff-body-medium;
+  display: flex;
+  position: relative;
+  color: $devit-white;
+  align-items: center;
+  border: none;
+  box-shadow: 0 5px 10px -5px rgba($devit-black, 0.5);
+  cursor: pointer;
+  justify-content: center;
+  letter-spacing: 0.5px;
+  margin: 1rem 0;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  transform: scale(1);
+  transition: all 250ms ease-in-out;
+  background-color: $devit-orange;
+  height: $button-height;
+}

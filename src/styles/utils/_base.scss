@@ -1,0 +1,43 @@
+// Base Styles
+html,
+body,
+#root {
+  min-height: calc(100vh - $banner-height);
+  position: relative;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+body {
+  @include ff-body;
+}
+
+:focus {
+  border-color: $devit-orange;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba($devit-orange, 0.25);
+}
+
+::selection,
+::-moz-selection {
+  color: $devit-black;
+  background-color: $devit-orange;
+}
+
+
+body {
+  @include ff-body;
+  color: $devit-white;
+  background-color: $gray-900;
+  position: relative;
+  min-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

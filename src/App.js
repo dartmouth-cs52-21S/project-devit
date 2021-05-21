@@ -1,20 +1,19 @@
 import React from 'react';
-import {
-  BrowserRouter as Router, Route, Switch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import Posts from './components/posts';
 import NewPost from './components/new-post';
 import SinglePost from './components/single-post';
-import Nav from './components/nav-bar';
 import SignIn from './components/sign-in';
 import PrivateRoute from './components/private-route';
 import Profile from './components/profile';
+import Banner from './components/Banner';
 
 const App = () => {
   return (
     <Router>
       <div>
-        <Nav />
+        <Banner />
         <Switch>
           <Route exact path="/" component={Posts} />
           <PrivateRoute path="/posts/new" component={NewPost} />
