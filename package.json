@@ -39,7 +39,7 @@
     "img-optimize-loader": "^1.0.7",
     "mini-css-extract-plugin": "^1.4.1",
     "postcss-loader": "^5.2.0",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^5.3.0",
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
