@@ -8,6 +8,7 @@ import SignIn from './components/sign-in';
 import PrivateRoute from './components/private-route';
 import Profile from './components/profile';
 import Banner from './components/Banner';
+import ErrorNotFound from './components/ErrorNotFound';
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
           <Route exact path="/posts/:postID" component={SinglePost} />
           <Route path="/signin" component={SignIn} />
           <Route path="/profile" component={Profile} />
-          <Route render={() => (<div>post not found </div>)} />
+          <Route component={ErrorNotFound} />
         </Switch>
       </div>
     </Router>
