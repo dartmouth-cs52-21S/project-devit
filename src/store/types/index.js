@@ -7,6 +7,7 @@ const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
+  TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR',
 };
 
 export default ActionTypes;
