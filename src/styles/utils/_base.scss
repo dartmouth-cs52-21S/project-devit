@@ -31,7 +31,6 @@ body {
   background-color: $devit-orange;
 }
 
-
 body {
   @include ff-body;
   color: $devit-white;
@@ -40,4 +39,36 @@ body {
   min-width: 100vw;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover::after {
+    transform: scale(1, 1);
+    transform-origin: 100%;
+  }
+
+  &::after {
+    @include transition;
+    content: "";
+    position: absolute;
+    bottom: -0.1em;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scale(0, 1);
+    transform-origin: 0;
+  }
+
+  &:visited {
+    color: $devit-orange;
+    text-decoration: none;
+  }
 }
