@@ -15,14 +15,16 @@ const App = () => {
     <Router>
       <div>
         <Banner />
-        <Switch>
-          <Route exact path="/" component={Posts} />
-          <PrivateRoute path="/posts/new" component={NewPost} />
-          <Route exact path="/posts/:postID" component={SinglePost} />
-          <Route path="/signin" component={SignIn} />
-          <Route path="/profile" component={Profile} />
-          <Route component={ErrorNotFound} />
-        </Switch>
+        <main className="main-section">
+          <Switch>
+            <Route exact path="/" component={Posts} />
+            <PrivateRoute path="/posts/new" component={NewPost} />
+            <Route exact path="/posts/:postID" component={SinglePost} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/profile" component={Profile} />
+            <Route component={ErrorNotFound} />
+          </Switch>
+        </main>
       </div>
     </Router>
   );
