@@ -1,8 +1,78 @@
+$devit-orange: #FF5D08;
+$devit-gray: #232323;
+$devit-white: #F4F4F4;
+$devit-black: #111111;
+
+
+.sign-in{
+  height: 85vh;
+  width:100vw;
+  display: flex;
+  justify-content: center;
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    background-color: $devit-black;
+    width: 40%;
+    height: 60%;
+    align-self: center;
+    text-align: center;
+    justify-content: center;
+    ul{
+      width: 100%;
+      display: table; 
+      margin: 0 auto;
+    }
+    h2{
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    img{
+      width: 30%;
+      margin-left: 35%;
+    }
+    li h2 {
+      text-align: left;
+      margin-left: 10%;
+    }
+    li input {width:80%;}
+    li button {
+      justify-self: center;
+      font-size: 1.4rem;
+      width: 80%;
+      height: 48px;
+      padding: 0px;
+      margin-top: 24px;
+    }
+  }
+  ul li {padding:0px;}
+  input{
+    background-color: #3B3B3B;
+    border:none;
+    line-height: 48px;
+  }
+  button{
+    background-color: $devit-orange;
+    color: $devit-white;
+    cursor: pointer;
+  }
+}
+#red{
+  position: relative;
+  bottom: 10px;
+  margin: 2px;
+  font-size: 0.7rem;
+  color: red;
+}
+#underline{ text-decoration: underline; cursor: pointer;}
+
+
 body, html {
     font-family: "Roboto", sans-serif;
-    background: #F0F4EF;
+    background: $devit-gray;
     height: 100%;
-    color: #0D1821;
+    color: $devit-white;
     margin: 0;
   }
 
@@ -16,7 +86,6 @@ body, html {
   }
 
   li{
-    cursor: pointer;
     list-style: none;
   }
   ul{
@@ -25,11 +94,7 @@ body, html {
     align-content: space-between;
     flex-direction: row;
     padding: 0;
-
-    li{
-      padding: 30px;
-      
-    }
+    li{padding: 30px;}
   }
 
   .active {
@@ -44,15 +109,6 @@ body, html {
     flex-direction: row;
     flex-wrap: wrap;
     align-content: space-around;
-  }
-  button{
-    padding: 20px;
-    background-color: #E6AACE;
-    color: #344966;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 10px;
-    align-self: center;
   }
 
   .post{
