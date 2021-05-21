@@ -3,3 +3,7 @@
   height: calc(100% - #{$banner-height});
   margin-top: $banner-height;
 }
+
+.current-page {
+  padding: 1.5rem;
+}

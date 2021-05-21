@@ -18,6 +18,7 @@ $nav-button-padding: 1.25rem;
 
   &__nav-link {
     @include center;
+    @include transition;
     color: $devit-white;
     justify-content: flex-start;
     width: 100%;
@@ -46,6 +47,16 @@ $nav-button-padding: 1.25rem;
       opacity: 0;
       transform: scale(1, 1);
     }
+
+    .icon {
+      margin-right: 0.5rem;
+      color: $devit-white;
+    }
+
+    &.active .icon {
+      color: $devit-orange;
+    }
+
   }
 
   &__nav-link-label {

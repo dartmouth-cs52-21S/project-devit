@@ -19,12 +19,14 @@ const App = () => {
         <main className="main-section">
           <Sidebar />
           <Switch>
-            <Route exact path="/" component={Posts} />
-            <PrivateRoute path="/posts/new" component={NewPost} />
-            <Route exact path="/posts/:postID" component={SinglePost} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/profile" component={Profile} />
-            <Route component={ErrorNotFound} />
+            <div className="current-page">
+              <Route exact path="/" component={Posts} />
+              <PrivateRoute path="/posts/new" component={NewPost} />
+              <Route exact path="/posts/:postID" component={SinglePost} />
+              <Route path="/signin" component={SignIn} />
+              <Route path="/profile" component={Profile} />
+              <Route component={ErrorNotFound} />
+            </div>
           </Switch>
         </main>
       </div>
