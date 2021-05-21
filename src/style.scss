@@ -27,6 +27,7 @@ $devit-black: #111111;
     h2{
       margin-bottom: 10px;
       font-size: 1.2rem;
+      font-weight: 100;
     }
     img{
       width: 30%;
@@ -36,7 +37,11 @@ $devit-black: #111111;
       text-align: left;
       margin-left: 10%;
     }
-    li input {width:80%;}
+    li input {
+      width:80%;
+      color: $devit-white;
+      font-size: 20px;
+    }
     li button {
       justify-self: center;
       font-size: 1.4rem;
