@@ -1,7 +1,7 @@
 // Projects Reducer
-export const selectAllProjects = (state) => state.posts.all;
-export const selectCurrentProject = (state) => state.posts.current;
-export const selectError = (state) => state.posts.error;
+export const selectAllProjects = (state) => state.projects.all;
+export const selectCurrentProject = (state) => state.projects.current;
+export const selectError = (state) => state.projects.error;
 
 // Auth Reducer
 export const selectisAuthenticated = (state) => state.auth.isAuthenticated;

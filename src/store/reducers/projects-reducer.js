@@ -8,11 +8,11 @@ const initialState = {
 
 const ProjectsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_POSTS:
+    case ActionTypes.FETCH_PROJECTS:
       return { all: action.payload, current: state.current, error: state.error };
-    case ActionTypes.FETCH_POST:
+    case ActionTypes.FETCH_PROJECT:
       return { all: state.all, current: action.payload, error: state.error };
-    case ActionTypes.NEW_POST:
+    case ActionTypes.NEW_PROJECT:
       return { all: [...state.all, action.payload], current: action.payload, error: state.error };
     case ActionTypes.ERROR_SET:
       return { all: state.all, current: state.current, error: action.error };

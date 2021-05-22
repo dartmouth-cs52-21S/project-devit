@@ -5,7 +5,7 @@ import authReducer from './auth-reducer';
 import sidebarReducer from './sidebar-reducer';
 
 const rootReducer = combineReducers({
-  posts: projectsReducer,
+  projects: projectsReducer,
   auth: authReducer,
   sidebar: sidebarReducer,
 });
