@@ -25,14 +25,24 @@ const Project = () => {
 
   return (
     <div className="project">
-      <h1 className="project__title">{project.name}</h1>
+      <div id="project__title__container">
+        <div className="project__logo">
+          <img src={project.logo} alt="confused emoji" />
+        </div>
+        <h1 className="project__title">{project.name}</h1>
+      </div>
       <p>{project.bio}</p>
-      <p>{project.industry}</p>
-      <p>{project.tools}</p>
-      <p>{project.logo}</p>
+      {/* {project.industry.map((item) => {
+        return (
+          <div className="project__industry__tag"> {item}</div>
+        );
+      })} */}
+      <p className="project__industry__tag">{project.industry}</p>
+      {/* don't need to display project tools right */}
+      {/* <p>{project.tools}</p> */}
       <p>{project.neededTeam}</p>
 
-      <p className="project__id">{`Project ID: ${projectID}` }</p>
+      {/* <p className="project__id">{`Project ID: ${projectID}` }</p> */}
     </div>
   );
 };
