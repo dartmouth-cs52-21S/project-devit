@@ -6,9 +6,10 @@
 @import "utils/layout";
 
 // Components
+@import "components/logo";
 @import "components/button";
 @import "components/icon";
 @import "components/banner";
 @import "components/sidebar";
-@import "components/signIn";
-@import "components/signUp";
+@import "components/sign-in";
+@import "components/sign-up";
