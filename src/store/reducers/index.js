@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 
-import postsReducer from './posts-reducer';
+import projectsReducer from './projects-reducer';
 import authReducer from './auth-reducer';
+import sidebarReducer from './sidebar-reducer';
 
 const rootReducer = combineReducers({
-  posts: postsReducer,
+  projects: projectsReducer,
   auth: authReducer,
+  sidebar: sidebarReducer,
 });
 
 export default rootReducer;

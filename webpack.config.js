@@ -6,6 +6,8 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssPresets = require('postcss-preset-env');
+const CopyPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { loader: 'style-loader' };
 
@@ -81,13 +83,20 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv({
+      systemvars: true,
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: './src/images', to: 'images' }],
     }),
     new ESLintPlugin({}),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html',
+      favicon: './src/images/favicon.png',
     }),
   ],
 };

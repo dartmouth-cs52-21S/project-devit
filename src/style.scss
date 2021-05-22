@@ -137,90 +137,9 @@ body, html {
 
   }
 
-$devit-orange: #FF5D08;
-$devit-gray: #232323;
-$devit-white: #F4F4F4;
-$devit-black: #111111;
 
-#profile{
-  background-color: #6C6C6C;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
 
-  h2{
-    color: $devit-white
-  }
 
-  .left-side{
-    width: 40%;
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-  .current-projects{
-    height: 50%;
-  }
-  .activity-container{
-    height: 50%;
-  }
-  .activity{
-    background-color: $devit-gray;
-    color: $devit-white
-  }
-  .project{
-    background-color: $devit-gray;
-    width: 100%;
-    height: 30%;
-    border-left: 5px solid $devit-orange;
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    justify-content: space-evenly;
-    h3{
-      background-color: #999999;
-      color: $devit-white;
-    }
-    .descriptions{
-      width: 70%;
-      display: flex;
-      justify-content: space-around;
-    }
-  }
-  .right-side{
-    width: 40%;
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: $devit-white;
-
-    img.profile{
-      height: 200px;
-      width: auto;
-      border-radius: 100px;
-      border: 5px solid $devit-orange;
-    }
-    .badges-container{
-      width: 80%;
-      height: 20%;
-    }
-    .badges{
-      height: 40%;
-      padding: 10px;
-      border: 3px solid $devit-orange;
-      display: flex;
-      justify-content: start;
-      background-color: $devit-black;
-    }
-
-  }
-}
 
 #new-idea{
   background-color: #6C6C6C;

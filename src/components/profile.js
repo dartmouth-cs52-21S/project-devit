@@ -1,8 +1,21 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Profile = (props) => {
+import { useHistory } from 'react-router-dom';
+import { selectisAuthenticated, selectUser } from '../store/selectors';
+
+import { signOutUser } from '../store/actions/index';
+
+const Profile = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const user = useSelector(selectUser);
+  const authenticated = useSelector(selectisAuthenticated);
+  console.log('user', user);
+
   return (
     <div id="profile">
+      <h2>{user && authenticated ? `Welcome, ${user.author}` : 'Please check you are logged in properly.'}</h2>
       <div className="left-side">
         <div className="current-projects">
           <h2>Current Projects</h2>
@@ -58,6 +71,7 @@ const Profile = (props) => {
         </div>
 
       </div>
+      {authenticated ? <button type="button" onClick={() => dispatch(signOutUser(history))}>Sign Out</button> : <div />}
     </div>
   );
 };

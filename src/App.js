@@ -2,28 +2,41 @@ import React from 'react';
 import {
   BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
-import Posts from './components/posts';
-import NewPost from './components/new-post';
-import SinglePost from './components/single-post';
-// import Nav from './components/nav-bar';
-import SignIn from './components/sign-in';
-import PrivateRoute from './components/private-route';
+import SignIn from './components/signIn';
+import PrivateRoute from './components/privateRoute';
 import Profile from './components/profile';
 import NewIdea from './components/new-idea';
 
-const App = (props) => {
+import Banner from './components/Banner';
+import Sidebar from './components/Sidebar';
+import SignUp from './components/SignUp';
+import Projects from './components/Projects';
+import Project from './components/Project';
+import FindProject from './components/FindProject';
+import ErrorNotFound from './components/ErrorNotFound';
+import LandingPage from './components/LandingPage';
+
+const App = () => {
   return (
     <Router>
       <div>
-        <Switch>
-          <Route exact path="/" component={Posts} />
-          <PrivateRoute path="/posts/new" component={NewPost} />
-          <Route path="/posts/:postID" component={SinglePost} />
-          <Route path="/signin" component={SignIn} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/newidea" component={NewIdea} />
-          <Route render={() => (<div>post not found </div>)} />
-        </Switch>
+        <Banner />
+        <main className="main-section">
+          <Sidebar />
+          <div className="current-page">
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/profile" component={Profile} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/signin" component={SignIn} />
+              <Route exact path="/projects" component={Projects} />
+              <Route exact path="/projects/:projectID" component={Project} />
+              <Route exact path="/find-project" component={FindProject} />
+              <PrivateRoute path="/new-project" component={NewIdea} />
+              <Route component={ErrorNotFound} />
+            </Switch>
+          </div>
+        </main>
       </div>
     </Router>
   );

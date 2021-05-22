@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { createIdea } from '../actions/index';
+import { createProject } from '../store/actions/index';
 
 const NewIdea = (props) => {
   const [title, setTitle] = useState('');
@@ -18,8 +18,8 @@ const NewIdea = (props) => {
       tools,
     //   team,
     };
-    console.log(idea);
-    // props.createIdea(idea, props.history);
+    createProject(idea, props.history);
+    // props.createProject(idea, props.history);
   };
 
   const industries = industry.map((single) => {

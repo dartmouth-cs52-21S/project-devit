@@ -1,0 +1,43 @@
+.sign-up{
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $devit-black;
+
+  ul{
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  li {
+    list-style: none;
+  }
+  h2{
+    margin-right: 10px;
+  }
+  h3{
+    display: inline;
+  }
+  input[type="checkbox"]{
+    width: 20px;
+  }
+  input{
+    background-color: #3B3B3B;
+    border:none;
+    line-height: 36px;
+    width: 200px;
+    margin-right: 40px;
+    color: $devit-white;
+  }
+  textarea{
+    background-color: #3B3B3B;
+    width: 600px;
+  }
+  button{
+    padding: 10px;
+    font-size: 1.4rem;
+  }
+}

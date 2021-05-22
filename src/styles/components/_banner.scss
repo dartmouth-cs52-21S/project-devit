@@ -1,0 +1,40 @@
+.banner {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  background-color:  $devit-black;
+  height: $banner-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+
+  &__logo {
+    margin-bottom: 0;
+    display: block;
+    width: 130px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    svg {
+      display: flex;
+    }
+  }
+
+  &__button {
+    margin-right: 0.5rem;
+    height: 2rem;
+  }
+
+  &__user-actions {
+    @include center;
+  }
+}

@@ -1,0 +1,110 @@
+$sidebar-width: 250px;
+$sidebar-width-collapsed: 50px;
+$nav-button-padding: 1.25rem;
+
+.sidebar {
+  @include transition;
+  width: $sidebar-width;
+  height: calc(100vh - #{$banner-height});
+  background-color: $gray-900;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: auto;
+
+  &.collapsed {
+    width: calc(#{$sidebar-width-collapsed} + #{$sm});
+    
+    .sidebar__nav-link-label {
+      transform: scale(0, 1);
+      width: 100%;
+      opacity: 0;
+
+      &.collapse-label {
+        display: none;
+      }
+    }
+
+    .icon {
+      margin: 0;
+    }
+  }
+
+  &__nav-links {
+    @include center;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  &__nav-link {
+    @include center;
+    @include transition;
+    color: $devit-white;
+    justify-content: flex-start;
+    width: 100%;
+    padding: $nav-button-padding;
+    position: relative;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &.active::after {
+      opacity: 1;
+    }
+
+    &:hover, &.active {
+      background-color: $devit-black;
+    }
+
+    &::after {
+      @include transition;
+      top: 0;
+      left: 0;
+      width: 0.25rem;
+      height: 100%;
+      background-color: $devit-orange;
+      opacity: 0;
+      transform: scale(1, 1);
+    }
+
+    .icon {
+      margin-right: 0.5rem;
+      color: $devit-white;
+    }
+
+    &.active .icon {
+      color: $devit-orange;
+    }
+
+  }
+
+  &__nav-link-label {
+    transition: 
+      opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s,
+      scale 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+    white-space: nowrap;
+    transform-origin: left;
+    color: $devit-white;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+  }
+
+  &__expand-collapse {
+    @include center;
+    @include transition;
+    justify-content: space-between;
+    padding: $nav-button-padding;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:hover {
+      background-color: $devit-black;
+      cursor: pointer;
+    }
+  }
+}
