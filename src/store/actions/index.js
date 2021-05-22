@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { toast } from 'react-toastify';
 import ActionTypes from '../types';
 
 const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090/api';
@@ -10,9 +11,10 @@ export const toggleSidebar = () => ({
 
 export function fetchProjects() {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/posts`).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_POSTS, payload: response.data });
-    })
+    axios
+      .get(`${ROOT_URL}/projects`).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_PROJECTS, payload: response.data });
+      })
       .catch((error) => {
         dispatch({ type: ActionTypes.ERROR_SET, error });
       });
@@ -21,10 +23,11 @@ export function fetchProjects() {
 
 export function createProject(post, history) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      history.push('/');
-      dispatch({ type: ActionTypes.NEW_POST, payload: response.data });
-    })
+    axios
+      .post(`${ROOT_URL}/projects`, post, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+        history.push('/');
+        dispatch({ type: ActionTypes.NEW_PROJECT, payload: response.data });
+      })
       .catch((error) => {
         dispatch({ type: ActionTypes.ERROR_SET, error });
       });
@@ -33,9 +36,10 @@ export function createProject(post, history) {
 
 export function updateProject(post, id) {
   return (dispatch) => {
-    axios.put(`${ROOT_URL}/posts/${id}`, post, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
-    })
+    axios
+      .put(`${ROOT_URL}/projects/${id}`, post, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_PROJECT, payload: response.data });
+      })
       .catch((error) => {
         dispatch({ type: ActionTypes.ERROR_SET, error });
       });
@@ -44,92 +48,65 @@ export function updateProject(post, id) {
 
 export function fetchProject(id, callback) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
-      dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
-      callback(response.data);
-    })
+    axios
+      .get(`${ROOT_URL}/projects/${id}`).then((response) => {
+        dispatch({ type: ActionTypes.FETCH_PROJECT, payload: response.data });
+        callback(response.data);
+      })
       .catch((error) => {
         dispatch({ type: ActionTypes.ERROR_SET, error });
       });
   };
 }
 
-export function deleteProjectSingular(id, history) {
+export function deleteProject(id, history) {
   return (dispatch) => {
-    axios.delete(`${ROOT_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } }).then(() => {
-      history.push('/');
-    })
+    axios
+      .delete(`${ROOT_URL}/projects/${id}`, { headers: { authorization: localStorage.getItem('token') } }).then(() => {
+        history.push('/');
+      })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
-      });
-    axios.get(`${ROOT_URL}/posts`).then((response) => {
-      const newProjects = response.data.filter((item) => item.id !== id);
-      dispatch({ type: ActionTypes.FETCH_POSTS, payload: newProjects });
-    })
-      .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        console.error(error);
+        toast.dark('Sorry, there was an issue when trying to delete that project.');
       });
   };
 }
 
-export function deleteProjectAll(id) {
+export function signInUser(user, history) {
   return (dispatch) => {
-    axios.delete(`${ROOT_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } })
+    axios
+      .post(`${ROOT_URL}/signin`, user).then((response) => {
+        dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
+        localStorage.setItem('token', response.data.token);
+        history.push('/');
+      })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
-      });
-    axios.get(`${ROOT_URL}/posts`).then((response) => {
-      const newProjects = response.data.filter((item) => item.id !== id);
-      dispatch({ type: ActionTypes.FETCH_POSTS, payload: newProjects });
-    })
-      .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        const toastMessage = `Sign In Failed: ${error.response.data}`;
+        toast.dark(toastMessage);
       });
   };
 }
 
-// trigger to deauth if there is error
-// can also use in your error reducer if you have one to display an error message
-export function authError(error) {
-  return {
-    type: ActionTypes.AUTH_ERROR,
-    message: error,
-  };
-}
-
-export function signInUser({ email, password }, history) {
+export function signUpUser(user, history) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
-      history.push('/');
-      dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
-      localStorage.setItem('token', response.data.token);
-    })
+    axios
+      .post(`${ROOT_URL}/signup`, user).then((response) => {
+        dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
+        localStorage.setItem('token', response.data.token);
+        history.push('/');
+      })
       .catch((error) => {
-        dispatch(authError(`Sign In Failed: ${error.response.data}`));
+        console.error(error);
+        toast.dark('Sorry, there was an issue when trying to sign you up.');
       });
   };
 }
 
-export function signUpUser({ email, password, author }, history) {
-  console.log('sign up', { email, password, author });
-  return (dispatch) => {
-    axios.post(`${ROOT_URL}/signup`, { email, password, author }).then((response) => {
-      history.push('/');
-      dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
-      localStorage.setItem('token', response.data.token);
-    })
-      .catch((error) => {
-        dispatch(authError(`Sign Up Failed: ${error.response.data}`));
-      });
-  };
-}
-
-// deletes token from localstorage
-// and deauths
 export function signOutUser(history) {
   return (dispatch) => {
     localStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
+    toast.dark('✌️ You have signed out');
     history.push('/');
   };
 }
