@@ -21,10 +21,10 @@ export function fetchProjects() {
   };
 }
 
-export function createProject(post, history) {
+export function createProject(project, history) {
   return (dispatch) => {
     axios
-      .post(`${ROOT_URL}/projects`, post, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      .post(`${ROOT_URL}/projects`, project, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
         history.push('/');
         dispatch({ type: ActionTypes.NEW_PROJECT, payload: response.data });
       })
@@ -34,10 +34,10 @@ export function createProject(post, history) {
   };
 }
 
-export function updateProject(post, id) {
+export function updateProject(project, id) {
   return (dispatch) => {
     axios
-      .put(`${ROOT_URL}/projects/${id}`, post, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      .put(`${ROOT_URL}/projects/${id}`, project, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
         dispatch({ type: ActionTypes.FETCH_PROJECT, payload: response.data });
       })
       .catch((error) => {
