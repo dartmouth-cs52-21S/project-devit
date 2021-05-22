@@ -12,6 +12,7 @@ import FindProject from './components/FindProject';
 import NewProject from './components/NewProject';
 import PrivateRoute from './components/PrivateRoute';
 import ErrorNotFound from './components/ErrorNotFound';
+import LandingPage from './components/LandingPage';
 
 const App = () => {
   return (
@@ -22,7 +23,8 @@ const App = () => {
           <Sidebar />
           <div className="current-page">
             <Switch>
-              <Route exact path={['/', '/profile']} component={Profile} />
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/profile" component={Profile} />
               <Route path="/signup" component={SignUp} />
               <Route path="/signin" component={SignIn} />
               <Route exact path="/projects" component={Projects} />
