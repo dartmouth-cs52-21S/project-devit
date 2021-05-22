@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Banner from './components/Banner';
 import Sidebar from './components/Sidebar';
-import Profile from './components/Profile';
+import Profile from './components/profile';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Projects from './components/Projects';
