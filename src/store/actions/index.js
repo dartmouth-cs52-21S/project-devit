@@ -8,7 +8,7 @@ export const toggleSidebar = () => ({
   type: ActionTypes.TOGGLE_SIDEBAR,
 });
 
-export function fetchPosts() {
+export function fetchProjects() {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/posts`).then((response) => {
       dispatch({ type: ActionTypes.FETCH_POSTS, payload: response.data });
@@ -19,7 +19,7 @@ export function fetchPosts() {
   };
 }
 
-export function createPost(post, history) {
+export function createProject(post, history) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       history.push('/');
@@ -31,7 +31,7 @@ export function createPost(post, history) {
   };
 }
 
-export function updatePost(post, id) {
+export function updateProject(post, id) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/posts/${id}`, post, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
@@ -42,7 +42,7 @@ export function updatePost(post, id) {
   };
 }
 
-export function fetchPost(id, callback) {
+export function fetchProject(id, callback) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
       dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
@@ -54,7 +54,7 @@ export function fetchPost(id, callback) {
   };
 }
 
-export function deletePostSingular(id, history) {
+export function deleteProjectSingular(id, history) {
   return (dispatch) => {
     axios.delete(`${ROOT_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } }).then(() => {
       history.push('/');
@@ -63,8 +63,8 @@ export function deletePostSingular(id, history) {
         dispatch({ type: ActionTypes.ERROR_SET, error });
       });
     axios.get(`${ROOT_URL}/posts`).then((response) => {
-      const newPosts = response.data.filter((item) => item.id !== id);
-      dispatch({ type: ActionTypes.FETCH_POSTS, payload: newPosts });
+      const newProjects = response.data.filter((item) => item.id !== id);
+      dispatch({ type: ActionTypes.FETCH_POSTS, payload: newProjects });
     })
       .catch((error) => {
         dispatch({ type: ActionTypes.ERROR_SET, error });
@@ -72,15 +72,15 @@ export function deletePostSingular(id, history) {
   };
 }
 
-export function deletePostAll(id) {
+export function deleteProjectAll(id) {
   return (dispatch) => {
     axios.delete(`${ROOT_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } })
       .catch((error) => {
         dispatch({ type: ActionTypes.ERROR_SET, error });
       });
     axios.get(`${ROOT_URL}/posts`).then((response) => {
-      const newPosts = response.data.filter((item) => item.id !== id);
-      dispatch({ type: ActionTypes.FETCH_POSTS, payload: newPosts });
+      const newProjects = response.data.filter((item) => item.id !== id);
+      dispatch({ type: ActionTypes.FETCH_POSTS, payload: newProjects });
     })
       .catch((error) => {
         dispatch({ type: ActionTypes.ERROR_SET, error });
