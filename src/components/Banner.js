@@ -33,7 +33,7 @@ const UserActionButton = () => {
   const isAuthenticated = useSelector(selectisAuthenticated);
 
   const handleGoToSignIn = () => history.push('/signin');
-  const handleSignOutUser = () => dispatch(signOutUser());
+  const handleSignOutUser = () => dispatch(signOutUser(history));
 
   return (
     <>
