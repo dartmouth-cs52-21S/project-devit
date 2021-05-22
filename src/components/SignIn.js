@@ -13,7 +13,11 @@ const SignIn = () => {
 
   const readyToSubmit = email && password;
 
-  const handleSignInUser = () => dispatch(signInUser({ email, password }, history));
+  const handleSignInUser = (e) => {
+    e.preventDefault();
+    dispatch(signInUser({ email, password }, history));
+  };
+
   const handleUpdateEmail = (e) => setEmail(e.target.value);
   const handleUpdatePassword = (e) => setPassword(e.target.value);
 
