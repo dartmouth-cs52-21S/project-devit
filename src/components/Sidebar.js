@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FiChevronsLeft, FiPlusSquare } from 'react-icons/fi';
@@ -10,16 +10,21 @@ import { selectSidebarIsCollapsed } from '../store/selectors';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+
   const sidebarIsCollapsed = useSelector(selectSidebarIsCollapsed);
 
   const toggleCollapsed = () => dispatch(toggleSidebar());
+
+  // Don't show sidebar on the routes indicated below
+  if (['/signin', '/signup'].includes(pathname)) return null;
 
   return (
     <nav className={`sidebar ${sidebarIsCollapsed ? 'collapsed' : ''}`}>
       <div className="sidebar__nav-links">
         <SidebarLink route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" />
-        <SidebarLink route="/" label="Find a Project" leftIcon={<AiOutlineFileSearch />} iconClass="find-icon" />
-        <SidebarLink route="/posts/new" label="New Idea" leftIcon={<FiPlusSquare />} iconClass="new-idea-icon" />
+        <SidebarLink route="/find-project" label="Find a Project" leftIcon={<AiOutlineFileSearch />} iconClass="find-icon" />
+        <SidebarLink route="/new-project" label="New Project" leftIcon={<FiPlusSquare />} iconClass="new-idea-icon" />
       </div>
       <div role="button" tabIndex="0" className="sidebar__expand-collapse" onClick={toggleCollapsed}>
         <h4 className="sidebar__nav-link-label collapse-label">Collapse</h4>
@@ -31,7 +36,6 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-// TODO: add so you can get exact path
 const SidebarLink = ({
   route, label, leftIcon, iconClass,
 }) => {
