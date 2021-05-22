@@ -18,8 +18,8 @@ const Sidebar = () => {
     <nav className={`sidebar ${sidebarIsCollapsed ? 'collapsed' : ''}`}>
       <div className="sidebar__nav-links">
         <SidebarLink route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" />
-        <SidebarLink route="/find-a-project" label="Find a Project" leftIcon={<AiOutlineFileSearch />} iconClass="find-icon" />
-        <SidebarLink route="/new-idea" label="New Idea" leftIcon={<FiPlusSquare />} iconClass="new-idea-icon" />
+        <SidebarLink route="/" label="Find a Project" leftIcon={<AiOutlineFileSearch />} iconClass="find-icon" />
+        <SidebarLink route="/posts/new" label="New Idea" leftIcon={<FiPlusSquare />} iconClass="new-idea-icon" />
       </div>
       <div role="button" tabIndex="0" className="sidebar__expand-collapse" onClick={toggleCollapsed}>
         <h4 className="sidebar__nav-link-label collapse-label">Collapse</h4>
@@ -31,6 +31,7 @@ const Sidebar = () => {
 
 export default Sidebar;
 
+// TODO: add so you can get exact path
 const SidebarLink = ({
   route, label, leftIcon, iconClass,
 }) => {

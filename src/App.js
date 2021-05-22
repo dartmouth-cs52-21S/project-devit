@@ -5,12 +5,13 @@ import Posts from './components/posts';
 import NewPost from './components/new-post';
 import SinglePost from './components/single-post';
 import SignIn from './components/SignIn';
-import PrivateRoute from './components/private-route';
+// import PrivateRoute from './components/private-route';
 import Profile from './components/profile';
 import Banner from './components/Banner';
 import Sidebar from './components/Sidebar';
 import ErrorNotFound from './components/ErrorNotFound';
 import SignUp from './components/SignUp';
+import Project from './components/project';
 
 const App = () => {
   return (
@@ -22,8 +23,9 @@ const App = () => {
           <div className="current-page">
             <Switch>
               <Route exact path="/" component={Posts} />
-              <PrivateRoute path="/posts/new" component={NewPost} />
+              <Route path="/posts/new" component={NewPost} />
               <Route exact path="/posts/:postID" component={SinglePost} />
+              <Route exact path="/projects/:postID" component={Project} />
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
               <Route path="/profile" component={Profile} />
