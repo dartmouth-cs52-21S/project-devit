@@ -1,8 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Logo from './Logo';
 import { UserAvatar } from './UserAvatar';
+import { selectisAuthenticated } from '../store/selectors';
+import { signOutUser } from '../store/actions';
 
 const Banner = () => {
   const history = useHistory();
@@ -15,7 +18,7 @@ const Banner = () => {
         <Logo />
       </div>
       <div className="banner__user-actions">
-        <button type="button" className="banner__button button">Login</button>
+        <UserActionButton />
         <UserAvatar />
       </div>
     </header>
@@ -23,3 +26,22 @@ const Banner = () => {
 };
 
 export default Banner;
+
+const UserActionButton = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const isAuthenticated = useSelector(selectisAuthenticated);
+
+  const handleGoToSignIn = () => history.push('/signin');
+  const handleSignOutUser = () => dispatch(signOutUser());
+
+  return (
+    <>
+      {isAuthenticated ? (
+        <button type="button" className="banner__button button" onClick={handleSignOutUser}>Sign Out</button>
+      ) : (
+        <button type="button" className="banner__button button" onClick={handleGoToSignIn}>Sign In</button>
+      )}
+    </>
+  );
+};
