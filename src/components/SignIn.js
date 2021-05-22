@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-import { signinUser } from '../store/actions';
+import { signInUser } from '../store/actions';
 import Logo from './Logo';
 
 const SignIn = () => {
@@ -13,7 +13,7 @@ const SignIn = () => {
 
   const readyToSubmit = email && password;
 
-  const handleSignInUser = () => dispatch(signinUser({ email, password }, history));
+  const handleSignInUser = () => dispatch(signInUser({ email, password }, history));
   const handleUpdateEmail = (e) => setEmail(e.target.value);
   const handleUpdatePassword = (e) => setPassword(e.target.value);
 

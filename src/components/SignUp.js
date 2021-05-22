@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { signupUser } from '../store/actions';
+import { signUpUser } from '../store/actions';
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -60,7 +60,7 @@ const SignUp = () => {
         </li>
       </ul>
       <button type="button"
-        onClick={() => dispatch(signupUser(user, history))}
+        onClick={() => dispatch(signUpUser(user, history))}
       >Sign Up
       </button>
     </div>

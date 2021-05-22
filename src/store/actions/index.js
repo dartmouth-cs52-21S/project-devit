@@ -97,7 +97,7 @@ export function authError(error) {
   };
 }
 
-export function signinUser({ email, password }, history) {
+export function signInUser({ email, password }, history) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
       history.push('/');
@@ -110,7 +110,7 @@ export function signinUser({ email, password }, history) {
   };
 }
 
-export function signupUser({ email, password, author }, history) {
+export function signUpUser({ email, password, author }, history) {
   console.log('sign up', { email, password, author });
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, { email, password, author }).then((response) => {
@@ -126,7 +126,7 @@ export function signupUser({ email, password, author }, history) {
 
 // deletes token from localstorage
 // and deauths
-export function signoutUser(history) {
+export function signOutUser(history) {
   return (dispatch) => {
     localStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
