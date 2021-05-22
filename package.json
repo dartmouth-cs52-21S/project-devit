@@ -6,6 +6,7 @@
   "scripts": {
     "test": "eslint src",
     "start": "NODE_ENV=development webpack serve",
+    "windows-start": "SET NODE_ENV=development& webpack serve",
     "build": "npm run clean; NODE_ENV=production webpack --color; cp -f _redirects dist/",
     "clean": "rimraf dist"
   },
@@ -20,7 +21,7 @@
   },
   "homepage": "https://github.com/dartmouth-cs52-21S/starterpack-lilymaechling#readme",
   "devDependencies": {
-    "@babel/core": "^7.13.15",
+    "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.13.14",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
@@ -49,6 +50,8 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/node": "^7.14.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
