@@ -16,7 +16,8 @@ export function fetchProjects() {
         dispatch({ type: ActionTypes.FETCH_PROJECTS, payload: response.data });
       })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        console.error(error);
+        toast.dark('Sorry, there was an issue when getting projects.');
       });
   };
 }
@@ -25,11 +26,12 @@ export function createProject(project, history) {
   return (dispatch) => {
     axios
       .post(`${ROOT_URL}/projects`, project, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-        history.push('/');
         dispatch({ type: ActionTypes.NEW_PROJECT, payload: response.data });
+        history.push('/projects');
       })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        console.error(error);
+        toast.dark('Sorry, there was an issue when trying to create your project.');
       });
   };
 }
@@ -41,7 +43,8 @@ export function updateProject(project, id) {
         dispatch({ type: ActionTypes.FETCH_PROJECT, payload: response.data });
       })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        console.error(error);
+        toast.dark('Sorry, there was an issue when trying to update that project.');
       });
   };
 }
@@ -54,7 +57,8 @@ export function fetchProject(id, callback) {
         callback(response.data);
       })
       .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        console.error(error);
+        toast.dark('Sorry, there was an issue when trying find that project.');
       });
   };
 }
@@ -81,6 +85,7 @@ export function signInUser(user, history) {
         history.push('/');
       })
       .catch((error) => {
+        console.error(error);
         const toastMessage = `Sign In Failed: ${error.response.data}`;
         toast.dark(toastMessage);
       });
