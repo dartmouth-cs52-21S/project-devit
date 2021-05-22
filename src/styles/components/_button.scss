@@ -18,4 +18,12 @@ $button-height: 2.8rem;
   transition: all 250ms ease-in-out;
   background-color: $devit-orange;
   height: $button-height;
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &:disabled {
+    background-color: $gray-700;
+  }
 }

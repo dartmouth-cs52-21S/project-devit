@@ -1,10 +1,11 @@
 .main-section {
   display: flex;
-  height: calc(100% - #{$banner-height});
+  height: calc(100vh - #{$banner-height});
   margin-top: $banner-height;
 }
 
 .current-page {
   padding: 2rem 1.5rem; 
   flex: 1;
+  overflow-y: scroll;
 }

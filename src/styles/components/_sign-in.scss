@@ -1,0 +1,38 @@
+.sign-in {
+  @include center;
+
+  &__container {
+    @include center;
+    flex-direction: column;
+    background-color: $devit-black;
+    padding: 2rem;
+    width: 350px;
+  }
+
+  &__logo {
+    width: 8rem;
+    margin-bottom: 1rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__label {
+    margin-bottom: 1rem;
+  }
+
+  &__label-text {
+    margin: 0 0 0.25rem;
+  }
+}
+
+.required {
+  position: relative;
+  top: 2px;
+  margin-left: 2px;
+  font-size: 1.5rem;
+  color: $devit-orange;
+}
