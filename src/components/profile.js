@@ -1,22 +1,21 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { signoutUser } from '../store/actions/index';
+import { useSelector } from 'react-redux';
 
 import { selectisAuthenticated, selectUser } from '../store/selectors';
 
 const Profile = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(selectUser);
   const isAuthenticated = useSelector(selectisAuthenticated);
 
+  const handleGoToSignIn = () => history.push('/signin');
+
   return (
-    <div>
-      <h1>This is the Profile Page.</h1>
-      <h2>{user && isAuthenticated ? `Welcome, ${user.author}` : 'Please check you are logged in properly.'}</h2>
-      {isAuthenticated ? <button type="button" onClick={() => dispatch(signoutUser(history))}>Sign Out</button> : <div />}
+    <div className="profile">
+      <h1 className="profile__heading">Profile</h1>
+      <h2 className="profile__subheading">{user && isAuthenticated ? `Welcome, ${user.author}` : 'You must be signed in to view this page.'}</h2>
+      {!isAuthenticated && <button type="button" className="button" onClick={handleGoToSignIn}>Sign In</button>}
     </div>
   );
 };
