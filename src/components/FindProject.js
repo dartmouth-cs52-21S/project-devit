@@ -6,6 +6,8 @@ import ProjectModal from './ProjectModal';
 
 const FindProject = (props) => {
   const [displayModal, showModal] = useState(false);
+  const [name, setName] = useState('');
+
   useEffect(() => {
     props.fetchProjects();
   }, []);
@@ -14,30 +16,33 @@ const FindProject = (props) => {
     showModal(false);
   };
 
-  const presentModal = () => {
+  const presentModal = (event) => {
+    setName(event.target.name);
     showModal(true);
   };
 
   const postProjects = props.projects.map((project) => {
     return (
-    // <div key={project.id}>
-      <Link key={project.id} to={`/projects/${project.id}`}>
+      <div key={project.id} className="findPostsItem">
         <div> {project.name}</div>
-        <button type="button" onClick={presentModal}>show modal</button>
-        <ProjectModal show={displayModal} handleClose={hideModal}>
-          <p>{project.name}</p>
-        </ProjectModal>
-      </Link>
+        <Link key={project.id} to={`/projects/${project.id}`}>
+          <button type="button" className="button">project page</button>
+        </Link>
+        <button type="button" name={project.name} onClick={presentModal} className="button">show modal</button>
 
-    // </div>
+      </div>
 
     );
   });
 
   return (
-    <div>
+    <div id="findPostsOuter">
       {postProjects}
+      <ProjectModal show={displayModal} handleClose={hideModal}>
+        <p>{name}</p>
+      </ProjectModal>
     </div>
+
   );
 };
 
