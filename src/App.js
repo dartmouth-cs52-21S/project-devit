@@ -2,8 +2,8 @@ import React from 'react';
 import {
   BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
-import SignIn from './components/signIn';
-import PrivateRoute from './components/privateRoute';
+import SignIn from './components/SignIn';
+import PrivateRoute from './components/PrivateRoute';
 import Profile from './components/profile';
 import NewIdea from './components/new-idea';
 
