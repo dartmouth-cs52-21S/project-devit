@@ -7,7 +7,6 @@ import { fetchProject } from '../store/actions';
 //   project: reduxState.initialState.current,
 // });
 
-// const Project = ({ title }) => {
 const Project = () => {
   const [project, setProject] = useState({});
   //   const [editing, setEditing] = useState(false);
