@@ -1,0 +1,30 @@
+.project__logo {
+    width: 40px;
+    height: 40px;
+}
+
+.project__logo img {
+    width: 100%;
+    height: auto;
+}
+
+#project__title__container {
+    display: flex;
+    align-items: center;
+    justify-content: left
+}
+
+p {
+    margin: 0;
+}
+
+h1 {
+    margin: 10px;
+}
+
+.project__industry__tag {
+    background-color:rgb(76, 76, 76);
+    padding: 8px;
+    display:inline-block;
+    margin: 20px;
+}
