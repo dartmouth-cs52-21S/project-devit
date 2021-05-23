@@ -1,0 +1,70 @@
+#new-idea{
+  background-color: #6C6C6C;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  color: $devit-white;
+
+  input{
+    width: 35%;
+    height: 8%;
+    font-size: 40px;
+    background-color: $devit-gray;
+    
+  }
+  h1{
+    align-self: flex-start;
+  }
+  p{
+    background-color: $devit-gray;
+    border-radius: 20px;
+    margin-right: 20px;
+    padding: 20px;
+  }
+  .selector{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    button{
+      background-color: $devit-gray;
+      padding: 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50%;
+      color: $devit-white;
+      width: 60px;
+
+    }
+    button:hover{
+      cursor: pointer;
+    }
+  }
+  .selector-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-start;
+    margin-left: 30vw;
+  }
+  .buttons{
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+  button{
+    width: 200px;
+    height: 60px;
+    border: none;
+    color: $devit-white;
+  }
+  button.save{
+    background-color: $devit-gray;
+  }
+  button.review{
+    background-color: $devit-orange;
+  }
+}
