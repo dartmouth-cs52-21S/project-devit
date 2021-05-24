@@ -21,10 +21,11 @@
             }
         ],
         "no-console": 0,
+        "import/extensions": 0,
         "import/no-unresolved": [
             2,
             {
-                "caseSensitive": false
+                "caseSensitive": true
             }
         ],
         "no-unused-vars": [
