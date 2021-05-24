@@ -17,7 +17,7 @@ const Sidebar = () => {
   const toggleCollapsed = () => dispatch(toggleSidebar());
 
   // Don't show sidebar on the routes indicated below
-  if (['/signin', '/signup'].includes(pathname)) return null;
+  if (['/signin', '/signup', '/'].includes(pathname)) return null;
 
   return (
     <nav className={`sidebar ${sidebarIsCollapsed ? 'collapsed' : ''}`}>

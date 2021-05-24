@@ -1,12 +1,10 @@
 import React from 'react';
-import {
-  BrowserRouter as Router, Route, Switch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import SignIn from './components/SignIn';
 import PrivateRoute from './components/PrivateRoute';
-import Profile from './components/profile';
+import Profile from './components/Profile';
 import NewIdea from './components/new-idea';
-
 import Banner from './components/Banner';
 import Sidebar from './components/Sidebar';
 import SignUp from './components/SignUp';
