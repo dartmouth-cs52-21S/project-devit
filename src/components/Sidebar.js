@@ -36,9 +36,7 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-const SidebarLink = ({
-  route, label, leftIcon, iconClass,
-}) => {
+const SidebarLink = ({ route, label, leftIcon, iconClass }) => {
   return (
     <NavLink to={route} className="sidebar__nav-link">
       <span className={`icon ${iconClass} md`}>{leftIcon}</span>

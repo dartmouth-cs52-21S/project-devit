@@ -46,9 +46,7 @@ const FindProject = (props) => {
   );
 };
 
-const mapStateToProps = (reduxState) => ({
-  projects: reduxState.projects.all,
-});
+const mapStateToProps = (reduxState) => ({ projects: reduxState.projects.all });
 
 // export default FindProject;
 export default connect(mapStateToProps, { fetchProjects })(FindProject);
