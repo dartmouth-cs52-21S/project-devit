@@ -1,0 +1,38 @@
+.landing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+
+  &__cta-wrapper {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    flex: 1 0 65%;
+  }
+
+  &__heading {
+    font-size: 5rem;
+    line-height: 1;
+    margin: 0 0 0.5rem;
+  }
+
+  &__subheading {
+    font-size: 2rem;
+    color: $gray-400;
+    margin: 0 0 0.25rem;
+  }
+
+  &__image {
+    flex: 0 0 35%;
+    object-fit: contain;
+  }
+
+  &__logo-3d {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+  }
+}

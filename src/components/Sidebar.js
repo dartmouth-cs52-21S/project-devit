@@ -17,7 +17,7 @@ const Sidebar = () => {
   const toggleCollapsed = () => dispatch(toggleSidebar());
 
   // Don't show sidebar on the routes indicated below
-  if (['/signin', '/signup'].includes(pathname)) return null;
+  if (['/signin', '/signup', '/'].includes(pathname)) return null;
 
   return (
     <nav className={`sidebar ${sidebarIsCollapsed ? 'collapsed' : ''}`}>
@@ -36,9 +36,7 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-const SidebarLink = ({
-  route, label, leftIcon, iconClass,
-}) => {
+const SidebarLink = ({ route, label, leftIcon, iconClass }) => {
   return (
     <NavLink to={route} className="sidebar__nav-link">
       <span className={`icon ${iconClass} md`}>{leftIcon}</span>

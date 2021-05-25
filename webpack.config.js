@@ -6,6 +6,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssPresets = require('postcss-preset-env');
+const CopyPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { loader: 'style-loader' };
@@ -13,20 +14,15 @@ const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { 
 module.exports = {
   mode: env,
   output: { publicPath: '/' },
-  entry: ['./src'], // this is where our app lives
+  entry: ['@babel/polyfill', './src'], // this is where our app lives
   devtool: 'source-map', // this enables debugging with source in chrome devtools
-  devServer: {
-    hot: true,
-    historyApiFallback: true,
-  },
+  devServer: { hot: true, historyApiFallback: true },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [
-          { loader: 'babel-loader' },
-        ],
+        use: [{ loader: 'babel-loader' }],
       },
       {
         test: /\.s?css/,
@@ -89,9 +85,13 @@ module.exports = {
       filename: '[name].css',
     }),
     new ESLintPlugin({}),
+    new CopyPlugin({
+      patterns: [{ from: './src/images', to: 'images' }],
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html',
+      favicon: './src/images/favicon.png',
     }),
   ],
 };
