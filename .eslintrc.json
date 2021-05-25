@@ -24,7 +24,7 @@
         "import/no-unresolved": [
             2,
             {
-                "caseSensitive": true
+                "caseSensitive": false
             }
         ],
         "no-unused-vars": [
