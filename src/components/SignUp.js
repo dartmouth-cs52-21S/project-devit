@@ -16,8 +16,6 @@ const SignUp = () => {
     skills: [],
   });
 
-  console.log(user);
-
   const dispatch = useDispatch();
   const history = useHistory();
 
