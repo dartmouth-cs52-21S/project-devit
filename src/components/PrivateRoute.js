@@ -10,7 +10,7 @@ import { selectisAuthenticated } from '../store/selectors';
 const PrivateRoute = ({ component: Child, ...props }) => {
   const isAuthenticated = useSelector(selectisAuthenticated);
 
-  toast.dark('Sorry, you must be signed in to view that page');
+  if (!isAuthenticated) toast.dark('Sorry, you must be signed in to view that page');
 
   return (
     <Route

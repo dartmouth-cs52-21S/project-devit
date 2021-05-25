@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { signInUser } from '../store/actions';
-import Logo from './Logo';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -24,9 +23,9 @@ const SignIn = () => {
   return (
     <section className="sign-in">
       <div className="sign-in__container">
-        <div className="sign-in__logo">
-          <Logo />
-        </div>
+        <h2 className="sign-in__heading">
+          Sign In
+        </h2>
         <form className="sign-in__form" onSubmit={handleSignInUser}>
           <label className="sign-in__label" htmlFor="email">
             <p className="sign-in__label-text">Email<span className="required">*</span></p>

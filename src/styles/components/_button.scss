@@ -26,4 +26,22 @@ $button-height: 2.8rem;
   &:disabled {
     background-color: $gray-700;
   }
+
+  &.ghost {
+    @include transition;
+    background-color: transparent;
+    border: 2px solid $devit-orange;
+
+    &:hover {
+      background-color: $devit-orange;
+    }
+  }
+
+  & + .button {
+    margin-left: 1rem;
+  }
+}
+
+.button-group {
+  @include center;
 }

@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchProjects } from '../store/actions';
+
 import ProjectModal from './ProjectModal';
+import { fetchProjects } from '../store/actions';
+import { selectAllProjects } from '../store/selectors';
 
 const FindProject = (props) => {
   const [displayModal, showModal] = useState(false);
   const [name, setName] = useState('');
+  const projects = useSelector(selectAllProjects);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    props.fetchProjects();
+    dispatch(fetchProjects());
   }, []);
 
   const hideModal = () => {
@@ -21,19 +26,15 @@ const FindProject = (props) => {
     showModal(true);
   };
 
-  const postProjects = props.projects.map((project) => {
-    return (
-      <div key={project.id} className="findPostsItem">
-        <div> {project.name}</div>
-        <Link key={project.id} to={`/projects/${project.id}`}>
-          <button type="button" className="button">project page</button>
-        </Link>
-        <button type="button" name={project.name} onClick={presentModal} className="button">show modal</button>
-
-      </div>
-
-    );
-  });
+  const postProjects = projects.map((project) => (
+    <div key={project.id} className="findPostsItem">
+      <div> {project.name}</div>
+      <Link key={project.id} to={`/projects/${project.id}`}>
+        <button type="button" className="button">project page</button>
+      </Link>
+      <button type="button" name={project.name} onClick={presentModal} className="button">show modal</button>
+    </div>
+  ));
 
   return (
     <div id="findPostsOuter">
@@ -46,9 +47,4 @@ const FindProject = (props) => {
   );
 };
 
-const mapStateToProps = (reduxState) => ({
-  projects: reduxState.projects.all,
-});
-
-// export default FindProject;
-export default connect(mapStateToProps, { fetchProjects })(FindProject);
+export default FindProject;
