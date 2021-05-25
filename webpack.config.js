@@ -14,21 +14,15 @@ const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { 
 module.exports = {
   mode: env,
   output: { publicPath: '/' },
-  entry: ['./src'], // this is where our app lives
+  entry: ['@babel/polyfill', './src'], // this is where our app lives
   devtool: 'source-map', // this enables debugging with source in chrome devtools
-  devServer: {
-    open: true,
-    hot: true,
-    historyApiFallback: true,
-  },
+  devServer: { hot: true, historyApiFallback: true },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [
-          { loader: 'babel-loader' },
-        ],
+        use: [{ loader: 'babel-loader' }],
       },
       {
         test: /\.s?css/,
@@ -90,10 +84,10 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
+    new ESLintPlugin({}),
     new CopyPlugin({
       patterns: [{ from: './src/images', to: 'images' }],
     }),
-    new ESLintPlugin({}),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html',
