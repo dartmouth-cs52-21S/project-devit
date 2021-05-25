@@ -24,11 +24,11 @@ const App = () => {
           <div className="current-page">
             <Switch>
               <Route exact path="/" component={LandingPage} />
-              <Route path="/profile" component={Profile} />
+              <PrivateRoute path="/profile" component={Profile} />
               <Route path="/signup" component={SignUp} />
               <Route path="/signin" component={SignIn} />
               <Route exact path="/projects" component={Projects} />
-              <Route exact path="/projects/:projectID" component={Project} />
+              <PrivateRoute exact path="/projects/:projectID" component={Project} />
               <Route exact path="/find-project" component={FindProject} />
               <PrivateRoute path="/new-project" component={NewIdea} />
               <Route component={ErrorNotFound} />
