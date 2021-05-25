@@ -6,7 +6,7 @@ import ProjectModal from './ProjectModal';
 import { fetchProjects } from '../store/actions';
 import { selectAllProjects } from '../store/selectors';
 
-const FindProject = (props) => {
+const FindProject = () => {
   const [displayModal, showModal] = useState(false);
   const [name, setName] = useState('');
   const projects = useSelector(selectAllProjects);
