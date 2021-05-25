@@ -9,6 +9,7 @@ import { signOutUser } from '../store/actions';
 
 const Banner = () => {
   const history = useHistory();
+  const isAuthenticated = useSelector(selectisAuthenticated);
 
   const handleGoHome = () => history.push('/');
 
@@ -17,10 +18,12 @@ const Banner = () => {
       <div className="banner__logo" role="button" tabIndex="0" onClick={handleGoHome}>
         <Logo />
       </div>
-      <div className="banner__user-actions">
-        <UserActionButton />
-        <UserAvatar />
-      </div>
+      {isAuthenticated && (
+        <div className="banner__user-actions">
+          <UserActionButton />
+          <UserAvatar />
+        </div>
+      )}
     </header>
   );
 };
@@ -30,18 +33,10 @@ export default Banner;
 const UserActionButton = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const isAuthenticated = useSelector(selectisAuthenticated);
 
-  const handleGoToSignIn = () => history.push('/signin');
   const handleSignOutUser = () => dispatch(signOutUser(history));
 
   return (
-    <>
-      {isAuthenticated ? (
-        <button type="button" className="banner__button button" onClick={handleSignOutUser}>Sign Out</button>
-      ) : (
-        <button type="button" className="banner__button button" onClick={handleGoToSignIn}>Sign In</button>
-      )}
-    </>
+    <button type="button" className="banner__button button" onClick={handleSignOutUser}>Sign Out</button>
   );
 };
