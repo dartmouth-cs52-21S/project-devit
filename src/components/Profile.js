@@ -10,12 +10,13 @@ const Profile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(selectUser);
-  const authenticated = useSelector(selectisAuthenticated);
-  console.log('user', user);
+  const isAuthenticated = useSelector(selectisAuthenticated);
+
+  const handleSignOut = () => dispatch(signOutUser(history));
 
   return (
     <div id="profile">
-      <h2>{user && authenticated ? `Welcome, ${user.author}` : 'Please check you are logged in properly.'}</h2>
+      <h2>{user && isAuthenticated ? `Welcome, ${user.author}` : 'Please check you are logged in properly.'}</h2>
       <div className="left-side">
         <div className="current-projects">
           <h2>Current Projects</h2>
@@ -71,7 +72,7 @@ const Profile = () => {
         </div>
 
       </div>
-      {authenticated ? <button type="button" onClick={() => dispatch(signOutUser(history))}>Sign Out</button> : <div />}
+      {isAuthenticated ? <button type="button" onClick={handleSignOut}>Sign Out</button> : <div />}
     </div>
   );
 };
