@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { signUpUser } from '../store/actions';
+import { uploadImage } from '../store/s3';
 
 const SignUp = () => {
+  const [file, setFile] = useState();
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -33,7 +35,23 @@ const SignUp = () => {
     setUser({ ...user, roles: newRoles });
   };
 
-  const handleSignUpUser = () => dispatch(signUpUser(user, history));
+  const handleSignUpUser = () => {
+    if (file) {
+      uploadImage(file).then((url) => {
+        handleUpdateUserValue(url, 'picture');
+        dispatch(signUpUser(user, history));
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+  };
+
+  const onImageUpload = (event) => {
+    setFile(event.target.files[0]);
+    if (file) {
+      handleUpdateUserValue(window.URL.createObjectURL(file), 'picture');
+    }
+  };
 
   return (
     <div className="sign-up">
@@ -53,7 +71,7 @@ const SignUp = () => {
       </ul>
       <ul>
         <li><h2>Profile Pic: </h2></li>
-        <li><input type="text" value={user.picture} onChange={(e) => handleUpdateUserValue(e, 'picture')} /></li>
+        <li><input type="file" name="coverImage" onChange={(e) => onImageUpload(e)} /></li>
         <li><h2>Location: </h2></li>
         <li><input type="text" value={user.location} onChange={(e) => handleUpdateUserValue(e, 'location')} /></li>
       </ul>
