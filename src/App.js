@@ -16,30 +16,35 @@ import ErrorNotFound from './components/ErrorNotFound';
 import LandingPage from './components/LandingPage';
 import Modal from './components/Modal';
 import { selectModalContentExists } from './store/selectors';
+import DarkBG from './components/DarkBG';
 
 const App = () => {
   const modalContentExists = useSelector(selectModalContentExists);
 
   return (
     <Router>
-      {modalContentExists && <Modal />}
-      <Banner />
-      <main className="main-section">
-        <Sidebar />
-        <div className="current-page">
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <PrivateRoute path="/profile" component={Profile} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/signin" component={SignIn} />
-            <Route exact path="/projects" component={Projects} />
-            <PrivateRoute exact path="/projects/:projectID" component={Project} />
-            <Route exact path="/find-project" component={FindProject} />
-            <PrivateRoute path="/new-project" component={NewIdea} />
-            <Route component={ErrorNotFound} />
-          </Switch>
-        </div>
-      </main>
+      <div>
+        {modalContentExists && <Modal />}
+        <Banner />
+        <main className="main-section">
+          <Sidebar />
+          <div className="current-page">
+            <Switch>
+              <DarkBG>
+                <Route exact path="/" component={LandingPage} />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/signin" component={SignIn} />
+              </DarkBG>
+              <PrivateRoute path="/profile" component={Profile} />
+              <Route exact path="/projects" component={Projects} />
+              <PrivateRoute exact path="/projects/:projectID" component={Project} />
+              <Route exact path="/find-project" component={FindProject} />
+              <PrivateRoute path="/new-project" component={NewIdea} />
+              <Route component={ErrorNotFound} />
+            </Switch>
+          </div>
+        </main>
+      </div>
     </Router>
   );
 };
