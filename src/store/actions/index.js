@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import ActionTypes from '../types';
 
-const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090/api';
+export const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090/api';
 
 export const toggleSidebar = () => ({ type: ActionTypes.TOGGLE_SIDEBAR });
 

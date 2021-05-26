@@ -1,124 +1,11 @@
-/* eslint-disable comma-spacing */
-/* eslint-disable no-multi-spaces */
-
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+
 import { RiCheckboxFill, RiCheckboxBlankLine } from 'react-icons/ri';
-
 import { signUpUser } from '../store/actions';
+import { uploadImage } from '../store/s3';
 import DarkBG from './DarkBG';
-
-const SignUp = () => {
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    location: '',
-    picture: '',
-    bio: '',
-    roles: [],
-    skills: [],
-  });
-
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const accountFields = [
-    { fieldName: 'email'   , value: user.email   , label: 'Email'    },
-    { fieldName: 'password', value: user.password, label: 'Password' },
-  ];
-
-  const profileFields = [
-    { fieldName: 'firstName', value: user.firstName, label: 'First Name' },
-    { fieldName: 'lastName' , value: user.lastName , label: 'Last Name'  },
-    { fieldName: 'location' , value: user.location , label: 'Location'   },
-    { fieldName: 'picture'  , value: user.picture  , label: 'Image URL'  },
-  ];
-
-  const rolesFields = [
-    { fieldName: 'developer', label: 'Developer' },
-    { fieldName: 'designer' , label: 'Designer'  },
-    { fieldName: 'ideator'  , label: 'Ideator'   },
-  ];
-
-  const skillsFields = [
-    { fieldName: 'react'   , label: 'React'    },
-    { fieldName: 'htmlcss' , label: 'HTML/CSS' },
-  ];
-
-  const handleUpdateUserValue = (e) => setUser({ ...user, [e.target.id]: e.target.value });
-  const handleUpdateUserArray = (e, userObject, userArrayKey) => {
-    let newArray = [];
-    const existingRole = userObject[userArrayKey].includes(e.target.value);
-
-    if (existingRole) {
-      newArray = userObject[userArrayKey].filter((value) => value !== e.target.value);
-    } else {
-      newArray = [...userObject[userArrayKey], e.target.value];
-    }
-
-    setUser({ ...userObject, [userArrayKey]: newArray });
-  };
-
-  const handleSignUpUser = () => dispatch(signUpUser(user, history));
-
-  return (
-    <DarkBG>
-      <div className="sign-up form">
-        <div className="form__container">
-          <h2 className="form__heading">Sign Up</h2>
-          <form className="form__form">
-            <section className="form__section">
-              <h3 className="form__section-heading">Account</h3>
-              {accountFields.map(({ fieldName, value, label }) => (
-                <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
-              ))}
-              <h3 className="form__section-heading">Profile</h3>
-              {profileFields.map(({ fieldName, value, label }) => (
-                <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
-              ))}
-              <label className="form__label" htmlFor="bio">
-                <p className="form__label-text">Bio<span className="form__required">*</span></p>
-                <textarea className="form__textarea" rows="5" id="bio" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} />
-              </label>
-            </section>
-            <section className="form__section">
-              <h3 className="form__section-heading">Roles</h3>
-              <div className="form__checkbox-group">
-                {rolesFields.map(({ fieldName, label }) => (
-                  <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
-                ))}
-              </div>
-            </section>
-            <section className="form__section">
-              <h3 className="form__section-heading">Skills</h3>
-              <div className="form__checkbox-group">
-                {skillsFields.map(({ fieldName, label }) => (
-                  <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
-                ))}
-              </div>
-            </section>
-            <button type="button" className="button form__button" onClick={handleSignUpUser}>Sign Up</button>
-          </form>
-          <p>Already have an account? <Link to="/signin">Sign In</Link></p>
-        </div>
-      </div>
-    </DarkBG>
-  );
-};
-
-export default SignUp;
-
-const InputWithLabel = ({ handleUpdateUserValue, fieldName, label, value }) => {
-  return (
-    <label className="form__label" htmlFor={fieldName}>
-      <p className="form__label-text">{label}<span className="form__required">*</span></p>
-      <input className="form__input-field" type="text" id={fieldName} value={value} onChange={(e) => handleUpdateUserValue(e, fieldName)} />
-    </label>
-  );
-};
 
 const SelectField = ({
   user, userArrayKey, handleUpdateUserArray, fieldName, label,
@@ -142,3 +29,133 @@ const SelectField = ({
     </label>
   );
 };
+
+const SignUp = () => {
+  const [file, setFile] = useState();
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    location: '',
+    picture: '',
+    bio: '',
+    roles: [],
+    skills: [],
+  });
+
+  console.log(user);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleSignUpUser = () => {
+    if (file) {
+      uploadImage(file).then((url) => {
+        dispatch(signUpUser({ ...user, picture: url }, history));
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+  };
+
+  const handleUpdateUserArray = (e, userObject, userArrayKey) => {
+    let newArray = [];
+    const existingRole = userObject[userArrayKey].includes(e.target.value);
+
+    if (existingRole) {
+      newArray = userObject[userArrayKey].filter((value) => value !== e.target.value);
+    } else {
+      newArray = [...userObject[userArrayKey], e.target.value];
+    }
+
+    setUser({ ...userObject, [userArrayKey]: newArray });
+  };
+
+  const onImageUpload = (event) => {
+    setFile(event.target.files[0]);
+    if (file) {
+      setUser({ picture: window.URL.createObjectURL(file) });
+    }
+  };
+
+  const rolesFields = [
+    { fieldName: 'developer', label: 'Developer' },
+    { fieldName: 'designer', label: 'Designer' },
+    { fieldName: 'ideator', label: 'Ideator' },
+  ];
+
+  const skillsFields = [
+    { fieldName: 'react', label: 'React' },
+    { fieldName: 'htmlcss', label: 'HTML/CSS' },
+  ];
+
+  return (
+    <DarkBG>
+      <div className="sign-up">
+        <h1>Account Info</h1>
+        <ul>
+          <li><h2>Email:<span id="red">*</span> </h2></li>
+          <li><input type="text" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} /></li>
+          <li><h2>Password:<span id="red">*</span> </h2></li>
+          <li><input type="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} /></li>
+        </ul>
+        <h1>User Info</h1>
+        <ul>
+          <li><h2>First Name:<span id="red">*</span> </h2></li>
+          <li><input type="text" value={user.firstName} onChange={(e) => setUser({ ...user, firstName: e.target.value })} /></li>
+          <li><h2>Last Name:<span id="red">*</span> </h2></li>
+          <li><input type="text" value={user.lastName} onChange={(e) => setUser({ ...user, lastName: e.target.value })} /></li>
+        </ul>
+        <ul>
+          <li><h2>Profile Pic: </h2></li>
+          <li><input type="file" name="coverImage" onChange={(e) => onImageUpload(e)} /></li>
+
+          <li><h2>Location: </h2></li>
+          <li><input type="text" value={user.location} onChange={(e) => setUser({ ...user, location: e.target.value })} /></li>
+        </ul>
+        <ul>
+          <li><h2>Bio: </h2></li>
+          <li><textarea type="text" value={user.bio} onChange={(e) => setUser({ ...user, bio: e.target.value })} /></li>
+        </ul>
+        {/* <ul>
+          <li><h2>Roles: </h2></li>
+          <li>
+            <button type="button" onClick={() => setUser({ ...user, roles: user.roles.add('dev') })}>dev</button>
+            <button type="button" onClick={() => setUser({ ...user, roles: [...user.roles, 'designer'] })}>designer</button>
+            <button type="button" onClick={() => setUser({ ...user, roles: [...user.roles, 'ideator'] })}>ideator</button>
+          </li>
+        </ul>
+        <ul>
+          <li><h2>Skills: </h2></li>
+          <li>
+            <button type="button" onClick={() => setUser({ ...user, skills: [...user.skills, 'react'] })}>React</button>
+            <button type="button" onClick={() => setUser({ ...user, skills: [...user.skills, 'html/css'] })}>html/css</button>
+          </li>
+        </ul> */}
+        <section className="form__section">
+          <h3 className="form__section-heading">Roles</h3>
+          <div className="form__checkbox-group">
+            {rolesFields.map(({ fieldName, label }) => (
+              <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
+            ))}
+          </div>
+        </section>
+        <section className="form__section">
+          <h3 className="form__section-heading">Skills</h3>
+          <div className="form__checkbox-group">
+            {skillsFields.map(({ fieldName, label }) => (
+              <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
+            ))}
+          </div>
+        </section>
+        <button type="button"
+          onClick={() => handleSignUpUser}
+        >Sign Up
+        </button>
+      </div>
+    </DarkBG>
+  );
+};
+
+export default SignUp;
