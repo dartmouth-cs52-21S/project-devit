@@ -7,6 +7,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { RiCheckboxFill, RiCheckboxBlankLine } from 'react-icons/ri';
 
 import { signUpUser } from '../store/actions';
+import DarkBG from './DarkBG';
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -64,45 +65,47 @@ const SignUp = () => {
   const handleSignUpUser = () => dispatch(signUpUser(user, history));
 
   return (
-    <div className="sign-up form">
-      <div className="form__container">
-        <h2 className="form__heading">Sign Up</h2>
-        <form className="form__form">
-          <section className="form__section">
-            <h3 className="form__section-heading">Account</h3>
-            {accountFields.map(({ fieldName, value, label }) => (
-              <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
-            ))}
-            <h3 className="form__section-heading">Profile</h3>
-            {profileFields.map(({ fieldName, value, label }) => (
-              <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
-            ))}
-            <label className="form__label" htmlFor="bio">
-              <p className="form__label-text">Bio<span className="form__required">*</span></p>
-              <textarea className="form__textarea" rows="5" id="bio" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} />
-            </label>
-          </section>
-          <section className="form__section">
-            <h3 className="form__section-heading">Roles</h3>
-            <div className="form__checkbox-group">
-              {rolesFields.map(({ fieldName, label }) => (
-                <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
+    <DarkBG>
+      <div className="sign-up form">
+        <div className="form__container">
+          <h2 className="form__heading">Sign Up</h2>
+          <form className="form__form">
+            <section className="form__section">
+              <h3 className="form__section-heading">Account</h3>
+              {accountFields.map(({ fieldName, value, label }) => (
+                <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
               ))}
-            </div>
-          </section>
-          <section className="form__section">
-            <h3 className="form__section-heading">Skills</h3>
-            <div className="form__checkbox-group">
-              {skillsFields.map(({ fieldName, label }) => (
-                <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
+              <h3 className="form__section-heading">Profile</h3>
+              {profileFields.map(({ fieldName, value, label }) => (
+                <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
               ))}
-            </div>
-          </section>
-          <button type="button" className="button form__button" onClick={handleSignUpUser}>Sign Up</button>
-        </form>
-        <p>Already have an account? <Link to="/signin">Sign In</Link></p>
+              <label className="form__label" htmlFor="bio">
+                <p className="form__label-text">Bio<span className="form__required">*</span></p>
+                <textarea className="form__textarea" rows="5" id="bio" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} />
+              </label>
+            </section>
+            <section className="form__section">
+              <h3 className="form__section-heading">Roles</h3>
+              <div className="form__checkbox-group">
+                {rolesFields.map(({ fieldName, label }) => (
+                  <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
+                ))}
+              </div>
+            </section>
+            <section className="form__section">
+              <h3 className="form__section-heading">Skills</h3>
+              <div className="form__checkbox-group">
+                {skillsFields.map(({ fieldName, label }) => (
+                  <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
+                ))}
+              </div>
+            </section>
+            <button type="button" className="button form__button" onClick={handleSignUpUser}>Sign Up</button>
+          </form>
+          <p>Already have an account? <Link to="/signin">Sign In</Link></p>
+        </div>
       </div>
-    </div>
+    </DarkBG>
   );
 };
 
