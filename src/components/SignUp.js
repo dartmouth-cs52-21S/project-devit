@@ -38,8 +38,7 @@ const SignUp = () => {
   const handleSignUpUser = () => {
     if (file) {
       uploadImage(file).then((url) => {
-        handleUpdateUserValue(url, 'picture');
-        dispatch(signUpUser(user, history));
+        dispatch(signUpUser({ ...user, picture: url }, history));
       }).catch((error) => {
         console.error(error);
       });
