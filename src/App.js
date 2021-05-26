@@ -13,6 +13,7 @@ import Project from './components/Project';
 import FindProject from './components/FindProject';
 import ErrorNotFound from './components/ErrorNotFound';
 import LandingPage from './components/LandingPage';
+import DarkBG from './components/DarkBG';
 
 const App = () => {
   return (
@@ -23,10 +24,12 @@ const App = () => {
           <Sidebar />
           <div className="current-page">
             <Switch>
-              <Route exact path="/" component={LandingPage} />
+              <DarkBG>
+                <Route exact path="/" component={LandingPage} />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/signin" component={SignIn} />
+              </DarkBG>
               <PrivateRoute path="/profile" component={Profile} />
-              <Route path="/signup" component={SignUp} />
-              <Route path="/signin" component={SignIn} />
               <Route exact path="/projects" component={Projects} />
               <PrivateRoute exact path="/projects/:projectID" component={Project} />
               <Route exact path="/find-project" component={FindProject} />
