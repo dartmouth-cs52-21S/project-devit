@@ -3,8 +3,7 @@
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
-import { RiCheckboxFill, RiCheckboxBlankLine } from 'react-icons/ri';
+import { useHistory } from 'react-router-dom';
 
 import { signUpUser } from '../store/actions';
 import { uploadImage } from '../store/s3';
@@ -26,29 +25,8 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const accountFields = [
-    { fieldName: 'email'   , value: user.email   , label: 'Email'    },
-    { fieldName: 'password', value: user.password, label: 'Password' },
-  ];
-
-  const profileFields = [
-    { fieldName: 'firstName', value: user.firstName, label: 'First Name' },
-    { fieldName: 'lastName' , value: user.lastName , label: 'Last Name'  },
-    { fieldName: 'location' , value: user.location , label: 'Location'   },
-  ];
-
-  const rolesFields = [
-    { fieldName: 'developer', label: 'Developer' },
-    { fieldName: 'designer' , label: 'Designer'  },
-    { fieldName: 'ideator'  , label: 'Ideator'   },
-  ];
-
-  const skillsFields = [
-    { fieldName: 'react'   , label: 'React'    },
-    { fieldName: 'htmlcss' , label: 'HTML/CSS' },
-  ];
-
   const handleUpdateUserValue = (e) => setUser({ ...user, [e.target.id]: e.target.value });
+
   const handleUpdateUserArray = (e, userObject, userArrayKey) => {
     let newArray = [];
     const existingRole = userObject[userArrayKey].includes(e.target.value);
@@ -80,79 +58,79 @@ const SignUp = () => {
   };
 
   return (
-    <div className="sign-up form">
-      <div className="form__container">
-        <h2 className="form__heading">Sign Up</h2>
-        <form className="form__form">
-          <section className="form__section">
-            <h3 className="form__section-heading">Account</h3>
-            {accountFields.map(({ fieldName, value, label }) => (
-              <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
-            ))}
-            <h3 className="form__section-heading">Profile</h3>
-            {profileFields.map(({ fieldName, value, label }) => (
-              <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
-            ))}
-            <input type="file" name="coverImage" onChange={(e) => onImageUpload(e)} />
-            <label className="form__label" htmlFor="bio">
-              <p className="form__label-text">Bio<span className="form__required">*</span></p>
-              <textarea className="form__textarea" rows="5" id="bio" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} />
-            </label>
-          </section>
-          <section className="form__section">
-            <h3 className="form__section-heading">Roles</h3>
-            <div className="form__checkbox-group">
-              {rolesFields.map(({ fieldName, label }) => (
-                <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
-              ))}
-            </div>
-          </section>
-          <section className="form__section">
-            <h3 className="form__section-heading">Skills</h3>
-            <div className="form__checkbox-group">
-              {skillsFields.map(({ fieldName, label }) => (
-                <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
-              ))}
-            </div>
-          </section>
-          <button type="button" className="button form__button" onClick={handleSignUpUser}>Sign Up</button>
-        </form>
-        <p>Already have an account? <Link to="/signin">Sign In</Link></p>
-      </div>
+    <div className="sign-up">
+      <h1>Account Info</h1>
+      <ul>
+        <li><h2>Email:<span id="red">*</span> </h2></li>
+        <li><input type="text" value={user.email} onChange={(e) => handleUpdateUserValue(e, 'email')} /></li>
+        <li><h2>Password:<span id="red">*</span> </h2></li>
+        <li><input type="password" value={user.password} onChange={(e) => handleUpdateUserValue(e, 'password')} /></li>
+      </ul>
+      <h1>User Info</h1>
+      <ul>
+        <li><h2>First Name:<span id="red">*</span> </h2></li>
+        <li><input type="text" value={user.firstName} onChange={(e) => handleUpdateUserValue(e, 'firstName')} /></li>
+        <li><h2>Last Name:<span id="red">*</span> </h2></li>
+        <li><input type="text" value={user.lastName} onChange={(e) => handleUpdateUserValue(e, 'lastName')} /></li>
+      </ul>
+      <ul>
+        <li><h2>Profile Pic: </h2></li>
+        <li><input type="file" name="coverImage" onChange={(e) => onImageUpload(e)} /></li>
+        <li><h2>Location: </h2></li>
+        <li><input type="text" value={user.location} onChange={(e) => handleUpdateUserValue(e, 'location')} /></li>
+      </ul>
+      <ul>
+        <li><h2>Bio: </h2></li>
+        <li><textarea type="text" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} /></li>
+      </ul>
+      <ul>
+        <li><h2>Roles: </h2></li>
+        <li>
+          <h3>Developer</h3>
+          <input
+            type="checkbox"
+            value="developer"
+            checked={user.roles.includes('developer')}
+            onChange={handleUpdateUserArray}
+          />
+          <h3>Designer</h3>
+          <input
+            type="checkbox"
+            value="designer"
+            checked={user.roles.includes('designer')}
+            onChange={handleUpdateUserArray}
+          />
+          <h3>Ideator</h3>
+          <input
+            type="checkbox"
+            value="ideator"
+            checked={user.roles.includes('ideator')}
+            onChange={handleUpdateUserArray}
+          />
+        </li>
+      </ul>
+      <ul>
+        <li><h2>Skills: </h2></li>
+        <li>
+          <h3>React</h3>
+          <input
+            type="checkbox"
+            value="react"
+            checked={user.skills.includes('react')}
+            onChange={(e) => setUser({ ...user, skills: [...new Set([...user.skills, e.target.value])] })}
+          />
+          <h3>HTML/CSS</h3>
+          <input
+            type="checkbox"
+            value="html/css"
+            checked={user.skills.includes('html/css')}
+            onChange={(e) => setUser({ ...user, skills: [...new Set([...user.skills, e.target.value])] })}
+          />
+        </li>
+      </ul>
+      <button type="button" className="button" onClick={handleSignUpUser}>Sign Up</button>
     </div>
   );
 };
 
 export default SignUp;
-
-const InputWithLabel = ({ handleUpdateUserValue, fieldName, label, value }) => {
-  return (
-    <label className="form__label" htmlFor={fieldName}>
-      <p className="form__label-text">{label}<span className="form__required">*</span></p>
-      <input className="form__input-field" type="text" id={fieldName} value={value} onChange={(e) => handleUpdateUserValue(e, fieldName)} />
-    </label>
-  );
-};
-
-const SelectField = ({
-  user, userArrayKey, handleUpdateUserArray, fieldName, label,
-}) => {
-  const checked = user[userArrayKey].includes(fieldName);
-
-  return (
-    <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
-      <span className="checkbox-icon">
-        {checked ? <RiCheckboxFill /> : <RiCheckboxBlankLine />}
-      </span>
-      <p className="form__label-text checkbox-label-text">{label}</p>
-      <input
-        id={fieldName}
-        className="form__checkbox"
-        type="checkbox"
-        value={fieldName}
-        checked={checked}
-        onChange={(e) => handleUpdateUserArray(e, user, userArrayKey)}
-      />
-    </label>
-  );
-};
