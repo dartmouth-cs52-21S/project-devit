@@ -23,9 +23,7 @@ const SignIn = () => {
   return (
     <section className="sign-in">
       <div className="sign-in__container">
-        <h2 className="sign-in__heading">
-          Sign In
-        </h2>
+        <h2 className="sign-in__heading">Sign In</h2>
         <form className="sign-in__form" onSubmit={handleSignInUser}>
           <label className="sign-in__label" htmlFor="email">
             <p className="sign-in__label-text">Email<span className="required">*</span></p>
