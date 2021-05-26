@@ -4,6 +4,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
+import { RiCheckboxFill, RiCheckboxBlankLine } from 'react-icons/ri';
+
 import { signUpUser } from '../store/actions';
 
 const SignUp = () => {
@@ -29,7 +31,6 @@ const SignUp = () => {
     { fieldName: 'lastName' , value: user.lastName , label: 'Last Name'  },
     { fieldName: 'location' , value: user.location , label: 'Location'   },
     { fieldName: 'picture'  , value: user.picture  , label: 'Image URL'  },
-    { fieldName: 'bio'      , value: user.bio      , label: 'Bio'        },
   ];
 
   const rolesFields = [
@@ -60,29 +61,37 @@ const SignUp = () => {
   const handleSignUpUser = () => dispatch(signUpUser(user, history));
 
   return (
-    <div className="sign-up">
-      <div className="sign-up__container">
-        <h2 className="sign-up__heading">Account Info</h2>
-        <form className="sign-up__form form">
-          <section className="sign-up__form-section">
-            <h3 className="sign-up__section-heading">Your Profile</h3>
+    <div className="sign-up form">
+      <div className="form__container">
+        <h2 className="form__heading">Sign Up</h2>
+        <form className="form__form">
+          <section className="form__section">
+            <h3 className="form__section-heading">Your Profile</h3>
             {valueFields.map(({ fieldName, value, label }) => (
               <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
             ))}
+            <label className="form__label" htmlFor="bio">
+              <p className="form__label-text">Bio<span className="form__required">*</span></p>
+              <textarea className="form__textarea" rows="5" id="bio" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} />
+            </label>
           </section>
-          <section className="sign-up__form-section">
-            <h3 className="sign-up__section-heading">Roles</h3>
-            {rolesFields.map(({ fieldName, label }) => (
-              <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
-            ))}
+          <section className="form__section">
+            <h3 className="form__section-heading">Roles</h3>
+            <div className="form__checkbox-group">
+              {rolesFields.map(({ fieldName, label }) => (
+                <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
+              ))}
+            </div>
           </section>
-          <section className="sign-up__form-section">
-            <h3 className="sign-up__section-heading">Skills</h3>
-            {skillsFields.map(({ fieldName, label }) => (
-              <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
-            ))}
+          <section className="form__section">
+            <h3 className="form__section-heading">Skills</h3>
+            <div className="form__checkbox-group">
+              {skillsFields.map(({ fieldName, label }) => (
+                <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
+              ))}
+            </div>
           </section>
-          <button type="button" className="button full-width" onClick={handleSignUpUser}>Sign Up</button>
+          <button type="button" className="button form__button" onClick={handleSignUpUser}>Sign Up</button>
         </form>
         <p>Already have an account? <Link to="/signin">Sign In</Link></p>
       </div>
@@ -94,9 +103,9 @@ export default SignUp;
 
 const InputWithLabel = ({ handleUpdateUserValue, fieldName, label, value }) => {
   return (
-    <label className="sign-in__label" htmlFor={fieldName}>
-      <p className="sign-in__label-text">{label}<span className="required">*</span></p>
-      <input className="sign-in__input-field" type="text" id={fieldName} value={value} onChange={(e) => handleUpdateUserValue(e, fieldName)} />
+    <label className="form__label" htmlFor={fieldName}>
+      <p className="form__label-text">{label}<span className="form__required">*</span></p>
+      <input className="form__input-field" type="text" id={fieldName} value={value} onChange={(e) => handleUpdateUserValue(e, fieldName)} />
     </label>
   );
 };
@@ -104,15 +113,20 @@ const InputWithLabel = ({ handleUpdateUserValue, fieldName, label, value }) => {
 const SelectField = ({
   user, userArrayKey, handleUpdateUserArray, fieldName, label,
 }) => {
+  const checked = user[userArrayKey].includes(fieldName);
+
   return (
-    <label className="sign-in__label" htmlFor={fieldName}>
-      <p className="sign-in__label-text">{label}</p>
+    <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
+      <span className="checkbox-icon">
+        {checked ? <RiCheckboxFill /> : <RiCheckboxBlankLine />}
+      </span>
+      <p className="form__label-text checkbox-label-text">{label}</p>
       <input
         id={fieldName}
-        className="sign-in__checkbox"
+        className="form__checkbox"
         type="checkbox"
         value={fieldName}
-        checked={user[userArrayKey].includes(fieldName)}
+        checked={checked}
         onChange={(e) => handleUpdateUserArray(e, user, userArrayKey)}
       />
     </label>
