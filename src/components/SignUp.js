@@ -1,6 +1,9 @@
+/* eslint-disable comma-spacing */
+/* eslint-disable no-multi-spaces */
+
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { signUpUser } from '../store/actions';
 
 const SignUp = () => {
@@ -19,96 +22,99 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleUpdateUserValue = (e, key) => setUser({ ...user, [key]: e.target.value });
-  const handleUpdateUserArray = (e) => {
-    let newRoles = [];
-    const existingRole = user.roles.includes(e.target.value);
+  const valueFields = [
+    { fieldName: 'email'    , value: user.email    , label: 'Email'      },
+    { fieldName: 'password' , value: user.password , label: 'Password'   },
+    { fieldName: 'firstName', value: user.firstName, label: 'First Name' },
+    { fieldName: 'lastName' , value: user.lastName , label: 'Last Name'  },
+    { fieldName: 'location' , value: user.location , label: 'Location'   },
+    { fieldName: 'picture'  , value: user.picture  , label: 'Image URL'  },
+    { fieldName: 'bio'      , value: user.bio      , label: 'Bio'        },
+  ];
+
+  const rolesFields = [
+    { fieldName: 'developer', label: 'Developer' },
+    { fieldName: 'designer' , label: 'Designer'  },
+    { fieldName: 'ideator'  , label: 'Ideator'   },
+  ];
+
+  const skillsFields = [
+    { fieldName: 'react'   , label: 'React'    },
+    { fieldName: 'htmlcss' , label: 'HTML/CSS' },
+  ];
+
+  const handleUpdateUserValue = (e) => setUser({ ...user, [e.target.id]: e.target.value });
+  const handleUpdateUserArray = (e, userObject, userArrayKey) => {
+    let newArray = [];
+    const existingRole = userObject[userArrayKey].includes(e.target.value);
 
     if (existingRole) {
-      newRoles = user.roles.filter((role) => role !== e.target.value);
+      newArray = userObject[userArrayKey].filter((value) => value !== e.target.value);
     } else {
-      newRoles = [...user.roles, e.target.value];
+      newArray = [...userObject[userArrayKey], e.target.value];
     }
 
-    setUser({ ...user, roles: newRoles });
+    setUser({ ...userObject, [userArrayKey]: newArray });
   };
 
   const handleSignUpUser = () => dispatch(signUpUser(user, history));
 
   return (
     <div className="sign-up">
-      <h1>Account Info</h1>
-      <ul>
-        <li><h2>Email:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.email} onChange={(e) => handleUpdateUserValue(e, 'email')} /></li>
-        <li><h2>Password:<span id="red">*</span> </h2></li>
-        <li><input type="password" value={user.password} onChange={(e) => handleUpdateUserValue(e, 'password')} /></li>
-      </ul>
-      <h1>User Info</h1>
-      <ul>
-        <li><h2>First Name:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.firstName} onChange={(e) => handleUpdateUserValue(e, 'firstName')} /></li>
-        <li><h2>Last Name:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.lastName} onChange={(e) => handleUpdateUserValue(e, 'lastName')} /></li>
-      </ul>
-      <ul>
-        <li><h2>Profile Pic: </h2></li>
-        <li><input type="text" value={user.picture} onChange={(e) => handleUpdateUserValue(e, 'picture')} /></li>
-        <li><h2>Location: </h2></li>
-        <li><input type="text" value={user.location} onChange={(e) => handleUpdateUserValue(e, 'location')} /></li>
-      </ul>
-      <ul>
-        <li><h2>Bio: </h2></li>
-        <li><textarea type="text" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} /></li>
-      </ul>
-      <ul>
-        <li><h2>Roles: </h2></li>
-        <li>
-          <h3>Developer</h3>
-          <input
-            type="checkbox"
-            value="developer"
-            checked={user.roles.includes('developer')}
-            onChange={handleUpdateUserArray}
-          />
-          <h3>Designer</h3>
-          <input
-            type="checkbox"
-            value="designer"
-            checked={user.roles.includes('designer')}
-            onChange={handleUpdateUserArray}
-          />
-          <h3>Ideator</h3>
-          <input
-            type="checkbox"
-            value="ideator"
-            checked={user.roles.includes('ideator')}
-            onChange={handleUpdateUserArray}
-          />
-        </li>
-      </ul>
-      <ul>
-        <li><h2>Skills: </h2></li>
-        <li>
-          <h3>React</h3>
-          <input
-            type="checkbox"
-            value="react"
-            checked={user.skills.includes('react')}
-            onChange={(e) => setUser({ ...user, skills: [...new Set([...user.skills, e.target.value])] })}
-          />
-          <h3>HTML/CSS</h3>
-          <input
-            type="checkbox"
-            value="html/css"
-            checked={user.skills.includes('html/css')}
-            onChange={(e) => setUser({ ...user, skills: [...new Set([...user.skills, e.target.value])] })}
-          />
-        </li>
-      </ul>
-      <button type="button" className="button" onClick={handleSignUpUser}>Sign Up</button>
+      <div className="sign-up__container">
+        <h2 className="sign-up__heading">Account Info</h2>
+        <form className="sign-up__form form">
+          <section className="sign-up__form-section">
+            <h3 className="sign-up__section-heading">Your Profile</h3>
+            {valueFields.map(({ fieldName, value, label }) => (
+              <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
+            ))}
+          </section>
+          <section className="sign-up__form-section">
+            <h3 className="sign-up__section-heading">Roles</h3>
+            {rolesFields.map(({ fieldName, label }) => (
+              <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
+            ))}
+          </section>
+          <section className="sign-up__form-section">
+            <h3 className="sign-up__section-heading">Skills</h3>
+            {skillsFields.map(({ fieldName, label }) => (
+              <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label}  />
+            ))}
+          </section>
+          <button type="button" className="button full-width" onClick={handleSignUpUser}>Sign Up</button>
+        </form>
+        <p>Already have an account? <Link to="/signin">Sign In</Link></p>
+      </div>
     </div>
   );
 };
 
 export default SignUp;
+
+const InputWithLabel = ({ handleUpdateUserValue, fieldName, label, value }) => {
+  return (
+    <label className="sign-in__label" htmlFor={fieldName}>
+      <p className="sign-in__label-text">{label}<span className="required">*</span></p>
+      <input className="sign-in__input-field" type="text" id={fieldName} value={value} onChange={(e) => handleUpdateUserValue(e, fieldName)} />
+    </label>
+  );
+};
+
+const SelectField = ({
+  user, userArrayKey, handleUpdateUserArray, fieldName, label,
+}) => {
+  return (
+    <label className="sign-in__label" htmlFor={fieldName}>
+      <p className="sign-in__label-text">{label}</p>
+      <input
+        id={fieldName}
+        className="sign-in__checkbox"
+        type="checkbox"
+        value={fieldName}
+        checked={user[userArrayKey].includes(fieldName)}
+        onChange={(e) => handleUpdateUserArray(e, user, userArrayKey)}
+      />
+    </label>
+  );
+};
