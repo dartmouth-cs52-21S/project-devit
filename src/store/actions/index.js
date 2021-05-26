@@ -106,3 +106,8 @@ export function signOutUser(history) {
     history.push('/signin');
   };
 }
+
+export const toggleModalVisibility = (modalContent) => ({
+  type: ActionTypes.TOGGLE_MODAL_VISIBILITY,
+  modalContent,
+});

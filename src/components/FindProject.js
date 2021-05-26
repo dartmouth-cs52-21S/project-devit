@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import ProjectModal from './ProjectModal';
-import { fetchProjects } from '../store/actions';
+import { fetchProjects, toggleModalVisibility } from '../store/actions';
 import { selectAllProjects } from '../store/selectors';
 
-const FindProject = (props) => {
+const FindProject = () => {
   const [displayModal, showModal] = useState(false);
   const [name, setName] = useState('');
   const projects = useSelector(selectAllProjects);
@@ -26,6 +26,8 @@ const FindProject = (props) => {
     showModal(true);
   };
 
+  const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
+
   const postProjects = projects.map((project) => (
     <div key={project.id} className="findPostsItem">
       <div> {project.name}</div>
@@ -39,6 +41,7 @@ const FindProject = (props) => {
   return (
     <div id="findPostsOuter">
       {postProjects}
+      <button type="button" className="button" onClick={handleToggleModal}>Toggle Redux ⚡️ Powered Modal</button>
       <ProjectModal show={displayModal} handleClose={hideModal}>
         <p>{name}</p>
       </ProjectModal>
@@ -48,3 +51,20 @@ const FindProject = (props) => {
 };
 
 export default FindProject;
+
+const ModalTestComponent = () => (
+  <div style={{
+    backgroundColor: '#232323',
+    height: '30vh',
+    padding: '2rem',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: '2px solid #ff5D08',
+  }}
+  >
+    <h2 style={{ margin: '0 0 0.75rem' }}>I&apos;m in the modal 🎉</h2>
+    <p>Click outside the border to dismiss me! ✌️</p>
+  </div>
+);

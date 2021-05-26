@@ -10,3 +10,7 @@ export const selectUserIsDefined = (state) => Object.keys(state.auth.user).lengt
 
 // Sidebar Reducer
 export const selectSidebarIsCollapsed = (state) => state.sidebar.isCollapsed;
+
+// Modal Reducer
+export const selectModalContent = (state) => state.modal.modalContent;
+export const selectModalContentExists = (state) => Object.keys(state.modal.modalContent).length > 0;

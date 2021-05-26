@@ -1,0 +1,36 @@
+.modal {
+  padding: 3rem;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  background: rgba($gray-500, 0.8);
+  backdrop-filter: blur(1px);
+  background-blend-mode: multiply;
+  z-index: 15;
+  overflow: scroll;
+  display: flex;
+  justify-content: center;
+
+  .modal-content-positioner {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+
+    .modal-content-wrapper {
+      margin: 0 0 5rem;
+      width: 650px;
+      position: relative;
+    }
+  }
+}
+
+.close {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  font-size: 1.5rem;
+  color: $devit-black;
+}
