@@ -24,9 +24,12 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const valueFields = [
-    { fieldName: 'email'    , value: user.email    , label: 'Email'      },
-    { fieldName: 'password' , value: user.password , label: 'Password'   },
+  const accountFields = [
+    { fieldName: 'email'   , value: user.email   , label: 'Email'    },
+    { fieldName: 'password', value: user.password, label: 'Password' },
+  ];
+
+  const profileFields = [
     { fieldName: 'firstName', value: user.firstName, label: 'First Name' },
     { fieldName: 'lastName' , value: user.lastName , label: 'Last Name'  },
     { fieldName: 'location' , value: user.location , label: 'Location'   },
@@ -66,8 +69,12 @@ const SignUp = () => {
         <h2 className="form__heading">Sign Up</h2>
         <form className="form__form">
           <section className="form__section">
-            <h3 className="form__section-heading">Your Profile</h3>
-            {valueFields.map(({ fieldName, value, label }) => (
+            <h3 className="form__section-heading">Account</h3>
+            {accountFields.map(({ fieldName, value, label }) => (
+              <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
+            ))}
+            <h3 className="form__section-heading">Profile</h3>
+            {profileFields.map(({ fieldName, value, label }) => (
               <InputWithLabel key={fieldName} fieldName={fieldName} value={value} label={label} handleUpdateUserValue={handleUpdateUserValue} />
             ))}
             <label className="form__label" htmlFor="bio">
