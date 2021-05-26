@@ -1,12 +1,33 @@
-/* eslint-disable comma-spacing */
-/* eslint-disable no-multi-spaces */
-
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { RiCheckboxFill, RiCheckboxBlankLine } from 'react-icons/ri';
 import { signUpUser } from '../store/actions';
 import { uploadImage } from '../store/s3';
+
+const SelectField = ({
+  user, userArrayKey, handleUpdateUserArray, fieldName, label,
+}) => {
+  const checked = user[userArrayKey].includes(fieldName);
+
+  return (
+    <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
+      <span className="checkbox-icon">
+        {checked ? <RiCheckboxFill /> : <RiCheckboxBlankLine />}
+      </span>
+      <p className="form__label-text checkbox-label-text">{label}</p>
+      <input
+        id={fieldName}
+        className="form__checkbox"
+        type="checkbox"
+        value={fieldName}
+        checked={checked}
+        onChange={(e) => handleUpdateUserArray(e, user, userArrayKey)}
+      />
+    </label>
+  );
+};
 
 const SignUp = () => {
   const [file, setFile] = useState();
@@ -22,10 +43,20 @@ const SignUp = () => {
     skills: [],
   });
 
+  console.log(user);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleUpdateUserValue = (e) => setUser({ ...user, [e.target.id]: e.target.value });
+  const handleSignUpUser = () => {
+    if (file) {
+      uploadImage(file).then((url) => {
+        dispatch(signUpUser({ ...user, picture: url }, history));
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+  };
 
   const handleUpdateUserArray = (e, userObject, userArrayKey) => {
     let newArray = [];
@@ -40,95 +71,86 @@ const SignUp = () => {
     setUser({ ...userObject, [userArrayKey]: newArray });
   };
 
-  const handleSignUpUser = () => {
-    if (file) {
-      uploadImage(file).then((url) => {
-        dispatch(signUpUser({ ...user, picture: url }, history));
-      }).catch((error) => {
-        console.error(error);
-      });
-    }
-  };
-
   const onImageUpload = (event) => {
     setFile(event.target.files[0]);
     if (file) {
-      handleUpdateUserValue(window.URL.createObjectURL(file), 'picture');
+      setUser({ picture: window.URL.createObjectURL(file) });
     }
   };
+
+  const rolesFields = [
+    { fieldName: 'developer', label: 'Developer' },
+    { fieldName: 'designer', label: 'Designer' },
+    { fieldName: 'ideator', label: 'Ideator' },
+  ];
+
+  const skillsFields = [
+    { fieldName: 'react', label: 'React' },
+    { fieldName: 'htmlcss', label: 'HTML/CSS' },
+  ];
 
   return (
     <div className="sign-up">
       <h1>Account Info</h1>
       <ul>
         <li><h2>Email:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.email} onChange={(e) => handleUpdateUserValue(e, 'email')} /></li>
+        <li><input type="text" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} /></li>
         <li><h2>Password:<span id="red">*</span> </h2></li>
-        <li><input type="password" value={user.password} onChange={(e) => handleUpdateUserValue(e, 'password')} /></li>
+        <li><input type="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} /></li>
       </ul>
       <h1>User Info</h1>
       <ul>
         <li><h2>First Name:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.firstName} onChange={(e) => handleUpdateUserValue(e, 'firstName')} /></li>
+        <li><input type="text" value={user.firstName} onChange={(e) => setUser({ ...user, firstName: e.target.value })} /></li>
         <li><h2>Last Name:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.lastName} onChange={(e) => handleUpdateUserValue(e, 'lastName')} /></li>
+        <li><input type="text" value={user.lastName} onChange={(e) => setUser({ ...user, lastName: e.target.value })} /></li>
       </ul>
       <ul>
         <li><h2>Profile Pic: </h2></li>
         <li><input type="file" name="coverImage" onChange={(e) => onImageUpload(e)} /></li>
+
         <li><h2>Location: </h2></li>
-        <li><input type="text" value={user.location} onChange={(e) => handleUpdateUserValue(e, 'location')} /></li>
+        <li><input type="text" value={user.location} onChange={(e) => setUser({ ...user, location: e.target.value })} /></li>
       </ul>
       <ul>
         <li><h2>Bio: </h2></li>
-        <li><textarea type="text" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} /></li>
+        <li><textarea type="text" value={user.bio} onChange={(e) => setUser({ ...user, bio: e.target.value })} /></li>
       </ul>
-      <ul>
+      {/* <ul>
         <li><h2>Roles: </h2></li>
         <li>
-          <h3>Developer</h3>
-          <input
-            type="checkbox"
-            value="developer"
-            checked={user.roles.includes('developer')}
-            onChange={handleUpdateUserArray}
-          />
-          <h3>Designer</h3>
-          <input
-            type="checkbox"
-            value="designer"
-            checked={user.roles.includes('designer')}
-            onChange={handleUpdateUserArray}
-          />
-          <h3>Ideator</h3>
-          <input
-            type="checkbox"
-            value="ideator"
-            checked={user.roles.includes('ideator')}
-            onChange={handleUpdateUserArray}
-          />
+          <button type="button" onClick={() => setUser({ ...user, roles: user.roles.add('dev') })}>dev</button>
+          <button type="button" onClick={() => setUser({ ...user, roles: [...user.roles, 'designer'] })}>designer</button>
+          <button type="button" onClick={() => setUser({ ...user, roles: [...user.roles, 'ideator'] })}>ideator</button>
         </li>
       </ul>
       <ul>
         <li><h2>Skills: </h2></li>
         <li>
-          <h3>React</h3>
-          <input
-            type="checkbox"
-            value="react"
-            checked={user.skills.includes('react')}
-            onChange={(e) => setUser({ ...user, skills: [...new Set([...user.skills, e.target.value])] })}
-          />
-          <h3>HTML/CSS</h3>
-          <input
-            type="checkbox"
-            value="html/css"
-            checked={user.skills.includes('html/css')}
-            onChange={(e) => setUser({ ...user, skills: [...new Set([...user.skills, e.target.value])] })}
-          />
+          <button type="button" onClick={() => setUser({ ...user, skills: [...user.skills, 'react'] })}>React</button>
+          <button type="button" onClick={() => setUser({ ...user, skills: [...user.skills, 'html/css'] })}>html/css</button>
         </li>
-      </ul>
-      <button type="button" className="button" onClick={handleSignUpUser}>Sign Up</button>
+      </ul> */}
+      <section className="form__section">
+        <h3 className="form__section-heading">Roles</h3>
+        <div className="form__checkbox-group">
+          {rolesFields.map(({ fieldName, label }) => (
+            <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
+          ))}
+        </div>
+      </section>
+      <section className="form__section">
+        <h3 className="form__section-heading">Skills</h3>
+        <div className="form__checkbox-group">
+          {skillsFields.map(({ fieldName, label }) => (
+            <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
+          ))}
+        </div>
+      </section>
+      <button type="button"
+        onClick={() => handleSignUpUser}
+      >Sign Up
+      </button>
     </div>
   );
 };
