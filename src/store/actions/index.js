@@ -74,7 +74,7 @@ export function signInUser(user, history) {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`${ROOT_URL}/signin`, user);
-      dispatch({ type: ActionTypes.AUTH_USER, payload: data });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('token', data.token);
       history.push('/profile');
     } catch (error) {
@@ -86,9 +86,10 @@ export function signInUser(user, history) {
 }
 
 export function signUpUser(user, history) {
-  return async () => {
+  return async (dispatch) => {
     try {
       const { data } = await axios.post(`${ROOT_URL}/signup`, user);
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('token', data.token);
       history.push('/profile');
     } catch (error) {
@@ -106,3 +107,8 @@ export function signOutUser(history) {
     history.push('/signin');
   };
 }
+
+export const toggleModalVisibility = (modalContent) => ({
+  type: ActionTypes.TOGGLE_MODAL_VISIBILITY,
+  modalContent,
+});

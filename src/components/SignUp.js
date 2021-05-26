@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { RiCheckboxFill, RiCheckboxBlankLine } from 'react-icons/ri';
 import { signUpUser } from '../store/actions';
 import { uploadImage } from '../store/s3';
+import DarkBG from './DarkBG';
 
 const SelectField = ({
   user, userArrayKey, handleUpdateUserArray, fieldName, label,
@@ -90,68 +91,70 @@ const SignUp = () => {
   ];
 
   return (
-    <div className="sign-up">
-      <h1>Account Info</h1>
-      <ul>
-        <li><h2>Email:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} /></li>
-        <li><h2>Password:<span id="red">*</span> </h2></li>
-        <li><input type="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} /></li>
-      </ul>
-      <h1>User Info</h1>
-      <ul>
-        <li><h2>First Name:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.firstName} onChange={(e) => setUser({ ...user, firstName: e.target.value })} /></li>
-        <li><h2>Last Name:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.lastName} onChange={(e) => setUser({ ...user, lastName: e.target.value })} /></li>
-      </ul>
-      <ul>
-        <li><h2>Profile Pic: </h2></li>
-        <li><input type="file" name="coverImage" onChange={(e) => onImageUpload(e)} /></li>
+    <DarkBG>
+      <div className="sign-up">
+        <h1>Account Info</h1>
+        <ul>
+          <li><h2>Email:<span id="red">*</span> </h2></li>
+          <li><input type="text" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} /></li>
+          <li><h2>Password:<span id="red">*</span> </h2></li>
+          <li><input type="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} /></li>
+        </ul>
+        <h1>User Info</h1>
+        <ul>
+          <li><h2>First Name:<span id="red">*</span> </h2></li>
+          <li><input type="text" value={user.firstName} onChange={(e) => setUser({ ...user, firstName: e.target.value })} /></li>
+          <li><h2>Last Name:<span id="red">*</span> </h2></li>
+          <li><input type="text" value={user.lastName} onChange={(e) => setUser({ ...user, lastName: e.target.value })} /></li>
+        </ul>
+        <ul>
+          <li><h2>Profile Pic: </h2></li>
+          <li><input type="file" name="coverImage" onChange={(e) => onImageUpload(e)} /></li>
 
-        <li><h2>Location: </h2></li>
-        <li><input type="text" value={user.location} onChange={(e) => setUser({ ...user, location: e.target.value })} /></li>
-      </ul>
-      <ul>
-        <li><h2>Bio: </h2></li>
-        <li><textarea type="text" value={user.bio} onChange={(e) => setUser({ ...user, bio: e.target.value })} /></li>
-      </ul>
-      {/* <ul>
-        <li><h2>Roles: </h2></li>
-        <li>
-          <button type="button" onClick={() => setUser({ ...user, roles: user.roles.add('dev') })}>dev</button>
-          <button type="button" onClick={() => setUser({ ...user, roles: [...user.roles, 'designer'] })}>designer</button>
-          <button type="button" onClick={() => setUser({ ...user, roles: [...user.roles, 'ideator'] })}>ideator</button>
-        </li>
-      </ul>
-      <ul>
-        <li><h2>Skills: </h2></li>
-        <li>
-          <button type="button" onClick={() => setUser({ ...user, skills: [...user.skills, 'react'] })}>React</button>
-          <button type="button" onClick={() => setUser({ ...user, skills: [...user.skills, 'html/css'] })}>html/css</button>
-        </li>
-      </ul> */}
-      <section className="form__section">
-        <h3 className="form__section-heading">Roles</h3>
-        <div className="form__checkbox-group">
-          {rolesFields.map(({ fieldName, label }) => (
-            <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
-          ))}
-        </div>
-      </section>
-      <section className="form__section">
-        <h3 className="form__section-heading">Skills</h3>
-        <div className="form__checkbox-group">
-          {skillsFields.map(({ fieldName, label }) => (
-            <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
-          ))}
-        </div>
-      </section>
-      <button type="button"
-        onClick={() => handleSignUpUser}
-      >Sign Up
-      </button>
-    </div>
+          <li><h2>Location: </h2></li>
+          <li><input type="text" value={user.location} onChange={(e) => setUser({ ...user, location: e.target.value })} /></li>
+        </ul>
+        <ul>
+          <li><h2>Bio: </h2></li>
+          <li><textarea type="text" value={user.bio} onChange={(e) => setUser({ ...user, bio: e.target.value })} /></li>
+        </ul>
+        {/* <ul>
+          <li><h2>Roles: </h2></li>
+          <li>
+            <button type="button" onClick={() => setUser({ ...user, roles: user.roles.add('dev') })}>dev</button>
+            <button type="button" onClick={() => setUser({ ...user, roles: [...user.roles, 'designer'] })}>designer</button>
+            <button type="button" onClick={() => setUser({ ...user, roles: [...user.roles, 'ideator'] })}>ideator</button>
+          </li>
+        </ul>
+        <ul>
+          <li><h2>Skills: </h2></li>
+          <li>
+            <button type="button" onClick={() => setUser({ ...user, skills: [...user.skills, 'react'] })}>React</button>
+            <button type="button" onClick={() => setUser({ ...user, skills: [...user.skills, 'html/css'] })}>html/css</button>
+          </li>
+        </ul> */}
+        <section className="form__section">
+          <h3 className="form__section-heading">Roles</h3>
+          <div className="form__checkbox-group">
+            {rolesFields.map(({ fieldName, label }) => (
+              <SelectField key={fieldName} user={user} userArrayKey="roles" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
+            ))}
+          </div>
+        </section>
+        <section className="form__section">
+          <h3 className="form__section-heading">Skills</h3>
+          <div className="form__checkbox-group">
+            {skillsFields.map(({ fieldName, label }) => (
+              <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
+            ))}
+          </div>
+        </section>
+        <button type="button"
+          onClick={() => handleSignUpUser}
+        >Sign Up
+        </button>
+      </div>
+    </DarkBG>
   );
 };
 
