@@ -15,6 +15,7 @@ const SignIn = () => {
   const handleSignInUser = (e) => {
     e.preventDefault();
     dispatch(signInUser({ email, password }, history));
+    history.push('/profile');
   };
 
   const handleUpdateEmail = (e) => setEmail(e.target.value);
