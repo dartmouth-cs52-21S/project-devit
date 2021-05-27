@@ -56,6 +56,8 @@ const SignUp = () => {
       }).catch((error) => {
         console.error(error);
       });
+    } else {
+      dispatch(signUpUser(user, history));
     }
   };
 
@@ -150,7 +152,7 @@ const SignUp = () => {
           </div>
         </section>
         <button type="button"
-          onClick={() => handleSignUpUser}
+          onClick={handleSignUpUser}
         >Sign Up
         </button>
       </div>
