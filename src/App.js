@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import SignIn from './components/SignIn';
@@ -13,22 +14,24 @@ import Project from './components/Project';
 import FindProject from './components/FindProject';
 import ErrorNotFound from './components/ErrorNotFound';
 import LandingPage from './components/LandingPage';
-import DarkBG from './components/DarkBG';
+import Modal from './components/Modal';
+import { selectModalContentExists } from './store/selectors';
 
 const App = () => {
+  const modalContentExists = useSelector(selectModalContentExists);
+
   return (
     <Router>
       <div>
+        {modalContentExists && <Modal />}
         <Banner />
         <main className="main-section">
           <Sidebar />
           <div className="current-page">
             <Switch>
-              <DarkBG>
-                <Route exact path="/" component={LandingPage} />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/signin" component={SignIn} />
-              </DarkBG>
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/signin" component={SignIn} />
               <PrivateRoute path="/profile" component={Profile} />
               <Route exact path="/projects" component={Projects} />
               <PrivateRoute exact path="/projects/:projectID" component={Project} />

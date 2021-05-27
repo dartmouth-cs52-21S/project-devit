@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
 
-import projectsReducer from './projects-reducer';
-import authReducer from './auth-reducer';
-import sidebarReducer from './sidebar-reducer';
+import ProjectsReducer from './projects-reducer';
+import AuthReducer from './auth-reducer';
+import SidebarReducer from './sidebar-reducer';
+import ModalReducer from './modal-reducer';
 
 const rootReducer = combineReducers({
-  projects: projectsReducer,
-  auth: authReducer,
-  sidebar: sidebarReducer,
+  projects: ProjectsReducer,
+  auth: AuthReducer,
+  sidebar: SidebarReducer,
+  modal: ModalReducer,
 });
 
 export default rootReducer;
