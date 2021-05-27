@@ -5,6 +5,8 @@
 }
 
 .current-page {
+  display: flex;
+  flex-direction: column;
   padding: $body-padding; 
   flex: 1;
   overflow-y: scroll;
