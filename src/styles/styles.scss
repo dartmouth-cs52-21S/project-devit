@@ -1,3 +1,6 @@
+// Imports
+@import "~bootstrap/scss/bootstrap";
+
 // Utilities
 @import "utils/normalize";
 @import "utils/variables";
@@ -23,4 +26,6 @@
 @import "components/landing-page";
 @import "components/profile";
 @import "components/find-project";
+
+
 
