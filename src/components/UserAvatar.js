@@ -1,16 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectUser, selectUserIsDefined } from '../store/selectors';
+import { selectUser } from '../store/selectors';
 import { pluckFirstLetter } from '../utils/utilityFunctions';
 
 export const UserAvatar = ({ useAuthenticatedUser, passedInUser }) => {
   const authenticatedUser = useSelector(selectUser);
-  const authenticatedUserIsDefined = useSelector(selectUserIsDefined);
-
-  if (useAuthenticatedUser && !authenticatedUserIsDefined) return null;
 
   const user = useAuthenticatedUser ? authenticatedUser : passedInUser;
+
+  if (!user) return null;
 
   const userInitials = `${pluckFirstLetter(user.firstName)}${pluckFirstLetter(user.lastName)}`;
 
