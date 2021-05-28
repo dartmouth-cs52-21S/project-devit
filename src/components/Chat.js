@@ -1,74 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdSend } from 'react-icons/md';
+import axios from 'axios';
+import dayjs from 'dayjs';
+
 import { UserAvatar } from './UserAvatar';
+import { addChatMessage, getChatMessages, ROOT_URL } from '../store/actions';
+import { selectUser, selectChatMessages } from '../store/selectors/index';
+
+import ActionTypes from '../store/types/index';
+
+const localizedFormat = require('dayjs/plugin/localizedFormat');
+const isYesterday = require('dayjs/plugin/isYesterday');
+const isToday = require('dayjs/plugin/isToday');
+
+dayjs.extend(localizedFormat);
+dayjs.extend(isYesterday);
+dayjs.extend(isToday);
+
+const POLLING_INTERVAL_SECONDS = 1;
 
 const Chat = () => {
   const [messageText, setMessageText] = useState('');
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
-  const users = [
-    {
-      firstName: 'Carrie',
-      lastName: 'Cove',
-      picture: 'https://media.giphy.com/media/1Ag1kXnpY6YcFoeg0L/giphy.gif',
-      roles: ['designer'],
-    },
-    {
-      firstName: 'Duncan',
-      lastName: 'Denver',
-      picture: 'https://media.giphy.com/media/l0K4oIudAiHkJswyk/giphy.gif',
-      roles: ['designer'],
-    },
-    {
-      firstName: 'Eva',
-      lastName: 'Eldridge',
-      picture: 'https://media.giphy.com/media/damwlhg3HEoQE4anQ8/giphy.gif',
-      roles: ['designer'],
-    },
-  ];
+  const messages = useSelector(selectChatMessages);
 
-  const messages = [
-    {
-      user: users[0],
-      body: 'I should be able to get to it later today.',
-      createdAt: 'Today at 8:22am',
-    },
-    {
-      user: users[1],
-      body: 'I am love these new components! 😍',
-      createdAt: 'Today at 2:12pm',
-    },
-    {
-      user: users[1],
-      body: 'What do you guys think about the new Toast component?',
-      createdAt: 'Today at 2:13pm',
-    },
-    {
-      user: users[0],
-      body: 'Looks really good!',
-      createdAt: 'Today at 2:13pm',
-    },
-    {
-      user: users[0],
-      body: 'I wonder if it’d be good to expose toastDuration?',
-      createdAt: 'Today at 2:13pm',
-    },
-    {
-      user: users[1],
-      body: 'That is definitely doable. Let me double check with Eva. @Eva, Would you look into this?',
-      createdAt: 'Today at 2:14pm',
-    },
-    {
-      user: users[2],
-      body: 'Looks good to me.',
-      createdAt: 'Today at 2:14pm',
-    },
-  ];
+  useEffect(() => {
+    const signIn = async () => {
+      const { data } = await axios.post(`${ROOT_URL}/signin`, { email: 'a@a.com', password: 'a' });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
+      localStorage.setItem('token', data.token);
+    };
+
+    signIn();
+  }, []);
+
+  useEffect(() => {
+    const pollInterval = setInterval(() => dispatch(getChatMessages('123456')), POLLING_INTERVAL_SECONDS * 1000);
+    return () => clearInterval(pollInterval);
+  }, []);
 
   const handleUpdateMessageText = (e) => setMessageText(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Hello there. You tried to submit.');
+
+    const newMessage = {
+      body: messageText,
+      projectId: '123456', // Placeholder. This vallue should come from a URL parameter (something like "projects/:projectId")
+      author: user.id,
+      isDeleted: false,
+    };
+
+    dispatch(addChatMessage(newMessage));
     setMessageText('');
   };
 
@@ -76,11 +62,13 @@ const Chat = () => {
     <div className="chat">
       <h1 className="chat__title">Team Chat</h1>
       <div className="chat__chat-window">
-        <div className="chat__messages">
-          {messages.map((message) => (
-            <ChatMessage message={message} />
-          ))}
-        </div>
+        {messages.length > 0 && (
+          <div className="chat__messages">
+            {messages.map((message) => (
+              <ChatMessage key={message.id} message={message} />
+            ))}
+          </div>
+        )}
         <div className="chat__message-input">
           <form className="chat__form form" onSubmit={handleSubmit}>
             <input type="text" id="message-input-field" value={messageText} className="chat__message-input-field" placeholder="Type something..." onChange={handleUpdateMessageText} />
@@ -94,15 +82,21 @@ const Chat = () => {
 
 export default Chat;
 
+export const formatTimestamp = (timestamp) => {
+  if (dayjs(timestamp).isYesterday()) return `Yesterday at ${dayjs(timestamp).format('LT')}`;
+  if (dayjs(timestamp).isToday()) return `Today at ${dayjs(timestamp).format('LT')}`;
+  return dayjs(timestamp).format('lll');
+};
+
 const ChatMessage = ({ message }) => (
   <div className="chat__message">
     <div className="chat__message-user">
-      <UserAvatar passedInUser={message.user} />
+      <UserAvatar passedInUser={message.author} />
     </div>
     <div className="chat__message-details">
       <div className="chat__message-details-meta">
-        <div className="chat__message-username">{`${message.user.firstName} ${message.user.lastName}`}</div>
-        <div className="chat__message-timestamp">{message.createdAt}</div>
+        <div className="chat__message-username">{`${message.author.firstName} ${message.author.lastName}`}</div>
+        <div className="chat__message-timestamp">{formatTimestamp(message.createdAt)}</div>
       </div>
       <div className="chat__message-text">{message.body}</div>
     </div>

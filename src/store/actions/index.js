@@ -112,3 +112,27 @@ export const toggleModalVisibility = (modalContent) => ({
   type: ActionTypes.TOGGLE_MODAL_VISIBILITY,
   modalContent,
 });
+
+export function getChatMessages(projectId) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${ROOT_URL}/chat-messages/${projectId}`, { headers: { authorization: localStorage.getItem('token') } });
+      dispatch({ type: ActionTypes.UPDATE_CHAT_MESSAGES, messages: data });
+    } catch (error) {
+      console.error(error);
+      toast.dark('Sorry, there was an issue when trying to get chat messages.');
+    }
+  };
+}
+
+export function addChatMessage(message) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`${ROOT_URL}/chat-messages/${message.projectId}`, { message, headers: { authorization: localStorage.getItem('token') } });
+      dispatch({ type: ActionTypes.ADD_CHAT_MESSAGE, newMessage: data });
+    } catch (error) {
+      console.error(error);
+      toast.dark('Sorry, there was an issue when trying to create a message.');
+    }
+  };
+}
