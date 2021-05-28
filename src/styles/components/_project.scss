@@ -30,8 +30,16 @@ h1 {
 }
 
 .project__links {
-     color: inherit; 
+     color: $devit-white; 
      margin: 5px;
+    border: 0;
+    background-color: $gray-800;
+}
+
+.project__links:hover {
+    color: $devit-white; 
+    text-decoration: none;
+
 }
 
 .designer__needed {
@@ -75,4 +83,10 @@ h1 {
     margin-top: 5px;
     margin-left: 0;
     margin-right: 2px;
+}
+
+#best__practices {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }

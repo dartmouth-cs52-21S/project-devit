@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
-import { fetchProject } from '../store/actions';
+import { fetchProject, toggleModalVisibility } from '../store/actions';
 
 // const mapStateToProps = (reduxState) => ({
 //   project: reduxState.initialState.current,
@@ -61,6 +61,8 @@ const Project = () => {
   }))
     : null;
 
+  const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
+
   return (
     <div className="project">
       <div id="project__title__container">
@@ -79,7 +81,10 @@ const Project = () => {
         <a className="project__links" href={project.Figma}>Figma</a>
         <a className="project__links" href={project.Slack}>Slack</a>
       </ul>
-      <FontAwesomeIcon className="icon" icon={faLightbulb} />
+      <div id="best__practices">
+        <FontAwesomeIcon className="icon" icon={faLightbulb} />
+        <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
+      </div>
 
       <ul className="neededTeam__container">
         {neededTeam}
@@ -91,69 +96,19 @@ const Project = () => {
 
 export default Project;
 
-// import React, { useEffect, useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { useParams, useHistory } from 'react-router-dom';
-
-// import ReactMarkdown from 'react-markdown';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-// import { fetchPost, deletePostSingular, updatePost } from '../store/actions';
-
-// const Project = () => {
-//   const [post, setPost] = useState({});
-//   const [editing, setEditing] = useState(false);
-
-//   const { postID } = useParams();
-//   const history = useHistory();
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     dispatch(fetchPost(postID, (data) => {
-//       setPost(data);
-//     }));
-//   }, []);
-
-//   const editMode = () => {
-//     setEditing(true);
-//   };
-
-//   const submitEdits = () => {
-//     const newUpdatedPost = {
-//       title: post.title,
-//       content: post.content,
-//     };
-
-//     dispatch(updatePost(newUpdatedPost, postID));
-//     setEditing(false);
-//   };
-
-//   return (
-//     <div>
-//       {editing
-//         ? (
-//           <div className="single-project">
-//             Title: <input type="text" value={post.title} onChange={(e) => setPost({ ...post, title: e.target.value })} />
-//             Content: <textarea value={post.content} onChange={(e) => setPost({ ...post, text: e.target.value })} />
-//             <button type="button" onClick={submitEdits}> Submit </button>
-//             <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
-//             {/* add "ARE YOU SURE confirmation" */}
-//             <FontAwesomeIcon icon={faTrash} onClick={() => dispatch(deletePostSingular(post.id, history))} size="2x" />
-//           </div>
-//         )
-//         : (
-//           <div className="single-project">
-//             <h1>{post.title}</h1>
-//             <span><ReactMarkdown>{post.content || ''}</ReactMarkdown></span>
-//             <h3>{`Author: ${post.author ? post.author.author : ''} `}</h3>
-//             <div id="icons">
-//               <FontAwesomeIcon icon={faEdit} onClick={editMode} size="2x" />
-//               <FontAwesomeIcon icon={faTrash} onClick={() => dispatch(deletePostSingular(postID, history))} size="2x" />
-//             </div>
-//           </div>
-//         )}
-//     </div>
-//   );
-// };
-
-// export default Project;
+const ModalTestComponent = () => (
+  <div style={{
+    backgroundColor: '#232323',
+    height: '30vh',
+    padding: '2rem',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: '2px solid #ff5D08',
+  }}
+  >
+    <h2 style={{ margin: '0 0 0.75rem' }}>I&apos;m in the modal 🎉</h2>
+    <p>Click outside the border to dismiss me! ✌️</p>
+  </div>
+);
