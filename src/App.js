@@ -38,7 +38,7 @@ const App = () => {
               <Route exact path="/projects" component={Projects} />
               <PrivateRoute exact path="/projects/:projectID" component={Project} />
               <Route exact path="/find-project" component={FindProject} />
-              <PrivateRoute path="/new-project" component={NewIdea} />
+              <Route path="/new-project" component={NewIdea} />
               <Route component={ErrorNotFound} />
             </Switch>
           </div>

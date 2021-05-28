@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Picker from 'emoji-picker-react';
 import { createProject } from '../store/actions/index';
 
 const NewIdea = (props) => {
@@ -10,21 +11,28 @@ const NewIdea = (props) => {
   const [workingIndustry, setWorkingIndustry] = useState('');
   const [editTools, setEditTools] = useState(false);
   const [workingTools, setWorkingTools] = useState('');
+  const [chosenEmoji, setChosenEmoji] = useState({ emoji: '✨' });
+  const [editEmoji, setEditEmoji] = useState(false);
 
   const makeIdea = () => {
     const idea = {
       title,
       industry,
       tools,
+      logo: chosenEmoji,
     //   team,
     };
     createProject(idea, props.history);
-    // props.createProject(idea, props.history);
   };
 
   const industries = industry.map((single) => {
     return <p key={single}>{single}</p>;
   });
+
+  const onEmojiClick = (event, emojiObject) => {
+    console.log(emojiObject);
+    setChosenEmoji(emojiObject);
+  };
 
   const handleIndustry = () => {
     setEditIndustry(false);
@@ -44,6 +52,17 @@ const NewIdea = (props) => {
 
   return (
     <div id="new-idea">
+      <div>
+        {editEmoji
+          ? (
+            <div>
+              <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
+              <button className="save emoji" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
+            </div>
+          )
+          : <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>}
+
+      </div>
       <input placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       <div className="selector-container">
         <h1>Industry</h1>
