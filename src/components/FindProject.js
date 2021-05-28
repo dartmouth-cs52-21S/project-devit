@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import ProjectModal from './ProjectModal';
-import { fetchProjects, toggleModalVisibility } from '../store/actions';
+import { fetchProjects, fetchProject, toggleModalVisibility } from '../store/actions';
 import { selectAllProjects } from '../store/selectors';
 
 const FindProject = () => {
   const [displayModal, showModal] = useState(false);
-  const [name, setName] = useState('');
+  const [proj, setProj] = useState('');
+  /* currently anything the modal needs to display has to be stored in state */
   const projects = useSelector(selectAllProjects);
 
   const dispatch = useDispatch();
@@ -21,8 +22,14 @@ const FindProject = () => {
     showModal(false);
   };
 
+  const join = () => {
+    console.log('join attempted');
+  };
+
   const presentModal = (event) => {
-    setName(event.target.name);
+    dispatch(fetchProject(event.target.name, (data) => {
+      setProj(data);
+    }));
     showModal(true);
   };
 
@@ -34,7 +41,7 @@ const FindProject = () => {
       <Link key={project.id} to={`/projects/${project.id}`}>
         <button type="button" className="button">project page</button>
       </Link>
-      <button type="button" name={project.name} onClick={presentModal} className="button">show modal</button>
+      <button type="button" name={project.id} onClick={presentModal} className="button">show modal</button>
     </div>
   ));
 
@@ -42,9 +49,7 @@ const FindProject = () => {
     <div id="findPostsOuter">
       {postProjects}
       <button type="button" className="button" onClick={handleToggleModal}>Toggle Redux ⚡️ Powered Modal</button>
-      <ProjectModal show={displayModal} handleClose={hideModal}>
-        <p>{name}</p>
-      </ProjectModal>
+      <ProjectModal proj={proj} show={displayModal} handleClose={hideModal} reqToJoin={join} />
     </div>
 
   );

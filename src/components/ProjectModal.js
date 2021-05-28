@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { updateProject } from '../store/actions';
 
 // const ProjectModal = (props) => {
 //   // const [showModal, toggleModal]
@@ -22,13 +24,35 @@ import React from 'react';
 
 // // wrap entire find a project page in project__modal
 
-const ProjectModal = ({ handleClose, show, children }) => {
+const ProjectModal = ({
+  handleClose, show, children, proj,
+}) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+
+  const dispatch = useDispatch();
+
+  const reqToJoin = () => {
+    console.log(proj.testApplicants);
+    const newProj = proj;
+    const applicants = newProj.testApplicants;
+    applicants.push('new applicant');
+    newProj.testApplicants = applicants;
+
+    console.log(newProj);
+
+    dispatch(updateProject(newProj, proj.id));
+  };
 
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
+        <p>{proj.name}</p>
+        <p>{proj.id}</p>
+        <p>{proj.testApplicants}</p>
+        <button type="button" onClick={reqToJoin}>
+          Request to Join
+        </button>
         <button type="button" onClick={handleClose}>
           Close
         </button>
