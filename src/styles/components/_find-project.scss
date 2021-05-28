@@ -1,3 +1,35 @@
 [className="findPostsItem"]{
     background-color: whitesmoke;
 }
+
+.search-bar{
+    background: $devit-gray;
+    width: 100%;
+    font-size: 26px;
+    vertical-align: middle;
+    border: none;
+    margin-bottom: 2%;
+    color: $devit-white;
+    input{
+        margin:0;
+    }
+}
+
+.toggle-container{
+    display: flex;
+    flex-direction: row;
+    .toggle{
+        margin-left: 10px;
+    }
+    .drop-toggle{
+        background-color: $devit-gray;
+        color: $devit-white;
+        .drop-menu a.drop-item dropdown-item{
+            background-color: $devit-gray;
+            color: $devit-white;
+        }
+        border: none;
+        border-radius: 0;
+    }
+
+}

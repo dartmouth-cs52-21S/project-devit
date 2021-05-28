@@ -1,3 +1,6 @@
+// Imports
+@import "~bootstrap/scss/bootstrap";
+
 // Utilities
 @import "utils/normalize";
 @import "utils/variables";
@@ -15,7 +18,7 @@
 @import "components/banner";
 @import "components/sidebar";
 @import "components/sign-in";
-@import "components/sign-up";
+@import "components/onboarding";
 @import "components/user-avatar";
 @import "components/chat";
 @import "components/project";
@@ -24,4 +27,6 @@
 @import "components/landing-page";
 @import "components/profile";
 @import "components/find-project";
+
+
 
