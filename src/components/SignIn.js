@@ -1,27 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import { signInUser } from '../store/actions';
 import DarkBG from './DarkBG';
 
-const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const validationSchema = Yup.object({
+  email: Yup.string().email('Invalid email format').required('Required Field'),
+  password: Yup.string().min(6, 'Minimum 6 characters').required('Required Field'),
+});
 
+const SignIn = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const readyToSubmit = email && password;
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema,
+  });
 
   const handleSignInUser = (e) => {
     e.preventDefault();
+    const { email } = formik.values;
+    const { password } = formik.values;
     dispatch(signInUser({ email, password }, history));
     history.push('/profile');
   };
-
-  const handleUpdateEmail = (e) => setEmail(e.target.value);
-  const handleUpdatePassword = (e) => setPassword(e.target.value);
 
   return (
     <DarkBG>
@@ -31,13 +40,27 @@ const SignIn = () => {
           <form className="form__form" onSubmit={handleSignInUser}>
             <label className="form__label" htmlFor="email">
               <p className="form__label-text">Email<span className="form__required">*</span></p>
-              <input className="form__label-input" type="text" id={email} value={email} onChange={handleUpdateEmail} />
+              <input
+                className="form__label-input"
+                type="text"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.email ? formik.errors.email : null}
             </label>
             <label className="form__label" htmlFor="password">
               <p className="form__label-text">Password<span className="form__required">*</span></p>
-              <input className="form__label-input" type="password" id={password} value={password} onChange={handleUpdatePassword} />
+              <input
+                className="form__label-input"
+                type="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.password ? formik.errors.password : null}
             </label>
-            <button type="submit" className="button form__button" disabled={!readyToSubmit}>Sign In</button>
+            <button type="submit" className="button form__button">Sign In</button>
           </form>
           <p>Do not have an account? <Link to="/signup">Sign Up</Link></p>
         </div>

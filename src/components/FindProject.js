@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import ProjectModal from './ProjectModal';
 import { fetchProjects, fetchProject, toggleModalVisibility } from '../store/actions';
@@ -9,13 +10,27 @@ import { selectAllProjects } from '../store/selectors';
 const FindProject = () => {
   const [displayModal, showModal] = useState(false);
   const [proj, setProj] = useState('');
-  /* currently anything the modal needs to display has to be stored in state */
+  const [searchterm, setSearchTerm] = useState('');
   const projects = useSelector(selectAllProjects);
+  const [currProjects, setCurrProjects] = useState([]);
 
   const dispatch = useDispatch();
 
+  const search = (word) => {
+    setCurrProjects(projects.filter((project) => {
+      return project.name.includes(word);
+    }));
+  };
+
+  const filter = (word) => {
+    setCurrProjects(projects.filter((project) => {
+      return project.industry.includes(word);
+    }));
+  };
+
   useEffect(() => {
     dispatch(fetchProjects());
+    setCurrProjects(projects);
   }, []);
 
   const hideModal = () => {
@@ -33,9 +48,14 @@ const FindProject = () => {
     showModal(true);
   };
 
+  const onSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+    search(event.target.value);
+  };
+
   const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
 
-  const postProjects = projects.map((project) => (
+  const postProjects = currProjects.map((project) => (
     <div key={project.id} className="findPostsItem">
       <div> {project.name}</div>
       <Link key={project.id} to={`/projects/${project.id}`}>
@@ -47,6 +67,25 @@ const FindProject = () => {
 
   return (
     <div id="findPostsOuter">
+      <div className="search-bar">
+        <input onChange={(e) => onSearchChange(e)} value={searchterm} placeholder="Search..." className="search-bar" />
+      </div>
+      <div className="toggle-container">
+        <h3>Toggles:</h3>
+        <div className="toggle" id="industry">
+          <Dropdown>
+            <Dropdown.Toggle variant="default" id="dropdown-basic" className="drop-toggle">
+              Industry
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu className="drop-menu">
+              <Dropdown.Item className="drop-item" eventKey="tech" onSelect={filter}>Tech</Dropdown.Item>
+              <Dropdown.Item className="drop-item" eventKey="edu" onSelect={filter}>Education</Dropdown.Item>
+              <Dropdown.Item className="drop-item" eventKey="science" onSelect={filter}>Science</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </div>
       {postProjects}
       <button type="button" className="button" onClick={handleToggleModal}>Toggle Redux ⚡️ Powered Modal</button>
       <ProjectModal proj={proj} show={displayModal} handleClose={hideModal} reqToJoin={join} />

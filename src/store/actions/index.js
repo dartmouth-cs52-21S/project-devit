@@ -44,12 +44,13 @@ export function updateProject(project, id) {
   };
 }
 
-export function fetchProject(id, callback) {
+export function fetchProject(id) {
+  console.log('in fetch');
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${ROOT_URL}/projects/${id}`);
+      console.log('data', data);
       dispatch({ type: ActionTypes.FETCH_PROJECT, payload: data });
-      callback(data);
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying find that project.');
@@ -85,16 +86,29 @@ export function signInUser(user, history) {
   };
 }
 
-export function signUpUser(user, history) {
+export function signUpUser(user) {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`${ROOT_URL}/signup`, user);
       dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('token', data.token);
-      history.push('/profile');
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying to sign you up.');
+    }
+  };
+}
+
+export function updateUser(id, user, history) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`${ROOT_URL}/users/${id}`, user);
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
+      localStorage.setItem('token', data.token);
+      history.push('/profile');
+    } catch (error) {
+      console.error(error);
+      toast.dark('Sorry, there was an issue when trying to update user.');
     }
   };
 }

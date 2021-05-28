@@ -9,6 +9,8 @@ $devit-black: #111111;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    height: 100%;
+    width: 100%;
   
     h2{
       color: $devit-white
@@ -16,15 +18,12 @@ $devit-black: #111111;
   
     .left-side{
       width: 40%;
-      height: 80%;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-between;
     }
-    .current-projects{
-      height: 50%;
-    }
-    .activity-container{
+    .container{
       height: 50%;
     }
     .activity{
@@ -34,35 +33,77 @@ $devit-black: #111111;
     .project{
       background-color: $devit-gray;
       width: 100%;
-      height: 30%;
+      height: 20%;
       border-left: 5px solid $devit-orange;
       display: flex;
       align-items: center;
       margin-top: 20px;
       justify-content: space-evenly;
+      h1{
+        margin-right: 20px;
+      }
+      h2{
+        margin-right: 20px;
+        width: 50%;
+      }
       h3{
-        background-color: #999999;
-        color: $devit-white;
+        background-color: #4c4c4c;
+        margin-left: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
       }
       .descriptions{
+        height: 60%;
         width: 70%;
         display: flex;
-        justify-content: space-around;
+        justify-content: start;
       }
     }
     .right-side{
       width: 40%;
-      height: 80%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       color: $devit-white;
-  
-      img.profile{
-        height: 200px;
-        width: auto;
-        border-radius: 100px;
-        border: 5px solid $devit-orange;
+
+      .profile-container{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1{
+        font-size: 50px;
+      }
+      
+      .location{
+        display: flex;
+        align-items: center;
+        h3{
+          margin-left: 10px;
+        }
+      }
+      
+      img.profile {
+        width:300px;
+        height:300px;
+        object-fit:cover;
+        border-radius:50%; 
+        margin: 0 auto;
+        padding: 10px;
+      }
+      img.dev{
+        box-shadow:
+          inset 0 0 0 5px $devit-orange;
+      }
+      img.des{
+        box-shadow:
+        inset 0 0 0 10px #039001;
+      }
+      img.both{
+        box-shadow:
+          inset 0 0 0 5px $devit-orange,
+          inset 0 0 0 10px #039001;
       }
       .badges-container{
         width: 80%;
