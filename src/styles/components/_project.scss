@@ -23,8 +23,56 @@ h1 {
 }
 
 .project__industry__tag {
-    background-color:rgb(76, 76, 76);
-    padding: 8px;
+    background-color: $gray-700;
+    padding: 6px;
     display:inline-block;
-    margin: 20px;
+    margin: 10px;
+}
+
+.project__links {
+     color: inherit; 
+     margin: 5px;
+}
+
+.designer__needed {
+    border: 2px solid red;
+    background-color: $gray-800;
+    height: 60px;
+    border-radius:50%;
+    width: 60px;
+    margin: 5px;
+}
+
+.developer__needed {
+    border: 2px solid blue;
+    background-color:$gray-800;
+    height: 60px;
+    border-radius:50%;
+    width: 60px;
+    margin: 5px;
+}
+
+.ideator__needed {
+    border: 2px solid green;
+    background-color:$gray-800;
+    height: 60px;
+    border-radius:50%;
+    width: 60px;
+    margin: 5px;
+}
+
+.neededTeam__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.neededTeam__item {
+    margin: 10px;
+}
+
+.icon {
+    margin-top: 5px;
+    margin-left: 0;
+    margin-right: 2px;
 }

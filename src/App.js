@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import SignIn from './components/SignIn';
-import PrivateRoute from './components/PrivateRoute';
+// import PrivateRoute from './components/PrivateRoute';
 import Profile from './components/Profile';
 import NewIdea from './components/NewIdea';
 import Banner from './components/Banner';
@@ -24,13 +24,16 @@ const App = () => {
           <div className="current-page">
             <Switch>
               <Route exact path="/" component={LandingPage} />
-              <PrivateRoute path="/profile" component={Profile} />
+              <Route path="/profile" component={Profile} />
+              {/* <PrivateRoute path="/profile" component={Profile} /> */}
               <Route path="/signup" component={SignUp} />
               <Route path="/signin" component={SignIn} />
               <Route exact path="/projects" component={Projects} />
-              <PrivateRoute exact path="/projects/:projectID" component={Project} />
+              <Route exact path="/projects/:projectID" component={Project} />
+              {/* <PrivateRoute exact path="/projects/:projectID" component={Project} /> */}
               <Route exact path="/find-project" component={FindProject} />
-              <PrivateRoute path="/new-project" component={NewIdea} />
+              {/* <PrivateRoute path="/new-project" component={NewIdea} /> */}
+              <Route path="/new-project" component={NewIdea} />
               <Route component={ErrorNotFound} />
             </Switch>
           </div>
