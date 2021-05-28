@@ -6,8 +6,8 @@ import SignIn from './components/SignIn';
 import PrivateRoute from './components/PrivateRoute';
 import Profile from './components/Profile';
 import NewIdea from './components/NewIdea';
-import Banner from './components/Banner';
-import Sidebar from './components/Sidebar';
+// import Banner from './components/Banner';
+// import Sidebar from './components/Sidebar';
 import SignUp from './components/SignUp';
 import Onboarding from './components/Onboarding';
 import Projects from './components/Projects';
@@ -25,9 +25,9 @@ const App = () => {
     <Router>
       <div>
         {modalContentExists && <Modal />}
-        <Banner />
+        {/* <Banner /> */}
         <main className="main-section">
-          <Sidebar />
+          {/* <Sidebar /> */}
           <div className="current-page">
             <Switch>
               <Route exact path="/" component={LandingPage} />
@@ -38,7 +38,7 @@ const App = () => {
               <Route exact path="/projects" component={Projects} />
               <PrivateRoute exact path="/projects/:projectID" component={Project} />
               <Route exact path="/find-project" component={FindProject} />
-              <PrivateRoute path="/new-project" component={NewIdea} />
+              <Route path="/new-project" component={NewIdea} />
               <Route component={ErrorNotFound} />
             </Switch>
           </div>
