@@ -13,10 +13,6 @@ const FindProject = () => {
   const [searchterm, setSearchTerm] = useState('');
   const projects = useSelector(selectAllProjects);
   const [currProjects, setCurrProjects] = useState([]);
-  // const [industry, setIndustry] = useState('');
-
-  console.log('curr', currProjects);
-  console.log('proj', projects);
 
   const dispatch = useDispatch();
 
@@ -45,8 +41,6 @@ const FindProject = () => {
     setName(event.target.name);
     showModal(true);
   };
-
-  // const debouncedSearch = useCallback(debounce(search, 500), []);
 
   const onSearchChange = (event) => {
     setSearchTerm(event.target.value);
