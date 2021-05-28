@@ -1,113 +1,81 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 import { signUpUser } from '../store/actions';
+import DarkBG from './DarkBG';
+
+const validationSchema = Yup.object({
+  email: Yup.string().email('Invalid email format').required('Required Field'),
+  password: Yup.string().min(6, 'Minimum 6 characters').required('Required Field'),
+  confirmedPassword: Yup.string().oneOf([Yup.ref('password')], 'Password\'s must match').required('Required Field'),
+});
 
 const SignUp = () => {
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    location: '',
-    picture: '',
-    bio: '',
-    roles: [],
-    skills: [],
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema,
   });
 
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleUpdateUserValue = (e, key) => setUser({ ...user, [key]: e.target.value });
-  const handleUpdateUserArray = (e) => {
-    let newRoles = [];
-    const existingRole = user.roles.includes(e.target.value);
-
-    if (existingRole) {
-      newRoles = user.roles.filter((role) => role !== e.target.value);
-    } else {
-      newRoles = [...user.roles, e.target.value];
-    }
-
-    setUser({ ...user, roles: newRoles });
+  const handleSignUpUser = (e) => {
+    e.preventDefault();
+    const { email } = formik.values;
+    const { password } = formik.values;
+    dispatch(signUpUser({ email, password }, history));
+    history.push('/onboarding');
   };
 
-  const handleSignUpUser = () => dispatch(signUpUser(user, history));
-
   return (
-    <div className="sign-up">
-      <h1>Account Info</h1>
-      <ul>
-        <li><h2>Email:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.email} onChange={(e) => handleUpdateUserValue(e, 'email')} /></li>
-        <li><h2>Password:<span id="red">*</span> </h2></li>
-        <li><input type="password" value={user.password} onChange={(e) => handleUpdateUserValue(e, 'password')} /></li>
-      </ul>
-      <h1>User Info</h1>
-      <ul>
-        <li><h2>First Name:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.firstName} onChange={(e) => handleUpdateUserValue(e, 'firstName')} /></li>
-        <li><h2>Last Name:<span id="red">*</span> </h2></li>
-        <li><input type="text" value={user.lastName} onChange={(e) => handleUpdateUserValue(e, 'lastName')} /></li>
-      </ul>
-      <ul>
-        <li><h2>Profile Pic: </h2></li>
-        <li><input type="text" value={user.picture} onChange={(e) => handleUpdateUserValue(e, 'picture')} /></li>
-        <li><h2>Location: </h2></li>
-        <li><input type="text" value={user.location} onChange={(e) => handleUpdateUserValue(e, 'location')} /></li>
-      </ul>
-      <ul>
-        <li><h2>Bio: </h2></li>
-        <li><textarea type="text" value={user.bio} onChange={(e) => handleUpdateUserValue(e, 'bio')} /></li>
-      </ul>
-      <ul>
-        <li><h2>Roles: </h2></li>
-        <li>
-          <h3>Developer</h3>
-          <input
-            type="checkbox"
-            value="developer"
-            checked={user.roles.includes('developer')}
-            onChange={handleUpdateUserArray}
-          />
-          <h3>Designer</h3>
-          <input
-            type="checkbox"
-            value="designer"
-            checked={user.roles.includes('designer')}
-            onChange={handleUpdateUserArray}
-          />
-          <h3>Ideator</h3>
-          <input
-            type="checkbox"
-            value="ideator"
-            checked={user.roles.includes('ideator')}
-            onChange={handleUpdateUserArray}
-          />
-        </li>
-      </ul>
-      <ul>
-        <li><h2>Skills: </h2></li>
-        <li>
-          <h3>React</h3>
-          <input
-            type="checkbox"
-            value="react"
-            checked={user.skills.includes('react')}
-            onChange={(e) => setUser({ ...user, skills: [...new Set([...user.skills, e.target.value])] })}
-          />
-          <h3>HTML/CSS</h3>
-          <input
-            type="checkbox"
-            value="html/css"
-            checked={user.skills.includes('html/css')}
-            onChange={(e) => setUser({ ...user, skills: [...new Set([...user.skills, e.target.value])] })}
-          />
-        </li>
-      </ul>
-      <button type="button" className="button" onClick={handleSignUpUser}>Sign Up</button>
-    </div>
+    <DarkBG>
+      <section className="sign-in form">
+        <div className="form__container">
+          <h2 className="form__heading">Sign Up</h2>
+          <form className="form__form" onSubmit={handleSignUpUser}>
+            <label className="form__label" htmlFor="email">
+              <p className="form__label-text">Email<span className="form__required">*</span></p>
+              <input className="form__label-input"
+                type="text"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.email ? formik.errors.email : null}
+            </label>
+            <label className="form__label" htmlFor="password">
+              <p className="form__label-text">Password<span className="form__required">*</span></p>
+              <input className="form__label-input"
+                type="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.password ? formik.errors.password : null}
+            </label>
+            <label className="form__label" htmlFor="password">
+              <p className="form__label-text">Confirm Password<span className="form__required">*</span></p>
+              <input className="form__label-input"
+                type="password"
+                name="confirmPassword"
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.confirmPassword ? formik.errors.confirmPassword : null}
+            </label>
+            <button type="submit" className="button form__button">Sign Up</button>
+          </form>
+          <p>Already have an account? <Link to="/signin">Sign In</Link></p>
+        </div>
+      </section>
+    </DarkBG>
   );
 };
 

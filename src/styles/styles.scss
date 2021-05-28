@@ -1,19 +1,24 @@
+// Imports
+@import "~bootstrap/scss/bootstrap";
+
 // Utilities
 @import "utils/normalize";
 @import "utils/variables";
 @import "utils/mixins";
 @import "utils/base";
 @import "utils/layout";
+@import "utils/modal";
 
 // Components
 @import "components/logo";
 @import "components/button";
+@import "components/form";
 @import "components/icon";
 @import "components/toast";
 @import "components/banner";
 @import "components/sidebar";
 @import "components/sign-in";
-@import "components/sign-up";
+@import "components/onboarding";
 @import "components/user-avatar";
 @import "components/project";
 @import "components/new-idea";
@@ -21,4 +26,6 @@
 @import "components/landing-page";
 @import "components/profile";
 @import "components/find-project";
+
+
 

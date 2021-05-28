@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import ActionTypes from '../types';
 
-const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090/api';
+export const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090/api';
 
 export const toggleSidebar = () => ({ type: ActionTypes.TOGGLE_SIDEBAR });
 
@@ -74,7 +74,7 @@ export function signInUser(user, history) {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`${ROOT_URL}/signin`, user);
-      dispatch({ type: ActionTypes.AUTH_USER, payload: data });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('token', data.token);
       history.push('/profile');
     } catch (error) {
@@ -85,15 +85,29 @@ export function signInUser(user, history) {
   };
 }
 
-export function signUpUser(user, history) {
-  return async () => {
+export function signUpUser(user) {
+  return async (dispatch) => {
     try {
       const { data } = await axios.post(`${ROOT_URL}/signup`, user);
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
+      localStorage.setItem('token', data.token);
+    } catch (error) {
+      console.error(error);
+      toast.dark('Sorry, there was an issue when trying to sign you up.');
+    }
+  };
+}
+
+export function updateUser(id, user, history) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`${ROOT_URL}/users/${id}`, user);
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('token', data.token);
       history.push('/profile');
     } catch (error) {
       console.error(error);
-      toast.dark('Sorry, there was an issue when trying to sign you up.');
+      toast.dark('Sorry, there was an issue when trying to update user.');
     }
   };
 }
@@ -106,3 +120,8 @@ export function signOutUser(history) {
     history.push('/signin');
   };
 }
+
+export const toggleModalVisibility = (modalContent) => ({
+  type: ActionTypes.TOGGLE_MODAL_VISIBILITY,
+  modalContent,
+});
