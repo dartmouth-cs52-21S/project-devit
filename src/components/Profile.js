@@ -95,7 +95,6 @@ const Profile = () => {
     classes = classes.concat(user.roles.includes('designer') ? ' des' : '');
     classes = classes.concat(user.roles.includes('developer') ? ' dev' : '');
     classes = user.roles.includes('designer') && user.roles.includes('developer') ? 'profile both' : classes;
-    console.log('classes', classes);
     return (
       // eslint-disable-next-line max-len
       <img className={classes} src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="profile" />
