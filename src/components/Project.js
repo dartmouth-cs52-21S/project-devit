@@ -110,5 +110,7 @@ const ModalTestComponent = () => (
   >
     <h2 style={{ margin: '0 0 0.75rem' }}>I&apos;m in the modal 🎉</h2>
     <p>Click outside the border to dismiss me! ✌️</p>
+    <a className="project__links" href="google.com">some ideas!!</a>
+
   </div>
 );
