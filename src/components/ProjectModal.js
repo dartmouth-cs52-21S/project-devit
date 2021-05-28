@@ -22,13 +22,20 @@ import React from 'react';
 
 // // wrap entire find a project page in project__modal
 
-const ProjectModal = ({ handleClose, show, children }) => {
+const ProjectModal = ({
+  handleClose, reqToJoin, show, children, proj,
+}) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
 
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
+        <p>{proj.name}</p>
+        <p>{proj.id}</p>
+        <button type="button" onClick={reqToJoin}>
+          Request to Join
+        </button>
         <button type="button" onClick={handleClose}>
           Close
         </button>
