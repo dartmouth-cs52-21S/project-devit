@@ -23,7 +23,6 @@ const NewIdea = (props) => {
     //   team,
     };
     createProject(idea, props.history);
-    // props.createProject(idea, props.history);
   };
 
   const industries = industry.map((single) => {
@@ -62,11 +61,6 @@ const NewIdea = (props) => {
             </div>
           )
           : <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>}
-        {/* {chosenEmoji ? (
-          <span>You chose: {chosenEmoji.emoji}</span>
-        ) : (
-          <span>No emoji Chosen</span>
-        )} */}
 
       </div>
       <input placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
