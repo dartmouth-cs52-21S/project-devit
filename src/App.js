@@ -37,9 +37,10 @@ const App = () => {
               <Route path="/onboarding" component={Onboarding} />
               <PrivateRoute path="/profile" component={Profile} />
               <Route exact path="/projects" component={Projects} />
-              <PrivateRoute exact path="/projects/:projectID" component={Project} />
+              <Route exact path="/projects/:projectID" component={Project} />
+              {/* <PrivateRoute exact path="/projects/:projectID" component={Project} /> */}
               <Route exact path="/find-project" component={FindProject} />
-              <PrivateRoute path="/new-project" component={NewIdea} />
+              <Route path="/new-project" component={NewIdea} />
               <Route path="/chat" component={Chat} />
               <Route component={ErrorNotFound} />
             </Switch>

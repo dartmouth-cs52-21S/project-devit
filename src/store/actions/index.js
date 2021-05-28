@@ -44,12 +44,13 @@ export function updateProject(project, id) {
   };
 }
 
-export function fetchProject(id, callback) {
+export function fetchProject(id) {
+  console.log('in fetch');
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${ROOT_URL}/projects/${id}`);
+      console.log('data', data);
       dispatch({ type: ActionTypes.FETCH_PROJECT, payload: data });
-      callback(data);
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying find that project.');
