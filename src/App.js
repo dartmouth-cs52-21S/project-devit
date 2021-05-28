@@ -9,6 +9,7 @@ import NewIdea from './components/NewIdea';
 import Banner from './components/Banner';
 import Sidebar from './components/Sidebar';
 import SignUp from './components/SignUp';
+import Onboarding from './components/Onboarding';
 import Projects from './components/Projects';
 import Project from './components/Project';
 import FindProject from './components/FindProject';
@@ -32,6 +33,7 @@ const App = () => {
               <Route exact path="/" component={LandingPage} />
               <Route path="/signup" component={SignUp} />
               <Route path="/signin" component={SignIn} />
+              <Route path="/onboarding" component={Onboarding} />
               <PrivateRoute path="/profile" component={Profile} />
               <Route exact path="/projects" component={Projects} />
               <PrivateRoute exact path="/projects/:projectID" component={Project} />
