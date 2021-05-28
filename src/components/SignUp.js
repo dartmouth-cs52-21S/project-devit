@@ -48,6 +48,7 @@ const SignUp = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
+              {formik.errors.email ? formik.errors.email : null}
             </label>
             <label className="form__label" htmlFor="password">
               <p className="form__label-text">Password<span className="form__required">*</span></p>
@@ -57,6 +58,7 @@ const SignUp = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
               />
+              {formik.errors.password ? formik.errors.password : null}
             </label>
             <label className="form__label" htmlFor="password">
               <p className="form__label-text">Confirm Password<span className="form__required">*</span></p>
@@ -66,6 +68,7 @@ const SignUp = () => {
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
               />
+              {formik.errors.confirmPassword ? formik.errors.confirmPassword : null}
             </label>
             <button type="submit" className="button form__button">Sign Up</button>
           </form>
