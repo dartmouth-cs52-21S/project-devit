@@ -20,7 +20,7 @@ export const UserAvatar = () => {
       {picture ? (
         <img className="user-avatar__image" src={picture} alt={`${[firstName, lastName].join(' ')}`} />
       ) : (
-        <div className="user-avatar__image">{userInitials}</div>
+        <div className="user-avatar__initials">{userInitials}</div>
       )}
     </div>
   );
