@@ -6,7 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ProjectModal from './ProjectModal';
 import { fetchProjects, toggleModalVisibility } from '../store/actions';
 import { selectAllProjects } from '../store/selectors';
-import industriesList from '../../industries.json';
+import industriesList from '../constants/industries.json';
 
 const FindProject = () => {
   const [displayModal, showModal] = useState(false);
