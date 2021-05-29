@@ -9,9 +9,9 @@ export const UserAvatar = () => {
 
   if (!userIsDefined) return null;
 
-  const pluckFirstLetter = (string) => string.slice(0, 1);
+  // const pluckFirstLetter = (string) => string.slice(0, 1);
 
-  const userInitials = `${pluckFirstLetter(firstName)}${pluckFirstLetter(lastName)}`;
+  // const userInitials = `${pluckFirstLetter(firstName)}${pluckFirstLetter(lastName)}`;
 
   const userAvatarClasses = ['user-avatar', ...roles].join(' ');
 
@@ -20,7 +20,7 @@ export const UserAvatar = () => {
       {picture ? (
         <img className="user-avatar__image" src={picture} alt={`${[firstName, lastName].join(' ')}`} />
       ) : (
-        <div className="user-avatar__image">{userInitials}</div>
+        <div className="user-avatar__image">Initials</div>
       )}
     </div>
   );
