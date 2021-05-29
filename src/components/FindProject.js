@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ProjectModal from './ProjectModal';
 import { fetchProjects, toggleModalVisibility } from '../store/actions';
 import { selectAllProjects } from '../store/selectors';
+import industriesList from '../../industries.json';
 
 const FindProject = () => {
   const [displayModal, showModal] = useState(false);
@@ -23,9 +24,9 @@ const FindProject = () => {
     }));
   };
 
-  const filter = (word) => {
+  const filter = (word, field) => {
     setCurrProjects(projects.filter((project) => {
-      return project.industry.includes(word);
+      return project[field].includes(word);
     }));
   };
 
@@ -67,6 +68,14 @@ const FindProject = () => {
     </div>
   ));
 
+  const industryFilter = industriesList.majorIndustries.map((industry) => (
+    <Dropdown.Item className="drop-item" eventKey={industry} onSelect={() => filter(industry, 'industry')}>{industry}</Dropdown.Item>
+  ));
+
+  const teamFilter = ['developer', 'designer'].map((role) => (
+    <Dropdown.Item className="drop-item" eventKey={role} onSelect={() => filter(role, 'neededTeam')}>{role}</Dropdown.Item>
+  ));
+
   return (
     <div id="findPostsOuter">
       <div className="search-bar">
@@ -81,9 +90,18 @@ const FindProject = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="drop-menu">
-              <Dropdown.Item className="drop-item" eventKey="tech" onSelect={filter}>Tech</Dropdown.Item>
-              <Dropdown.Item className="drop-item" eventKey="edu" onSelect={filter}>Education</Dropdown.Item>
-              <Dropdown.Item className="drop-item" eventKey="science" onSelect={filter}>Science</Dropdown.Item>
+              {industryFilter}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+        <div className="toggle" id="roles">
+          <Dropdown>
+            <Dropdown.Toggle variant="default" id="dropdown-basic" className="drop-toggle">
+              Needed Roles
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu className="drop-menu">
+              {teamFilter}
             </Dropdown.Menu>
           </Dropdown>
         </div>
