@@ -21,7 +21,7 @@ const Banner = () => {
       {isAuthenticated && (
         <div className="banner__user-actions">
           <UserActionButton />
-          <UserAvatar />
+          <UserAvatar useAuthenticatedUser />
         </div>
       )}
     </header>

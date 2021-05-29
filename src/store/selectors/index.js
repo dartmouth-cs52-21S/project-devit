@@ -14,3 +14,6 @@ export const selectSidebarIsCollapsed = (state) => state.sidebar.isCollapsed;
 // Modal Reducer
 export const selectModalContent = (state) => state.modal.modalContent;
 export const selectModalContentExists = (state) => Object.keys(state.modal.modalContent).length > 0;
+
+// Chat Reducer
+export const selectChatMessages = (state) => state.chat.messages;
