@@ -102,6 +102,14 @@ const Project = () => {
       <div className="project__chat">
         <Chat />
       </div>
+
+      <ul className="neededTeam__container">
+        {project.neededTeam}
+      </ul>
+      <ul className="applicants__container">
+        {project.applicants}
+      </ul>
+      {/* <p className="project__id">{`Project ID: ${projectID}` }</p> */}
     </div>
   );
 };
