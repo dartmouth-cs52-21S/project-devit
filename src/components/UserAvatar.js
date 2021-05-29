@@ -11,14 +11,14 @@ export const UserAvatar = () => {
 
   const pluckFirstLetter = (string) => string.slice(0, 1);
 
-  const userInitials = `${pluckFirstLetter(firstName)}${pluckFirstLetter(lastName)}`;
+  const userInitials = `${pluckFirstLetter(firstName ?? '')}${pluckFirstLetter(lastName ?? '')}`;
 
   const userAvatarClasses = ['user-avatar', ...roles].join(' ');
 
   return (
     <div className={userAvatarClasses}>
       {picture ? (
-        <img className="user-avatar__image" src={picture} alt={`${[firstName, lastName].join(' ')}`} />
+        <img className="user-avatar__image" src={picture} alt={`${[firstName ?? '', lastName ?? ''].join(' ')}`} />
       ) : (
         <div className="user-avatar__initials">{userInitials}</div>
       )}
