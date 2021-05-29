@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FiChevronsLeft, FiPlusSquare } from 'react-icons/fi';
+import { FiChevronsLeft, FiChevronsRight, FiPlusSquare } from 'react-icons/fi';
 import { VscProject } from 'react-icons/vsc';
 import { AiOutlineFileSearch } from 'react-icons/ai';
 import { toggleSidebar } from '../store/actions/index';
@@ -28,7 +28,7 @@ const Sidebar = () => {
       </div>
       <div role="button" tabIndex="0" className="sidebar__expand-collapse" onClick={toggleCollapsed}>
         <h4 className="sidebar__nav-link-label collapse-label">Collapse</h4>
-        <span className="icon md"><FiChevronsLeft /></span>
+        <span className="icon md">{sidebarIsCollapsed ? <FiChevronsRight /> : <FiChevronsLeft />}</span>
       </div>
     </nav>
   );
