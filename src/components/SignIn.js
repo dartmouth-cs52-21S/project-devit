@@ -44,6 +44,7 @@ const SignIn = () => {
                 className="form__label-input"
                 type="text"
                 name="email"
+                data-lpignore={process.env.NODE_ENV === 'production' ? 'true' : false}
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
@@ -55,6 +56,7 @@ const SignIn = () => {
                 className="form__label-input"
                 type="password"
                 name="password"
+                data-lpignore={process.env.NODE_ENV === 'production' ? 'true' : false}
                 value={formik.values.password}
                 onChange={formik.handleChange}
               />
