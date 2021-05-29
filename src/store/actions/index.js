@@ -71,12 +71,28 @@ export function deleteProject(id, history) {
   };
 }
 
+export function reauthenticateUser(token) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`${ROOT_URL}/reauth`, { token });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+    } catch (error) {
+      console.error(error);
+      const toastMessage = `Sorry, there was an issue when trying to reauthenticate: ${error.response.data}`;
+      toast.dark(toastMessage);
+    }
+  };
+}
+
 export function signInUser(user, history) {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`${ROOT_URL}/signin`, user);
       dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
       history.push('/profile');
     } catch (error) {
       console.error(error);
@@ -116,6 +132,7 @@ export function updateUser(id, user, history) {
 export function signOutUser(history) {
   return (dispatch) => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     dispatch({ type: ActionTypes.DEAUTH_USER });
     toast.dark('✌️ You have signed out');
     history.push('/signin');
