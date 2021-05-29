@@ -60,7 +60,7 @@ const Chat = () => {
 
   return (
     <div className="chat">
-      <h1 className="chat__title">Team Chat</h1>
+      <h1 className="chat__title">Chat</h1>
       <div className="chat__chat-window">
         {messages.length > 0 && (
           <div className="chat__messages">

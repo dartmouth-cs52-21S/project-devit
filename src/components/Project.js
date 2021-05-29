@@ -94,22 +94,17 @@ const Project = () => {
           <FontAwesomeIcon className="icon" icon={faLightbulb} />
           <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
         </div>
-
         <ul className="neededTeam__container">
           {project.neededTeam}
         </ul>
+        <ul className="applicants__container">
+          {project.applicants}
+        </ul>
       </div>
+
       <div className="project__chat">
         <Chat />
       </div>
-
-      <ul className="neededTeam__container">
-        {project.neededTeam}
-      </ul>
-      <ul className="applicants__container">
-        {project.applicants}
-      </ul>
-      {/* <p className="project__id">{`Project ID: ${projectID}` }</p> */}
     </div>
   );
 };
