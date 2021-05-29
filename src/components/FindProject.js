@@ -42,9 +42,18 @@ const FindProject = () => {
   };
 
   const presentModal = (event) => {
+    console.log(currProjects);
     dispatch(fetchProject(event.target.name, (data) => {
       setProj(data);
     }));
+    let i = 0;
+    while (i < currProjects.length) {
+      if (currProjects[i].id === event.target.name) {
+        setProj(currProjects[i]);
+        break;
+      }
+      i += 1;
+    }
     showModal(true);
   };
 
