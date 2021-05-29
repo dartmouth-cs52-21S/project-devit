@@ -15,8 +15,10 @@
 }
 
 .project__logo {
+  @include center;
   width: 40px;
   height: 40px;
+  font-size: 2rem;
 }
 
 .project__logo img {
