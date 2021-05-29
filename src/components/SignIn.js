@@ -29,7 +29,6 @@ const SignIn = () => {
     const { email } = formik.values;
     const { password } = formik.values;
     dispatch(signInUser({ email, password }, history));
-    history.push('/profile');
   };
 
   return (
