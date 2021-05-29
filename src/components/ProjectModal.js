@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { updateProject } from '../store/actions';
+import { updateProject, updateUser } from '../store/actions';
 import { selectisAuthenticated, selectUser } from '../store/selectors';
 
 // const ProjectModal = (props) => {
@@ -37,16 +37,24 @@ const ProjectModal = ({
   const isAuthenticated = useSelector(selectisAuthenticated);
   const history = useHistory();
 
-  const reqToJoin = () => {
+  const joinProject = () => {
     if (isAuthenticated) {
-      if (proj.team.includes(user.id)) {
+      if (proj.team.includes(user.id) || user.projects.includes(proj.id)) {
         toast.dark('You are already a member of this project!');
       } else {
+        // add the user to the project
         const newProj = proj;
         const newteam = proj.team;
         newteam.push(user.id);
         newProj.applicants = newteam;
         dispatch(updateProject(newProj, proj.id));
+
+        // add the project to the user
+        const newUser = user;
+        const newprojects = user.projects;
+        newprojects.push(proj.id);
+        newUser.projects = newprojects;
+        dispatch(updateUser(user.id, newUser, history));
       }
     } else {
       history.push('/signup');
@@ -59,7 +67,7 @@ const ProjectModal = ({
         {children}
         <p>{proj.name}</p>
         <p>Team Members: {proj.team}</p>
-        <button type="button" onClick={reqToJoin}>
+        <button type="button" onClick={joinProject}>
           Join Team
         </button>
         <button type="button" onClick={handleClose}>
