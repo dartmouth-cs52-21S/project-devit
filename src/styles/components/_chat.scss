@@ -1,0 +1,87 @@
+$message-input-height: 3rem;
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+
+  &__title {
+    margin: 0 0 0.5rem;
+  }
+  
+  &__chat-window {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    height: 0;
+    background-color: $devit-gray;
+  }
+
+  &__messages {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 0 1rem;
+    margin-bottom: $message-input-height;
+  }
+  
+  &__message {
+    padding: 0.75rem 0;
+  }
+
+  &__message {
+    display: flex;
+  }
+
+  &__message-user {
+    margin-right: 0.25rem;
+  }
+
+  &__message-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  &__message-details-meta {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__message-username {
+    font-size: 0.9rem;
+    margin-right: 0.25rem;
+    color: $orange-800;
+  }
+
+  &__message-timestamp {
+    font-size: 0.8rem;
+    color: $gray-300;
+  }
+
+  input[type=text] {
+    background-color: $devit-black;
+  }
+
+  &__message-input {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    height: $message-input-height;
+    justify-self: flex-end;
+  }
+
+  &__form {
+    flex: 1;
+  }
+
+  &__submit-button {
+    height: $message-input-height;
+    margin: 0;
+  }
+}
+

@@ -1,13 +1,19 @@
+/* eslint-disable key-spacing */
+/* eslint-disable comma-spacing */
+/* eslint-disable no-multi-spaces */
+
 const ActionTypes = {
-  FETCH_PROJECTS: 'FETCH_PROJECTS',
-  FETCH_PROJECTS_FOR_USER: 'FETCH_PROJECTS_FOR_USER',
-  FETCH_PROJECT: 'FETCH_PROJECT',
-  DELETE_PROJECT: 'DELETE_PROJECT',
-  NEW_PROJECT: 'NEW_PROJECT',
-  AUTH_USER: 'AUTH_USER',
-  DEAUTH_USER: 'DEAUTH_USER',
-  TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR',
-  TOGGLE_MODAL_VISIBILITY: 'TOGGLE_MODAL_VISIBILITY',
+  FETCH_PROJECTS          : 'projects/FETCH_PROJECTS'          ,
+  FETCH_PROJECTS_FOR_USER : 'projects/FETCH_PROJECTS_FOR_USER' ,
+  FETCH_PROJECT           : 'projects/FETCH_PROJECT'           ,
+  DELETE_PROJECT          : 'projects/DELETE_PROJECT'          ,
+  NEW_PROJECT             : 'projects/NEW_PROJECT'             ,
+  AUTH_USER               : 'auth/AUTH_USER'                   ,
+  DEAUTH_USER             : 'auth/DEAUTH_USER'                 ,
+  TOGGLE_SIDEBAR          : 'sidebar/TOGGLE_SIDEBAR'           ,
+  TOGGLE_MODAL_VISIBILITY : 'modal/TOGGLE_MODAL_VISIBILITY'    ,
+  UPDATE_CHAT_MESSAGES    : 'chat/UPDATE_CHAT_MESSAGES'        ,
+  ADD_CHAT_MESSAGE        : 'chat/ADD_CHAT_MESSAGE'            ,
 };
 
 export default ActionTypes;

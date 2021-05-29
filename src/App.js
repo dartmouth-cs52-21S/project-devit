@@ -17,6 +17,7 @@ import ErrorNotFound from './components/ErrorNotFound';
 import LandingPage from './components/LandingPage';
 import Modal from './components/Modal';
 import { selectModalContentExists } from './store/selectors';
+import Chat from './components/Chat';
 
 const App = () => {
   const modalContentExists = useSelector(selectModalContentExists);
@@ -40,6 +41,7 @@ const App = () => {
               {/* <PrivateRoute exact path="/projects/:projectID" component={Project} /> */}
               <Route exact path="/find-project" component={FindProject} />
               <Route path="/new-project" component={NewIdea} />
+              <Route path="/chat" component={Chat} />
               <Route component={ErrorNotFound} />
             </Switch>
           </div>

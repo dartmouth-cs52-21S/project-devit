@@ -1,31 +1,28 @@
 import React from 'react';
 // import { useSelector } from 'react-redux';
 
-// import { selectUser, selectUserIsDefined } from '../store/selectors';
 
-export const UserAvatar = () => {
-  // const { firstName, lastName, roles, picture } = useSelector(selectUser);
-  // const userIsDefined = useSelector(selectUserIsDefined);
+import { selectUser } from '../store/selectors';
+import { pluckFirstLetter } from '../utils/utilityFunctions';
 
-  // if (!userIsDefined) return null;
+export const UserAvatar = ({ useAuthenticatedUser, passedInUser }) => {
+  const authenticatedUser = useSelector(selectUser);
 
-  // const pluckFirstLetter = (string) => string.slice(0, 1);
+  const user = useAuthenticatedUser ? authenticatedUser : passedInUser;
 
-  // const userInitials = `${pluckFirstLetter(firstName)}${pluckFirstLetter(lastName)}`;
+  if (!user) return null;
 
-  // const userAvatarClasses = ['user-avatar', ...roles].join(' ');
+  const userInitials = `${pluckFirstLetter(user.firstName)}${pluckFirstLetter(user.lastName)}`;
+
+  const userAvatarClasses = ['user-avatar', ...user.roles].join(' ');
 
   return (
-    // <div className={userAvatarClasses}>
-    //   {picture ? (
-    //     // <img className="user-avatar__image" src={picture} alt={`${[firstName, lastName].join(' ')}`} />
-    //     <img className="user-avatar__image" src={picture} alt="firstname lastname" />
-    //   ) : (
-    //     <div className="user-avatar__image">Initials</div>
-    //   )}
-    // </div>
-    <div>
-      user avatar
+    <div className={userAvatarClasses}>
+      {user.picture ? (
+        <img className="user-avatar__image" src={user.picture} alt={`${[user.firstName, user.lastName].join(' ')}`} />
+      ) : (
+        <div className="user-avatar__initials">{userInitials}</div>
+      )}
     </div>
   );
 };
