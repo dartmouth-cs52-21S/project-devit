@@ -1,12 +1,10 @@
-import React from 'react';
-// import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
-import { toggleModalVisibility } from '../store/actions';
-// import { fetchProject, toggleModalVisibility } from '../store/actions';
-import projectsList from '../data/projects';
+import { fetchProject, toggleModalVisibility } from '../store/actions';
+// import projectsList from '../data/projects';
 import Chat from './Chat';
 
 // const mapStateToProps = (reduxState) => ({
@@ -14,21 +12,19 @@ import Chat from './Chat';
 // });
 
 const Project = () => {
-  // const [project, setProject] = useState();
+  const [project, setProject] = useState();
   //   const [editing, setEditing] = useState(false);
 
   const { projectID } = useParams();
-  //   const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   // code to run on component mount
-  //   dispatch(fetchProject(projectID, (data) => {
-  //     setProject(data);
-  //   }));
-  // }, []);
-
-  const project = projectsList.find((item) => item.id === projectID);
+  useEffect(() => {
+    // code to run on component mount
+    dispatch(fetchProject(projectID, (data) => {
+      setProject(data);
+    }));
+  }, []);
 
   const industries = project.industry ? (project.industry.map((item) => {
     return (
@@ -37,35 +33,35 @@ const Project = () => {
   }))
     : null;
 
-  // const neededTeam = project.neededTeam ? (project.neededTeam.map((item) => {
-  //   const designer = 'designer';
-  //   const developer = 'developer';
-  //   // const ideator = 'ideator';
+  const neededTeam = project.neededTeam ? (project.neededTeam.map((item) => {
+    const designer = 'designer';
+    const developer = 'developer';
+    // const ideator = 'ideator';
 
-  //   if (designer.match(item)) {
-  //     return (
-  //       <div className="neededTeam__item" key={item}>
-  //         <p className="designer__needed" />
-  //         <p>{item}</p>
-  //       </div>
-  //     );
-  //   } else if (developer.match(item)) {
-  //     return (
-  //       <div className="neededTeam__item" key={item}>
-  //         <p className="developer__needed" />
-  //         <p>{item}</p>
-  //       </div>
-  //     );
-  //   } else {
-  //     return (
-  //       <div className="neededTeam__item" key={item}>
-  //         <p className="ideator__needed" />
-  //         <p>{item}</p>
-  //       </div>
-  //     );
-  //   }
-  // }))
-  //   : null;
+    if (designer.match(item)) {
+      return (
+        <div className="neededTeam__item" key={item}>
+          <p className="designer__needed" />
+          <p>{item}</p>
+        </div>
+      );
+    } else if (developer.match(item)) {
+      return (
+        <div className="neededTeam__item" key={item}>
+          <p className="developer__needed" />
+          <p>{item}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="neededTeam__item" key={item}>
+          <p className="ideator__needed" />
+          <p>{item}</p>
+        </div>
+      );
+    }
+  }))
+    : null;
 
   const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
 
@@ -95,7 +91,7 @@ const Project = () => {
           <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
         </div>
         <ul className="neededTeam__container">
-          {project.neededTeam}
+          {neededTeam}
         </ul>
         <ul className="applicants__container">
           {project.applicants}
