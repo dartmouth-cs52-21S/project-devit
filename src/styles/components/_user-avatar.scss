@@ -39,6 +39,7 @@
   }
 
   &__initials {
+    @include ff-body-medium;
     @include center;
     height: 100%;
   }
