@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const ProjectsReducer = (state = initialState, action) => {
-  console.log('type', action.type);
   switch (action.type) {
     case ActionTypes.FETCH_PROJECTS:
       return { all: action.payload, current: state.current };

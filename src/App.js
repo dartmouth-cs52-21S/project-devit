@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignIn from './components/SignIn';
 import PrivateRoute from './components/PrivateRoute';
 import Profile from './components/Profile';
-import NewIdea from './components/NewIdea';
+import NewProject from './components/NewProject';
 import Banner from './components/Banner';
 import Sidebar from './components/Sidebar';
 import SignUp from './components/SignUp';
@@ -38,9 +38,8 @@ const App = () => {
               <PrivateRoute path="/profile" component={Profile} />
               <Route exact path="/projects" component={Projects} />
               <Route exact path="/projects/:projectID" component={Project} />
-              {/* <PrivateRoute exact path="/projects/:projectID" component={Project} /> */}
               <Route exact path="/find-project" component={FindProject} />
-              <Route path="/new-project" component={NewIdea} />
+              <Route path="/new-project" component={NewProject} />
               <Route path="/chat" component={Chat} />
               <Route component={ErrorNotFound} />
             </Switch>

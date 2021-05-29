@@ -79,7 +79,7 @@ const Profile = () => {
       return <h3 key={ind}>{ind}</h3>;
     });
     return (
-      <div className="project" key={project}>
+      <div className="project" key={project.id}>
         <h1>{project.logo}</h1>
         <h2>{project.name}</h2>
         <div className="descriptions">

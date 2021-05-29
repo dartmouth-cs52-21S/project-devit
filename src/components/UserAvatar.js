@@ -1,13 +1,11 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 
 import { selectUser } from '../store/selectors';
 import { pluckFirstLetter } from '../utils/utilityFunctions';
 
 export const UserAvatar = ({ useAuthenticatedUser, passedInUser }) => {
   const authenticatedUser = useSelector(selectUser);
-
   const user = useAuthenticatedUser ? authenticatedUser : passedInUser;
 
   if (!user) return null;
