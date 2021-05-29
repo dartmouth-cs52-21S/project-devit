@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import ProjectModal from './ProjectModal';
-import { fetchProjects, fetchProject, toggleModalVisibility } from '../store/actions';
+import { fetchProjects, toggleModalVisibility } from '../store/actions';
 import { selectAllProjects } from '../store/selectors';
 
 const FindProject = () => {
@@ -12,6 +12,7 @@ const FindProject = () => {
   const [proj, setProj] = useState('');
   const [searchterm, setSearchTerm] = useState('');
   const projects = useSelector(selectAllProjects);
+
   const [currProjects, setCurrProjects] = useState([]);
 
   const dispatch = useDispatch();
@@ -42,10 +43,6 @@ const FindProject = () => {
   };
 
   const presentModal = (event) => {
-    console.log(currProjects);
-    dispatch(fetchProject(event.target.name, (data) => {
-      setProj(data);
-    }));
     let i = 0;
     while (i < currProjects.length) {
       if (currProjects[i].id === event.target.name) {

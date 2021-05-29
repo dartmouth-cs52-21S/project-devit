@@ -1,6 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { updateProject } from '../store/actions';
+import { selectisAuthenticated, selectUser } from '../store/selectors';
 
 // const ProjectModal = (props) => {
 //   // const [showModal, toggleModal]
@@ -30,17 +32,22 @@ const ProjectModal = ({
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
 
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const isAuthenticated = useSelector(selectisAuthenticated);
+  const history = useHistory();
 
   const reqToJoin = () => {
-    console.log(proj.testApplicants);
-    const newProj = proj;
-    const applicants = newProj.testApplicants;
-    applicants.push('new applicant');
-    newProj.testApplicants = applicants;
+    if (isAuthenticated) {
+      console.log(proj.applicants);
+      const newProj = proj;
+      const newapplicants = proj.applicants;
+      newapplicants.push(user.id);
+      newProj.applicants = newapplicants;
 
-    console.log(newProj);
-
-    dispatch(updateProject(newProj, proj.id));
+      dispatch(updateProject(newProj, proj.id));
+    } else {
+      history.push('/signup');
+    }
   };
 
   return (
@@ -48,8 +55,7 @@ const ProjectModal = ({
       <section className="modal-main">
         {children}
         <p>{proj.name}</p>
-        <p>{proj.id}</p>
-        <p>{proj.testApplicants}</p>
+        <p>{proj.applicants}</p>
         <button type="button" onClick={reqToJoin}>
           Request to Join
         </button>
