@@ -68,7 +68,7 @@ const FindProject = () => {
     </div>
   ));
 
-  const industryFilter = industriesList.majorIndustries.map((industry) => (
+  const industryFilter = industriesList.industries.map((industry) => (
     <Dropdown.Item className="drop-item" eventKey={industry} onSelect={() => filter(industry, 'industry')}>{industry}</Dropdown.Item>
   ));
 
