@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { updateProject } from '../store/actions';
 import { selectisAuthenticated, selectUser } from '../store/selectors';
 
@@ -38,13 +39,15 @@ const ProjectModal = ({
 
   const reqToJoin = () => {
     if (isAuthenticated) {
-      console.log(proj.applicants);
-      const newProj = proj;
-      const newapplicants = proj.applicants;
-      newapplicants.push(user.id);
-      newProj.applicants = newapplicants;
-
-      dispatch(updateProject(newProj, proj.id));
+      if (proj.team.includes(user.id)) {
+        toast.dark('You are already a member of this project!');
+      } else {
+        const newProj = proj;
+        const newteam = proj.team;
+        newteam.push(user.id);
+        newProj.applicants = newteam;
+        dispatch(updateProject(newProj, proj.id));
+      }
     } else {
       history.push('/signup');
     }
@@ -55,9 +58,9 @@ const ProjectModal = ({
       <section className="modal-main">
         {children}
         <p>{proj.name}</p>
-        <p>{proj.applicants}</p>
+        <p>Team Members: {proj.team}</p>
         <button type="button" onClick={reqToJoin}>
-          Request to Join
+          Join Team
         </button>
         <button type="button" onClick={handleClose}>
           Close

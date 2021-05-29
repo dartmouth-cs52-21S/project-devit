@@ -38,10 +38,6 @@ const FindProject = () => {
     showModal(false);
   };
 
-  const join = () => {
-    console.log('join attempted');
-  };
-
   const presentModal = (event) => {
     let i = 0;
     while (i < currProjects.length) {
@@ -94,7 +90,7 @@ const FindProject = () => {
       </div>
       {postProjects}
       <button type="button" className="button" onClick={handleToggleModal}>Toggle Redux ⚡️ Powered Modal</button>
-      <ProjectModal proj={proj} show={displayModal} handleClose={hideModal} reqToJoin={join} />
+      <ProjectModal proj={proj} show={displayModal} handleClose={hideModal} />
     </div>
 
   );
