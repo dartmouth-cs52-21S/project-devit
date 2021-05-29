@@ -100,12 +100,13 @@ export function signUpUser(user) {
 }
 
 export function updateUser(id, user, history) {
+  console.log(user);
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`${ROOT_URL}/users/${id}`, user);
+      const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user);
       dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('token', data.token);
-      history.push('/profile');
+      // history.push('/profile');
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying to update user.');
