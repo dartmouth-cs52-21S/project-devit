@@ -6,7 +6,6 @@ import { pluckFirstLetter } from '../utils/utilityFunctions';
 
 export const UserAvatar = ({ useAuthenticatedUser, passedInUser }) => {
   const authenticatedUser = useSelector(selectUser);
-
   const user = useAuthenticatedUser ? authenticatedUser : passedInUser;
 
   if (!user) return null;
