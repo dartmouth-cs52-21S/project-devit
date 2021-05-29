@@ -49,25 +49,22 @@ const Onboarding = () => {
     setUser({ ...user, picture: url });
   }, [file]);
 
-  console.log(user);
-
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleUpdateUser = () => {
-    console.log('going to update');
-    console.log('stored user', storedUser);
     if (file) {
       uploadImage(file).then((url) => {
-        dispatch(updateUser(storedUser._id, { ...user, picture: url }, history));
+        dispatch(updateUser(storedUser.id, { ...user, picture: url }, history));
       }).catch((error) => {
         console.error(error);
       });
+    } else {
+      dispatch(updateUser(storedUser.id, user, history));
     }
   };
 
   const handleUpdateUserArray = (e, userObject, userArrayKey) => {
-    console.log('userobj', userObject);
     let newArray = [];
     const existingRole = userObject[userArrayKey]?.includes(e.target.value);
 
