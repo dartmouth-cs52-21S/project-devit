@@ -107,4 +107,12 @@ $nav-button-padding: 1.25rem;
       cursor: pointer;
     }
   }
+
+  .expand-collapse-icon {
+    @include transition;
+
+    &.flip {
+      transform: rotate(180deg);
+    }
+  }
 }
