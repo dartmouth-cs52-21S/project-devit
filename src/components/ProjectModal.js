@@ -1,6 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { updateProject } from '../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { updateProject, updateUser } from '../store/actions';
+import { selectisAuthenticated, selectUser } from '../store/selectors';
 
 // const ProjectModal = (props) => {
 //   // const [showModal, toggleModal]
@@ -30,17 +33,32 @@ const ProjectModal = ({
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
 
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const isAuthenticated = useSelector(selectisAuthenticated);
+  const history = useHistory();
 
-  const reqToJoin = () => {
-    console.log(proj.testApplicants);
-    const newProj = proj;
-    const applicants = newProj.testApplicants;
-    applicants.push('new applicant');
-    newProj.testApplicants = applicants;
+  const joinProject = () => {
+    if (isAuthenticated) {
+      if (proj.team.includes(user.id) || user.projects.includes(proj.id)) {
+        toast.dark('You are already a member of this project!');
+      } else {
+        // add the user to the project
+        const newProj = proj;
+        const newteam = proj.team;
+        newteam.push(user.id);
+        newProj.applicants = newteam;
+        dispatch(updateProject(newProj, proj.id));
 
-    console.log(newProj);
-
-    dispatch(updateProject(newProj, proj.id));
+        // add the project to the user
+        const newUser = user;
+        const newprojects = user.projects;
+        newprojects.push(proj.id);
+        newUser.projects = newprojects;
+        dispatch(updateUser(user.id, newUser, history));
+      }
+    } else {
+      history.push('/signup');
+    }
   };
 
   return (
@@ -48,10 +66,9 @@ const ProjectModal = ({
       <section className="modal-main">
         {children}
         <p>{proj.name}</p>
-        <p>{proj.id}</p>
-        <p>{proj.testApplicants}</p>
-        <button type="button" onClick={reqToJoin}>
-          Request to Join
+        <p>Team Members: {proj.team}</p>
+        <button type="button" onClick={joinProject}>
+          Join Team
         </button>
         <button type="button" onClick={handleClose}>
           Close
