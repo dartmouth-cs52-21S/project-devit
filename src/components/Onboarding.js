@@ -7,6 +7,7 @@ import { selectUser } from '../store/selectors';
 
 import { updateUser } from '../store/actions';
 import { uploadImage } from '../store/s3';
+import Skills from '../constants/skills.json';
 import DarkBG from './DarkBG';
 
 const SelectField = ({
@@ -37,9 +38,11 @@ const Onboarding = () => {
     picture: '../images/user.png',
     bio: '',
     roles: [],
-    skills: [],
+    devSkills: [],
+    desSkills: [],
   });
   const [file, setFile] = useState();
+  console.log(Skills.devloper);
 
   const storedUser = useSelector(selectUser);
 
@@ -84,12 +87,6 @@ const Onboarding = () => {
   const rolesFields = [
     { fieldName: 'developer', label: 'Developer' },
     { fieldName: 'designer', label: 'Designer' },
-    { fieldName: 'ideator', label: 'Ideator' },
-  ];
-
-  const skillsFields = [
-    { fieldName: 'react', label: 'React' },
-    { fieldName: 'htmlcss', label: 'HTML/CSS' },
   ];
 
   return (
@@ -124,11 +121,19 @@ const Onboarding = () => {
               ))}
             </div>
           </section>
-          <section className="form__section">
-            <h1>Skills</h1>
+          <section className="form__section" id="skills">
+            <h1> Developer Skills</h1>
             <div className="form__checkbox-group">
-              {skillsFields.map(({ fieldName, label }) => (
-                <SelectField key={fieldName} user={user} userArrayKey="skills" handleUpdateUserArray={handleUpdateUserArray} fieldName={fieldName} label={label} />
+              {Skills.developer.map((item) => (
+                <SelectField key={item} user={user} userArrayKey="devSkills" handleUpdateUserArray={handleUpdateUserArray} fieldName={item} label={item} />
+              ))}
+            </div>
+          </section>
+          <section className="form__section" id="skills">
+            <h1> Designer Skills</h1>
+            <div className="form__checkbox-group">
+              {Skills.designer.map((name) => (
+                <SelectField key={name} user={user} userArrayKey="desSkills" handleUpdateUserArray={handleUpdateUserArray} fieldName={name} label={name} />
               ))}
             </div>
           </section>
