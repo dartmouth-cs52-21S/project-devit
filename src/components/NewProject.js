@@ -36,7 +36,7 @@ const NewProject = (props) => {
   };
 
   const industries = industry.map((single) => {
-    return <p key={single} className="new">{single}</p>;
+    return <p key={single} className="new form__label-text checkbox-label-text">{single}</p>;
   });
 
   const onEmojiClick = (event, emojiObject) => {
@@ -78,20 +78,20 @@ const NewProject = (props) => {
 
   return (
     <div id="new-idea">
-      <div className="title">
-        <div>
-          {editEmoji
-            ? (
-              <div>
-                <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
-                <button className="save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
-              </div>
-            )
-            : <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>}
+      {editEmoji
+        ? (
+          <div className="picker">
+            <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
+            <button className="save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
+          </div>
+        )
+        : (
+          <div className="title">
+            <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>
+            <input className="title" placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+          </div>
+        )}
 
-        </div>
-        <input className="title" placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-      </div>
       <div className="selector-container">
         <h1>Description</h1>
         <textarea placeholder="Describe your project" rows="4" columns="50" onChange={(e) => setDescription(e.target.value)} />
@@ -115,8 +115,8 @@ const NewProject = (props) => {
           {industries}
           {editIndustry
             ? (
-              <div>
-                <input placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
+              <div className="add-ind">
+                <input className="add" placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
                 <button className="add" type="submit" onClick={handleIndustry}>Add</button>
               </div>
             )
