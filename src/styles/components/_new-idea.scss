@@ -6,22 +6,35 @@
   align-items: center;
   justify-content: space-around;
   color: $devit-white;
+  margin-top: 300px;
 
   button.emoji{
     background-color: $devit-gray;
-    width: 50px;
-    height: 50px;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    font-size: 40px;
+  }
+  .title{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
   }
 
-  input{
+  input.title{
     width: 35%;
-    height: 8%;
+    height: 80%;
     font-size: 40px;
+    margin-left: 20px;
     background-color: $devit-gray;
     
   }
   h1{
     align-self: flex-start;
+  }
+  textarea{
+    background-color: $devit-gray;
   }
   label{
     border-radius: 20px;
@@ -60,6 +73,7 @@
     align-items: flex-start;
     align-self: center;
     width: 80%;
+    margin-top: 50px;
   }
   .buttons{
     width: 30%;
@@ -76,10 +90,7 @@
     background-color: $devit-gray;
     width: 200px;
     height: 60px;
-  }
-  button.review{
-    background-color: $devit-orange;
-    width: 200px;
-    height: 60px;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
 }

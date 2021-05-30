@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { createProject } from '../store/actions/index';
 import industriesList from '../constants/industries.json';
 
@@ -12,14 +14,25 @@ const NewProject = (props) => {
   const [editEmoji, setEditEmoji] = useState(false);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
   const [roles, setRoles] = useState([]);
+  const [description, setDescription] = useState([]);
+  const [problemDescription, setProblemDescription] = useState('');
+  const [audienceDescription, setAudienceDescription] = useState('');
+  const [marketDescription, setMarketDescription] = useState('');
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const makeIdea = () => {
     const idea = {
-      title,
+      name: title,
       industry: industry.concat(selectedIndustries),
-      logo: chosenEmoji,
+      logo: chosenEmoji.emoji,
+      bio: description,
+      problemDescription,
+      audienceDescription,
+      marketDescription,
     };
-    createProject(idea, props.history);
+    dispatch(createProject(idea, history));
   };
 
   const industries = industry.map((single) => {
@@ -65,18 +78,24 @@ const NewProject = (props) => {
 
   return (
     <div id="new-idea">
-      <div>
-        {editEmoji
-          ? (
-            <div>
-              <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
-              <button className="save emoji" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
-            </div>
-          )
-          : <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>}
+      <div className="title">
+        <div>
+          {editEmoji
+            ? (
+              <div>
+                <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
+                <button className="save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
+              </div>
+            )
+            : <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>}
 
+        </div>
+        <input className="title" placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
-      <input placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+      <div className="selector-container">
+        <h1>Description</h1>
+        <textarea placeholder="Describe your project" rows="4" columns="50" onChange={(e) => setDescription(e.target.value)} />
+      </div>
       <div className="selector-container">
         <h1>Industry</h1>
         <div className="selector">
@@ -121,9 +140,20 @@ const NewProject = (props) => {
           })}
         </div>
       </div>
+      <div className="selector-container">
+        <h1>What is the problem you are solving? Why is it important?</h1>
+        <textarea placeholder="Describe your idea" rows="4" columns="50" onChange={(e) => setProblemDescription(e.target.value)} />
+      </div>
+      <div className="selector-container">
+        <h1>What is your target audience?</h1>
+        <textarea placeholder="Describe your customers" rows="4" columns="50" onChange={(e) => setAudienceDescription(e.target.value)} />
+      </div>
+      <div className="selector-container">
+        <h1>Do you plan to market your idea? What is your going to market strategy?</h1>
+        <textarea placeholder="Describe your plan" rows="4" columns="50" onChange={(e) => setMarketDescription(e.target.value)} />
+      </div>
       <div className="buttons">
         <button className="save" type="submit" onClick={makeIdea}>Save Draft</button>
-        <button className="review" type="button">Review before posting</button>
       </div>
 
     </div>
