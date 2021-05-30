@@ -106,12 +106,15 @@ const Onboarding = () => {
               <input type="text" value={user.firstName} placeholder="First Name" onChange={(e) => setUser({ ...user, firstName: e.target.value })} />
               <input type="text" value={user.lastName} placeholder="Last Name" onChange={(e) => setUser({ ...user, lastName: e.target.value })} />
             </div>
-            <input type="text"
-              id="long"
-              value={user.location}
-              placeholder={`${<FontAwesomeIcon icon={faMapMarkerAlt} />}Add Location`}
-              onChange={(e) => setUser({ ...user, location: e.target.value })}
-            />
+            <div className="input-icons">
+              <input type="text"
+                id="long"
+                value={user.location}
+                placeholder="Add Location"
+                onChange={(e) => setUser({ ...user, location: e.target.value })}
+              />
+              <FontAwesomeIcon icon={faMapMarkerAlt} id="icon" size="lg" />
+            </div>
             <textarea type="text" value={user.bio} placeholder="Bio" onChange={(e) => setUser({ ...user, bio: e.target.value })} />
           </div>
         </div>
