@@ -1,36 +1,45 @@
 import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { createProject } from '../store/actions/index';
+import industriesList from '../constants/industries.json';
 
 const NewProject = (props) => {
   const [title, setTitle] = useState('');
   const [industry, setIndustry] = useState([]);
-  const [tools, setTools] = useState([]);
-  //   const [team, setTeam] = useState([]);
   const [editIndustry, setEditIndustry] = useState(false);
   const [workingIndustry, setWorkingIndustry] = useState('');
-  const [editTools, setEditTools] = useState(false);
-  const [workingTools, setWorkingTools] = useState('');
   const [chosenEmoji, setChosenEmoji] = useState({ emoji: '✨' });
   const [editEmoji, setEditEmoji] = useState(false);
+  const [selectedIndustries, setSelectedIndustries] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [description, setDescription] = useState([]);
+  const [problemDescription, setProblemDescription] = useState('');
+  const [audienceDescription, setAudienceDescription] = useState('');
+  const [marketDescription, setMarketDescription] = useState('');
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const makeIdea = () => {
     const idea = {
-      title,
-      industry,
-      tools,
-      logo: chosenEmoji,
-    //   team,
+      name: title,
+      industry: industry.concat(selectedIndustries),
+      logo: chosenEmoji.emoji,
+      bio: description,
+      problemDescription,
+      audienceDescription,
+      marketDescription,
     };
-    createProject(idea, props.history);
+    dispatch(createProject(idea, history));
   };
 
   const industries = industry.map((single) => {
-    return <p key={single}>{single}</p>;
+    return <p key={single} className="new form__label-text checkbox-label-text">{single}</p>;
   });
 
   const onEmojiClick = (event, emojiObject) => {
-    console.log(emojiObject);
     setChosenEmoji(emojiObject);
   };
 
@@ -40,64 +49,111 @@ const NewProject = (props) => {
     setWorkingIndustry('');
   };
 
-  const renderTools = tools.map((single) => {
-    return <p key={single}>{single}</p>;
-  });
-
-  const handleTools = () => {
-    setEditTools(false);
-    setTools([...tools, workingTools]);
-    setWorkingTools('');
+  const addIndustry = (ind) => {
+    let newArray = [];
+    const exists = selectedIndustries?.includes(ind);
+    if (exists) {
+      newArray = selectedIndustries.filter((value) => value !== ind);
+    } else {
+      newArray = [...selectedIndustries, ind];
+    }
+    setSelectedIndustries(newArray);
   };
+
+  const addRole = (role) => {
+    let newArray = [];
+    const exists = roles?.includes(role);
+    if (exists) {
+      newArray = roles.filter((value) => value !== role);
+    } else {
+      newArray = [...roles, role];
+    }
+    setRoles(newArray);
+  };
+
+  const rolesFields = [
+    { fieldName: 'developer', label: 'Developers' },
+    { fieldName: 'designer', label: 'Designers' },
+  ];
 
   return (
     <div id="new-idea">
-      <div>
-        {editEmoji
-          ? (
-            <div>
-              <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
-              <button className="save emoji" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
-            </div>
-          )
-          : <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>}
+      {editEmoji
+        ? (
+          <div className="picker">
+            <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
+            <button className="save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
+          </div>
+        )
+        : (
+          <div className="title">
+            <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>
+            <input className="title" placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+          </div>
+        )}
 
+      <div className="selector-container">
+        <h1>Description</h1>
+        <textarea placeholder="Describe your project" rows="4" columns="50" onChange={(e) => setDescription(e.target.value)} />
       </div>
-      <input placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       <div className="selector-container">
         <h1>Industry</h1>
         <div className="selector">
+          {industriesList.industries.map((single) => {
+            const checked = selectedIndustries?.includes(single);
+            return (
+              <div key={single}>
+                <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={single}>
+                  <p className="form__label-text checkbox-label-text">{single}</p>
+                  <input className="form__checkbox" type="checkbox" id={single} onChange={() => addIndustry(single)} />
+                </label>
+              </div>
+
+            );
+          })}
+
           {industries}
           {editIndustry
             ? (
-              <div>
-                <input placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
-                <button type="submit" onClick={handleIndustry}>Add</button>
+              <div className="add-ind">
+                <input className="add" placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
+                <button className="add" type="submit" onClick={handleIndustry}>Add</button>
               </div>
             )
-            : <button type="button" onClick={() => setEditIndustry(true)}>+</button>}
+            : <button className="add" type="button" onClick={() => setEditIndustry(true)}>+</button>}
         </div>
       </div>
       <div className="selector-container">
-        <h1>Tools</h1>
+        <h1>I need...</h1>
         <div className="selector">
-          {renderTools}
-          {editTools
-            ? (
-              <div>
-                <input placeholder="tools" type="text" onChange={(e) => setWorkingTools(e.target.value)} />
-                <button type="submit" onClick={handleTools}>Add</button>
+          {rolesFields.map(({ fieldName, label }) => {
+            const checked = roles?.includes(fieldName);
+            return (
+              <div key={fieldName}>
+                <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
+                  <p className="form__label-text checkbox-label-text">{label}</p>
+                  <input className="form__checkbox" type="checkbox" id={fieldName} onChange={() => addRole(fieldName)} />
+                </label>
               </div>
-            )
-            : <button type="button" onClick={() => setEditTools(true)}>+</button>}
+
+            );
+          })}
         </div>
       </div>
       <div className="selector-container">
-        <h1>Team</h1>
+        <h1>What is the problem you are solving? Why is it important?</h1>
+        <textarea placeholder="Describe your idea" rows="4" columns="50" onChange={(e) => setProblemDescription(e.target.value)} />
+      </div>
+      <div className="selector-container">
+        <h1>What is your target audience?</h1>
+        <textarea placeholder="Describe your customers" rows="4" columns="50" onChange={(e) => setAudienceDescription(e.target.value)} />
+      </div>
+      <div className="selector-container">
+        <h1>Do you plan to market your idea? What is your going to market strategy?</h1>
+        <textarea placeholder="Describe your plan" rows="4" columns="50" onChange={(e) => setMarketDescription(e.target.value)} />
       </div>
       <div className="buttons">
         <button className="save" type="submit" onClick={makeIdea}>Save Draft</button>
-        <button className="review" type="button">Review before posting</button>
       </div>
 
     </div>
