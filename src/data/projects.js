@@ -1,4 +1,6 @@
 /* eslint-disable max-len */
+// export default []
+
 export default [
   {
     id: 1,

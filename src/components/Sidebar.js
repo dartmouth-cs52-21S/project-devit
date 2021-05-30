@@ -28,7 +28,11 @@ const Sidebar = () => {
   return (
     <nav className={`sidebar ${sidebarIsCollapsed ? 'collapsed' : ''}`}>
       <ul className="sidebar__nav-links">
-        <SidebarLinkWithDropdown route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projectsList} />
+        {projectsList.length > 0 ? (
+          <SidebarLinkWithDropdown route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projectsList} />
+        ) : (
+          <SidebarLink route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projectsList} />
+        )}
         <SidebarLink route="/find-project" label="Find a Project" leftIcon={<AiOutlineFileSearch />} iconClass="find-icon" />
         <SidebarLink route="/new-project" label="New Project" leftIcon={<FiPlusSquare />} iconClass="new-idea-icon" />
       </ul>
