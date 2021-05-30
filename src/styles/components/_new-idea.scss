@@ -23,8 +23,7 @@
   h1{
     align-self: flex-start;
   }
-  p{
-    background-color: $devit-gray;
+  label{
     border-radius: 20px;
     margin-right: 20px;
     padding: 20px;
@@ -33,7 +32,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    button{
+    width: 100%;
+    button.add{
       background-color: $devit-gray;
       padding: 20px;
       font-size: 1.2rem;
@@ -43,16 +43,23 @@
       width: 60px;
 
     }
+    p.new{
+      background-color: $devit-orange;
+      border-radius: 20px;
+      margin-right: 20px;
+      padding: 20px;
+    }
     button:hover{
       cursor: pointer;
     }
+    
   }
   .selector-container{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    align-self: flex-start;
-    margin-left: 30vw;
+    align-self: center;
+    width: 80%;
   }
   .buttons{
     width: 30%;

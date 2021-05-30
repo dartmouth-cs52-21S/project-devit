@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
 import { createProject } from '../store/actions/index';
+import industriesList from '../constants/industries.json';
 
 const NewProject = (props) => {
   const [title, setTitle] = useState('');
   const [industry, setIndustry] = useState([]);
   const [tools, setTools] = useState([]);
-  //   const [team, setTeam] = useState([]);
   const [editIndustry, setEditIndustry] = useState(false);
   const [workingIndustry, setWorkingIndustry] = useState('');
   const [editTools, setEditTools] = useState(false);
   const [workingTools, setWorkingTools] = useState('');
   const [chosenEmoji, setChosenEmoji] = useState({ emoji: '✨' });
   const [editEmoji, setEditEmoji] = useState(false);
+  const [selectedIndustries, setSelectedIndustries] = useState([]);
 
   const makeIdea = () => {
     const idea = {
       title,
-      industry,
+      industry: industry.concat(selectedIndustries),
       tools,
       logo: chosenEmoji,
-    //   team,
     };
     createProject(idea, props.history);
   };
 
   const industries = industry.map((single) => {
-    return <p key={single}>{single}</p>;
+    return <p key={single} className="new">{single}</p>;
   });
 
   const onEmojiClick = (event, emojiObject) => {
@@ -38,6 +38,18 @@ const NewProject = (props) => {
     setEditIndustry(false);
     setIndustry([...industry, workingIndustry]);
     setWorkingIndustry('');
+  };
+
+  const addIndustry = (ind) => {
+    console.log(selectedIndustries);
+    let newArray = [];
+    const exists = selectedIndustries?.includes(ind);
+    if (exists) {
+      newArray = selectedIndustries.filter((value) => value !== ind);
+    } else {
+      newArray = [...selectedIndustries, ind];
+    }
+    setSelectedIndustries(newArray);
   };
 
   const renderTools = tools.map((single) => {
@@ -67,15 +79,28 @@ const NewProject = (props) => {
       <div className="selector-container">
         <h1>Industry</h1>
         <div className="selector">
+          {industriesList.industries.map((single) => {
+            const checked = selectedIndustries?.includes(single);
+            return (
+              <div key={single}>
+                <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={single}>
+                  <p className="form__label-text checkbox-label-text">{single}</p>
+                  <input className="form__checkbox" type="checkbox" id={single} onChange={() => addIndustry(single)} />
+                </label>
+              </div>
+
+            );
+          })}
+
           {industries}
           {editIndustry
             ? (
               <div>
                 <input placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
-                <button type="submit" onClick={handleIndustry}>Add</button>
+                <button className="add" type="submit" onClick={handleIndustry}>Add</button>
               </div>
             )
-            : <button type="button" onClick={() => setEditIndustry(true)}>+</button>}
+            : <button className="add" type="button" onClick={() => setEditIndustry(true)}>+</button>}
         </div>
       </div>
       <div className="selector-container">
