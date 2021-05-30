@@ -43,29 +43,6 @@ $nav-button-padding: 1.25rem;
     width: 100%;
   }
 
-  // &__nav-sublinks {
-  //   position: relative;
-  //   // top: 0;
-  //   // left: 0;
-  //   // width: 100%;
-  //   // z-index: 1;
-  // }
-  
-  // &__nav-sublink {
-  //   @include transition;
-  //   font-size: 0.9rem;
-  //   white-space: nowrap;
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
-  //   color: $devit-white;
-  //   background-color: $devit-black;
-    
-  //   &:hover {
-  //     background-color: $pure-black;
-  //     cursor: pointer;
-  //   }
-  // }
-  
   &__link-text {
     @include transition;
     display: block;
@@ -216,5 +193,9 @@ $nav-button-padding: 1.25rem;
 
   .flip {
     transform: rotate(180deg);
+  }
+
+  a.sidebar__link-text {
+    color: $devit-white;
   }
 }
