@@ -6,20 +6,17 @@ import industriesList from '../constants/industries.json';
 const NewProject = (props) => {
   const [title, setTitle] = useState('');
   const [industry, setIndustry] = useState([]);
-  const [tools, setTools] = useState([]);
   const [editIndustry, setEditIndustry] = useState(false);
   const [workingIndustry, setWorkingIndustry] = useState('');
-  const [editTools, setEditTools] = useState(false);
-  const [workingTools, setWorkingTools] = useState('');
   const [chosenEmoji, setChosenEmoji] = useState({ emoji: '✨' });
   const [editEmoji, setEditEmoji] = useState(false);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
+  const [roles, setRoles] = useState([]);
 
   const makeIdea = () => {
     const idea = {
       title,
       industry: industry.concat(selectedIndustries),
-      tools,
       logo: chosenEmoji,
     };
     createProject(idea, props.history);
@@ -30,7 +27,6 @@ const NewProject = (props) => {
   });
 
   const onEmojiClick = (event, emojiObject) => {
-    console.log(emojiObject);
     setChosenEmoji(emojiObject);
   };
 
@@ -41,7 +37,6 @@ const NewProject = (props) => {
   };
 
   const addIndustry = (ind) => {
-    console.log(selectedIndustries);
     let newArray = [];
     const exists = selectedIndustries?.includes(ind);
     if (exists) {
@@ -52,15 +47,21 @@ const NewProject = (props) => {
     setSelectedIndustries(newArray);
   };
 
-  const renderTools = tools.map((single) => {
-    return <p key={single}>{single}</p>;
-  });
-
-  const handleTools = () => {
-    setEditTools(false);
-    setTools([...tools, workingTools]);
-    setWorkingTools('');
+  const addRole = (role) => {
+    let newArray = [];
+    const exists = roles?.includes(role);
+    if (exists) {
+      newArray = roles.filter((value) => value !== role);
+    } else {
+      newArray = [...roles, role];
+    }
+    setRoles(newArray);
   };
+
+  const rolesFields = [
+    { fieldName: 'developer', label: 'Developers' },
+    { fieldName: 'designer', label: 'Designers' },
+  ];
 
   return (
     <div id="new-idea">
@@ -104,21 +105,21 @@ const NewProject = (props) => {
         </div>
       </div>
       <div className="selector-container">
-        <h1>Tools</h1>
+        <h1>I need...</h1>
         <div className="selector">
-          {renderTools}
-          {editTools
-            ? (
-              <div>
-                <input placeholder="tools" type="text" onChange={(e) => setWorkingTools(e.target.value)} />
-                <button type="submit" onClick={handleTools}>Add</button>
+          {rolesFields.map(({ fieldName, label }) => {
+            const checked = roles?.includes(fieldName);
+            return (
+              <div key={fieldName}>
+                <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
+                  <p className="form__label-text checkbox-label-text">{label}</p>
+                  <input className="form__checkbox" type="checkbox" id={fieldName} onChange={() => addRole(fieldName)} />
+                </label>
               </div>
-            )
-            : <button type="button" onClick={() => setEditTools(true)}>+</button>}
+
+            );
+          })}
         </div>
-      </div>
-      <div className="selector-container">
-        <h1>Team</h1>
       </div>
       <div className="buttons">
         <button className="save" type="submit" onClick={makeIdea}>Save Draft</button>
