@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../store/selectors';
 import { getInitials } from '../utils/utilityFunctions';
 
-export const UserAvatar = ({ useAuthenticatedUser, passedInUser }) => {
+export const UserAvatar = ({ useAuthenticatedUser, passedInUser, onClick }) => {
   const authenticatedUser = useSelector(selectUser);
   const user = useAuthenticatedUser ? authenticatedUser : passedInUser;
 
@@ -13,7 +13,7 @@ export const UserAvatar = ({ useAuthenticatedUser, passedInUser }) => {
   const userAvatarClasses = ['user-avatar', ...user.roles].join(' ');
 
   return (
-    <div className={userAvatarClasses}>
+    <div className={userAvatarClasses} role="button" tabIndex="0" onClick={onClick}>
       {user.picture ? (
         <img className="user-avatar__image" src={user.picture} alt={`${[user.firstName, user.lastName].join(' ')}`} />
       ) : (

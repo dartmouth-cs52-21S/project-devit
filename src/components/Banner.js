@@ -12,6 +12,7 @@ const Banner = () => {
   const isAuthenticated = useSelector(selectisAuthenticated);
 
   const handleGoHome = () => history.push('/');
+  const handleGoToProfile = () => history.push('/profile');
 
   return (
     <header className="banner">
@@ -21,7 +22,7 @@ const Banner = () => {
       {isAuthenticated && (
         <div className="banner__user-actions">
           <UserActionButton />
-          <UserAvatar useAuthenticatedUser />
+          <UserAvatar useAuthenticatedUser onClick={handleGoToProfile} />
         </div>
       )}
     </header>
