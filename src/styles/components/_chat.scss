@@ -25,13 +25,14 @@ $message-input-height: 3rem;
     padding: 0 1rem;
     margin-bottom: $message-input-height;
   }
+
+  &__loading-message {
+    padding: 1rem;
+  }
   
   &__message {
-    padding: 0.75rem 0;
-  }
-
-  &__message {
     display: flex;
+    padding: 0.75rem 0;
   }
 
   &__message-user {

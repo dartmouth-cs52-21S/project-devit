@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FiChevronsLeft, FiPlusSquare, FiChevronDown } from 'react-icons/fi';
 import { VscProject } from 'react-icons/vsc';
 import { AiOutlineFileSearch } from 'react-icons/ai';
-import { toggleSidebar } from '../store/actions/index';
+import { toggleSidebar, clearChat } from '../store/actions/index';
 import { selectSidebarIsCollapsed } from '../store/selectors';
 // import { selectSidebarIsCollapsed, selectUser } from '../store/selectors';
 import projectsList from '../data/projects';
@@ -61,10 +61,12 @@ const SidebarLinkWithDropdown = ({
   route, label, leftIcon, iconClass, projects,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const dispatch = useDispatch();
   const sidebarIsCollapsed = useSelector(selectSidebarIsCollapsed);
 
   const toggleExpand = () => setIsExpanded(!isExpanded);
   const dropdownIconClasses = ['icon', 'md', 'dropdown-icon', isExpanded ? 'flip' : ''].join(' ');
+  const handleClearChat = () => dispatch(clearChat());
 
   return (
     <li className="sidebar__nav-link-wrapper">
@@ -81,7 +83,7 @@ const SidebarLinkWithDropdown = ({
         {!sidebarIsCollapsed && isExpanded && (
           <ul className="sidebar__nav-sublinks">
             {projects.map((project) => (
-              <li className="sidebar__nav-sublink" key={project.id}>
+              <li className="sidebar__nav-sublink" key={project.id} onClick={handleClearChat}>
                 <NavLink to={`/projects/${project.id}`} className="sidebar__link-text">{project.name}</NavLink>
               </li>
             ))}

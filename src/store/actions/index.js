@@ -7,6 +7,8 @@ export const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090
 
 export const toggleSidebar = () => ({ type: ActionTypes.TOGGLE_SIDEBAR });
 
+export const clearChat = () => ({ type: ActionTypes.CLEAR_CHAT });
+
 export function fetchProjects() {
   return async (dispatch) => {
     try {

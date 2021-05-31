@@ -15,13 +15,13 @@ const Project = () => {
   const [project, setProject] = useState();
   //   const [editing, setEditing] = useState(false);
 
-  const { projectID } = useParams();
+  const { projectId } = useParams();
   // const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
     // code to run on component mount
-    dispatch(fetchProject(projectID, (data) => {
+    dispatch(fetchProject(projectId, (data) => {
       setProject(data);
     }));
   }, []);

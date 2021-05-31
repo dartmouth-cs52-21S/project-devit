@@ -14,6 +14,7 @@ const ActionTypes = {
   TOGGLE_MODAL_VISIBILITY : 'modal/TOGGLE_MODAL_VISIBILITY'    ,
   UPDATE_CHAT_MESSAGES    : 'chat/UPDATE_CHAT_MESSAGES'        ,
   ADD_CHAT_MESSAGE        : 'chat/ADD_CHAT_MESSAGE'            ,
+  CLEAR_CHAT              : 'chat/CLEAR_CHAT'                  ,
 };
 
 export default ActionTypes;

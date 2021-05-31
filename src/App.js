@@ -38,7 +38,7 @@ const App = () => {
               <Route path="/onboarding" component={Onboarding} />
               <PrivateRoute path="/profile" component={Profile} />
               <Route exact path="/projects" component={Projects} />
-              <Route exact path="/projects/:projectID" component={Project} />
+              <Route exact path="/projects/:projectId" component={Project} />
               <Route exact path="/find-project" component={FindProject} />
               <Route path="/new-project" component={NewProject} />
               <Route path="/chat" component={Chat} />
