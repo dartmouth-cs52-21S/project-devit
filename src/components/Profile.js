@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
@@ -36,21 +37,26 @@ const Profile = () => {
   };
 
   const renderProjects = () => {
-    const proj = user.projects.map((project) => {
-      const descriptions = project.industry.map((ind) => {
-        return <h3 key={ind}>{ind}</h3>;
+    if (user.projects) {
+      const proj = user.projects.map((project) => {
+        if (project.industry) {
+          const descriptions = project.industry.map((ind) => {
+            return <h3 key={ind}>{ind}</h3>;
+          });
+          return (
+            <div className="project" key={project.id}>
+              <h1>{project.logo}</h1>
+              <h2>{project.name}</h2>
+              <div className="descriptions">
+                {descriptions}
+              </div>
+            </div>
+          );
+        }
       });
-      return (
-        <div className="project" key={project.id}>
-          <h1>{project.logo}</h1>
-          <h2>{project.name}</h2>
-          <div className="descriptions">
-            {descriptions}
-          </div>
-        </div>
-      );
-    });
-    return proj;
+      return proj;
+    }
+    return {};
   };
 
   useEffect(() => {
@@ -59,32 +65,31 @@ const Profile = () => {
         const index = git.indexOf('github.com/') + 'github.com/'.length;
         const repo = git.substring(index);
         getCommits(repo).then((commits) => {
-          commits.map((com) => {
+          const newArray = commits.map((com) => {
+            console.log(com);
             const author = com.author ? com.author.login : 'unknown';
             const { message } = com.commit;
-            const { date } = com.author;
-            console.log({ author, message, date });
-            const newArray = [
-              ...userCommits,
-              { author, message, date },
-            ];
-            console.log('array', newArray);
-            setUserCommits(newArray);
-            console.log(userCommits);
+            const { date } = com.commit.author;
+            return { author, message, date };
           });
+          setUserCommits(newArray);
         });
       });
     });
   }, []);
 
   const renderActivity = () => {
-    console.log('here');
-    if (userCommits.length > 0) {
+    console.log(userCommits, userCommits.length);
+    if (userCommits && userCommits.length > 0) {
       const activity = userCommits.map((commit) => {
-        <div className="activity">
-          <h3>Commit from {commit.author}</h3>
-          <p>{commit.message}</p>
-        </div>;
+        const date = commit.date.substring(0, 10);
+        const time = commit.date.substring(commit.date.indexOf('T') + 1, commit.date.indexOf('T') + 9);
+        return (
+          <div className="activity">
+            <h3 className="commit">Commit from {commit.author}, on {date}, at {time}</h3>
+            <p className="commit">{commit.message}</p>
+          </div>
+        );
       });
       return activity;
     }
@@ -98,9 +103,11 @@ const Profile = () => {
           <h2>Current Projects</h2>
           {renderProjects()}
         </div>
-        <div className="activity-container">
+        <div className="continer">
           <h2>Recent Activity</h2>
-          {renderActivity()}
+          <div className="activity-container">
+            {renderActivity()}
+          </div>
         </div>
 
       </div>

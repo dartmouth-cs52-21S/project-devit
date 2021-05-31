@@ -33,6 +33,7 @@ $devit-black: #111111;
     .activity{
       background-color: $devit-gray;
       color: $devit-white
+  
     }
     .project{
       background-color: $devit-gray;
@@ -127,5 +128,11 @@ $devit-black: #111111;
         background-color: $devit-black;
       }
   
+    }
+    h3.commit{
+      margin-left: 20px;
+    }
+    p.commit{
+      margin-left: 20px;
     }
   }
