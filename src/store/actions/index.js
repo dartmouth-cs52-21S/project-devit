@@ -116,7 +116,23 @@ export function signUpUser(user) {
   };
 }
 
+const mapCountsToBadges = (user) => {
+  if (user.projectsCreated > 0) {
+    if (!user.badges.includes('ideator-beginner')) {
+      user.badges.push('ideator-beginner');
+    }
+  }
+
+  if (user.projectsJoined > 0) {
+    if (!user.badges.includes('devit-beginner')) {
+      user.badges.push('devit-beginner');
+    }
+  }
+};
+
 export function updateUser(id, user, history) {
+  mapCountsToBadges(user);
+
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user);

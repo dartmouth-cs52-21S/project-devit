@@ -54,6 +54,10 @@ const ProjectModal = ({
         const newprojects = user.projects;
         newprojects.push(proj.id);
         newUser.projects = newprojects;
+        if (!user.projectsJoined) {
+          newUser.projectsJoined = 0;
+        }
+        newUser.projectsJoined = user.projectsJoined + 1;
         dispatch(updateUser(user.id, newUser, history));
       }
     } else {

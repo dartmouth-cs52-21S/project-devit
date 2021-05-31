@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
-import { createProject } from '../store/actions/index';
+import { useDispatch, useSelector } from 'react-redux';
+import { createProject, updateUser } from '../store/actions/index';
+import { selectUser } from '../store/selectors';
 
 const NewProject = (props) => {
   const [title, setTitle] = useState('');
@@ -14,15 +16,25 @@ const NewProject = (props) => {
   const [chosenEmoji, setChosenEmoji] = useState({ emoji: '✨' });
   const [editEmoji, setEditEmoji] = useState(false);
 
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
   const makeIdea = () => {
     const idea = {
       title,
       industry,
       tools,
       logo: chosenEmoji,
-    //   team,
+      team: [user.id],
     };
-    createProject(idea, props.history);
+    dispatch(createProject(idea, props.history));
+    if (!user.projectsCreated) {
+      user.projectsCreated = 1;
+    } else {
+      user.projectsCreated += 1;
+    }
+
+    dispatch(updateUser(user.id, user, props.history));
   };
 
   const industries = industry.map((single) => {
