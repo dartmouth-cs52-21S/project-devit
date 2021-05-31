@@ -128,8 +128,8 @@ const mapCountsToBadges = (user) => {
     }
   }
 
-  if (user.projectsCreated > 0) {
-    if (user.projectsCreated > 3) {
+  if (user.projectsJoined > 0) {
+    if (user.projectsJoined > 3) {
       if (!user.badges.includes('devitPro')) {
         user.badges.push('devitPro');
       }
