@@ -1,20 +1,36 @@
 {
-    "badges": [
-        "ideator-bronze",
-        "ideator-silver",
-        "ideator-gold",
-        "designer-bronze",
-        "designer-silver",
-        "designer-gold",
-        "developer-bronze",
-        "developer-silver",
-        "developer-gold",
-        "teammate-bronze",
-        "teammate-silver",
-        "teammate-gold",
-        "active-member",
-        "github-bronze",
-        "github-silver",
-        "github-gold"
-    ]
+    "ideatorBeginner": {
+        "text": "ideator beginner",
+        "description": "Create a new project",
+        "icon": {"c": "fa-lightbulb-o", "l": "Lightbulb o"}
+    },
+    "ideatorPro": {
+        "text": "ideator pro",
+        "description": "Create 3 projects"
+    },
+    "devitBeginner": {
+        "text": "devit beginner",
+        "description": "Join a Project",
+        "icon": "../../images/badge_icons/cil_badge.png"
+    },
+    "devitPro": {
+        "text": "devit pro",
+        "description": "Join 3 projects"
+    },
+    "githubCommits": {
+        "text": "github-commits",
+        "description": "Make 15 commits with github"
+    },
+    "pullRequestPro": {
+        "text": "github pull requests",
+        "description": "Make 5 pull requests with github"
+    },
+    "planner": {
+        "text": "plan deadlines",
+        "description": "Create 3 events on the calendar"
+    },
+    "activeChatter": {
+        "text": "active chatter",
+        "description": "send 30 messages in the chat"
+    }
 }

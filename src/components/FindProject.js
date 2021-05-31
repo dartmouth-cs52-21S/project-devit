@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import Badges from '../constants/badges.json';
 
 import ProjectModal from './ProjectModal';
 import { fetchProjects, toggleModalVisibility } from '../store/actions';
@@ -17,6 +21,7 @@ const FindProject = () => {
   const [currProjects, setCurrProjects] = useState();
 
   const dispatch = useDispatch();
+  const htmlPart = '<FontAwesomeIcon icon={faLightbulb} />';
 
   const search = (word) => {
     setCurrProjects(projects.filter((project) => {
@@ -89,6 +94,9 @@ const FindProject = () => {
 
   return (
     <div id="findPostsOuter">
+      <i className="far fa-lightbulb" />
+      <FontAwesomeIcon icon={faLightbulb} />
+      {/* <i className="fas fa-snowflake"></i> */}
       <div className="search-bar">
         <input onChange={(e) => onSearchChange(e)} value={searchterm} placeholder="Search..." className="search-bar" />
       </div>
