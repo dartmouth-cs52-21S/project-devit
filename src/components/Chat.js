@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdSend } from 'react-icons/md';
-import axios from 'axios';
+// import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { UserAvatar } from './UserAvatar';
-import { addChatMessage, getChatMessages, ROOT_URL } from '../store/actions';
+import { addChatMessage, getChatMessages } from '../store/actions';
 import { selectUser, selectChatMessages } from '../store/selectors/index';
-
-import ActionTypes from '../store/types/index';
 
 const localizedFormat = require('dayjs/plugin/localizedFormat');
 const isYesterday = require('dayjs/plugin/isYesterday');
@@ -22,25 +21,16 @@ const POLLING_INTERVAL_SECONDS = 1;
 
 const Chat = () => {
   const [messageText, setMessageText] = useState('');
+  const { projectId } = useParams();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   const messages = useSelector(selectChatMessages);
 
   useEffect(() => {
-    const signIn = async () => {
-      const { data } = await axios.post(`${ROOT_URL}/signin`, { email: 'a@a.com', password: 'a' });
-      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
-      localStorage.setItem('token', data.token);
-    };
-
-    signIn();
-  }, []);
-
-  useEffect(() => {
-    const pollInterval = setInterval(() => dispatch(getChatMessages('123456')), POLLING_INTERVAL_SECONDS * 1000);
+    const pollInterval = setInterval(() => dispatch(getChatMessages(projectId)), POLLING_INTERVAL_SECONDS * 1000);
     return () => clearInterval(pollInterval);
-  }, []);
+  }, [projectId]);
 
   const handleUpdateMessageText = (e) => setMessageText(e.target.value);
 
@@ -49,7 +39,7 @@ const Chat = () => {
 
     const newMessage = {
       body: messageText,
-      projectId: '123456', // Placeholder. This vallue should come from a URL parameter (something like "projects/:projectId")
+      projectId,
       author: user.id,
       isDeleted: false,
     };
@@ -62,13 +52,11 @@ const Chat = () => {
     <div className="chat">
       <h1 className="chat__title">Chat</h1>
       <div className="chat__chat-window">
-        {messages.length > 0 && (
-          <div className="chat__messages">
-            {messages.map((message) => (
-              <ChatMessage key={message.id} message={message} />
-            ))}
-          </div>
-        )}
+        <div className="chat__messages">
+          {messages.length > 0
+            ? (<>{ messages.map((message) => <ChatMessage key={message.id} message={message} />) }</>)
+            : (<p className="chat__loading-message">Retrieving messages...</p>)}
+        </div>
         <div className="chat__message-input">
           <form className="chat__form form" onSubmit={handleSubmit}>
             <input type="text" id="message-input-field" value={messageText} className="chat__message-input-field" placeholder="Type something..." onChange={handleUpdateMessageText} />
