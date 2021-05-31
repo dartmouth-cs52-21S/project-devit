@@ -18,7 +18,6 @@ import LandingPage from './components/LandingPage';
 import Modal from './components/Modal';
 import { selectModalContentExists } from './store/selectors';
 import Chat from './components/Chat';
-import Calendar from './components/Calendar';
 
 const App = () => {
   const modalContentExists = useSelector(selectModalContentExists);
@@ -42,7 +41,6 @@ const App = () => {
               <Route exact path="/find-project" component={FindProject} />
               <Route path="/new-project" component={NewProject} />
               <Route path="/chat" component={Chat} />
-              <Route path="/calendar" component={Calendar} />
               <Route component={ErrorNotFound} />
             </Switch>
           </div>
