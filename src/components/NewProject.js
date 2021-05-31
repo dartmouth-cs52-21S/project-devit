@@ -88,7 +88,7 @@ const NewProject = () => {
   ];
 
   return (
-    <div id="new-idea">
+    <div id="new-project">
       {editEmoji
         ? (
           <div className="picker">
