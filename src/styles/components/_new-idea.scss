@@ -6,25 +6,44 @@
   align-items: center;
   justify-content: space-around;
   color: $devit-white;
+  margin-top: 350px;
 
   button.emoji{
     background-color: $devit-gray;
-    width: 50px;
-    height: 50px;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    font-size: 40px;
+  }
+  .title{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+    .picker{
+      margin-top: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
   }
 
-  input{
+  input.title{
     width: 35%;
-    height: 8%;
+    height: 80%;
     font-size: 40px;
+    margin-left: 20px;
     background-color: $devit-gray;
     
   }
   h1{
     align-self: flex-start;
   }
-  p{
+  textarea{
     background-color: $devit-gray;
+  }
+  label{
     border-radius: 20px;
     margin-right: 20px;
     padding: 20px;
@@ -33,7 +52,9 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    button{
+    width: 100%;
+    flex-wrap: wrap;
+    button.add{
       background-color: $devit-gray;
       padding: 20px;
       font-size: 1.2rem;
@@ -41,18 +62,28 @@
       border-radius: 50%;
       color: $devit-white;
       width: 60px;
+      align-self: flex-start;
 
+    }
+    p.new{
+      background-color: $devit-orange;
+      border-radius: 20px;
+      margin-right: 20px;
+      padding: 20px;
+      align-self: flex-start;
     }
     button:hover{
       cursor: pointer;
     }
+    
   }
   .selector-container{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    align-self: flex-start;
-    margin-left: 30vw;
+    align-self: center;
+    width: 80%;
+    margin-top: 50px;
   }
   .buttons{
     width: 30%;
@@ -69,10 +100,19 @@
     background-color: $devit-gray;
     width: 200px;
     height: 60px;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
-  button.review{
-    background-color: $devit-orange;
-    width: 200px;
-    height: 60px;
-  }
+}
+
+.add-ind{
+  display: flex;
+  align-self: flex-start;
+}
+input.add{
+  background-color: $devit-gray;
+  border-radius: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  
 }

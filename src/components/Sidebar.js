@@ -19,6 +19,8 @@ const Sidebar = () => {
   // Don't show sidebar on the routes indicated below
   if (['/signin', '/signup', '/'].includes(pathname)) return null;
 
+  const chevronIconClasses = ['icon', 'md', 'expand-collapse-icon', sidebarIsCollapsed ? 'flip' : ''].join(' ');
+
   return (
     <nav className={`sidebar ${sidebarIsCollapsed ? 'collapsed' : ''}`}>
       <div className="sidebar__nav-links">
@@ -28,7 +30,7 @@ const Sidebar = () => {
       </div>
       <div role="button" tabIndex="0" className="sidebar__expand-collapse" onClick={toggleCollapsed}>
         <h4 className="sidebar__nav-link-label collapse-label">Collapse</h4>
-        <span className="icon md"><FiChevronsLeft /></span>
+        <span className={chevronIconClasses}><FiChevronsLeft /></span>
       </div>
     </nav>
   );

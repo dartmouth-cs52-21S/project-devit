@@ -1,31 +1,12 @@
 {
     "industries": [
-        "Arts",
         "Health",
-        "Fitness",
         "Travel",
-        "Tourism",
         "Food",
-        "Cooking",
         "Business",
-        "Finance",
-        "Agriculture",
         "Sports",
-        "Recreation",
-        "Nature",
-        "Music",
         "Education",
-        "Language",
         "Science",
-        "Business to Business",
-        "Mental Health",
-        "Mindfulness",
-        "Literature",
-        "Fashion",
-        "Consulting",
-        "Law",
-        "Media",
-        "Electronics",
-        "Manufacturing"
+        "Tech"
     ]
 }

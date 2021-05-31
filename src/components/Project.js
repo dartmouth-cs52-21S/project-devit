@@ -4,17 +4,19 @@ import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { fetchProject, toggleModalVisibility } from '../store/actions';
+// import projectsList from '../data/projects';
+import Chat from './Chat';
 
 // const mapStateToProps = (reduxState) => ({
 //   project: reduxState.initialState.current,
 // });
 
 const Project = () => {
-  const [project, setProject] = useState({});
+  const [project, setProject] = useState();
   //   const [editing, setEditing] = useState(false);
 
   const { projectID } = useParams();
-  //   const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,34 +67,40 @@ const Project = () => {
 
   return (
     <div className="project">
-      <div id="project__title__container">
-        <div className="project__logo">
-          <img src={project.logo} alt="emoji" />
+      <div className="project__details">
+
+        <div id="project__title__container">
+          <div className="project__logo">
+            {/* <img src={project.logo} alt="emoji" /> */}
+            {project.logo}
+          </div>
+          <h1 className="project__title">{project.name}</h1>
         </div>
-        <h1 className="project__title">{project.name}</h1>
-      </div>
-      <p>{project.bio}</p>
-      <ul>
-        {industries}
-      </ul>
-      <ul>
-        <FontAwesomeIcon icon={faLink} />
-        <a className="project__links" href={project.GitHub}>GitHub</a>
-        <a className="project__links" href={project.Figma}>Figma</a>
-        <a className="project__links" href={project.Slack}>Slack</a>
-      </ul>
-      <div id="best__practices">
-        <FontAwesomeIcon className="icon" icon={faLightbulb} />
-        <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
+        <p>{project.bio}</p>
+        <ul>
+          {industries}
+        </ul>
+        <ul>
+          <FontAwesomeIcon icon={faLink} />
+          <a className="project__links" href={project.GitHub}>GitHub</a>
+          <a className="project__links" href={project.Figma}>Figma</a>
+          <a className="project__links" href={project.Slack}>Slack</a>
+        </ul>
+        <div id="best__practices">
+          <FontAwesomeIcon className="icon" icon={faLightbulb} />
+          <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
+        </div>
+        <ul className="neededTeam__container">
+          {neededTeam}
+        </ul>
+        <ul className="applicants__container">
+          {project.applicants}
+        </ul>
       </div>
 
-      <ul className="neededTeam__container">
-        {neededTeam}
-      </ul>
-      <ul className="applicants__container">
-        {project.applicants}
-      </ul>
-      {/* <p className="project__id">{`Project ID: ${projectID}` }</p> */}
+      <div className="project__chat">
+        <Chat />
+      </div>
     </div>
   );
 };

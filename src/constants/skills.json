@@ -1,58 +1,30 @@
 {
     "developer": [
-        "Clojure",
-        "C#",
-        "C",
-        "C++",
-        "Go",
-        "Kotlin",
+        "C/C++",
         "Python",
-        "Shell",
-        "CoffeeScript",
-        "Crystal",
-        "Groovy",
-        "Lean",
-        "Racket",
         "SQL",
-        "Dart",
-        "Haskell",
-        "Lua",
         "Ruby",
         "Swift",
-        "Coq",
-        "Elixir",
-        "Java",
-        "NASM",
-        "Rust",
         "TypeScript",
-        "F#",
         "JavaScript",
-        "PHP",
-        "Scala",
         "HTML/CSS",
-        "Git",
-        "Github"
+        "Github",
+        "React",
+        "NodeJS",
+        "React Native"
     ],
     "designer": [
         "Figma",
         "Photoshop",
         "UX",
         "UI",
-        "Adobe Photoshop",
-        "Adobe InDesign",
-        "Adobe Illustrator",
+        "Adobe Suite",
         "Typography",
         "Filestage",
         "PicsArt",
         "Bannersnack",
         "DesignBold",
         "Foto",
-        "Marvel",
-        "Webflow"
-
-    ],
-    "ideator": [
-        "Project Management",
-        "Marketing"
+        "Marvel"
     ]
 }
