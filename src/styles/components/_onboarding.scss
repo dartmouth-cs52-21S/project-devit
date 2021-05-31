@@ -22,6 +22,16 @@
       }
       #long{
         width: 300px;
+        padding-left: 40px;
+        position: relative;
+      }
+      #icon{
+        left: -300px;
+        position: relative;
+        color: $gray-500;
+      }
+      .input-icons {
+        width: 100%;
       }
     }
     .user-picture{

@@ -20,6 +20,13 @@ const ChatReducer = (state = initialState, action) => {
       };
     }
 
+    case ActionTypes.CLEAR_CHAT: {
+      return {
+        ...state,
+        messages: [],
+      };
+    }
+
     default:
       return state;
   }

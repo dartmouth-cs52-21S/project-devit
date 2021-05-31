@@ -6,6 +6,10 @@
   overflow: hidden;
   margin: 0 0.5rem;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &.developer {
     box-shadow: 0 0 0 2px rgba($devit-orange, 1);  
 

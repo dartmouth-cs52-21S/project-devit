@@ -7,6 +7,8 @@ export const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090
 
 export const toggleSidebar = () => ({ type: ActionTypes.TOGGLE_SIDEBAR });
 
+export const clearChat = () => ({ type: ActionTypes.CLEAR_CHAT });
+
 export function fetchProjects() {
   return async (dispatch) => {
     try {
@@ -116,7 +118,33 @@ export function signUpUser(user) {
   };
 }
 
+const mapCountsToBadges = (user) => {
+  if (user.projectsCreated > 0) {
+    if (user.projectsCreated > 3) {
+      if (!user.badges.includes('ideatorPro')) {
+        user.badges.push('ideatorPro');
+      }
+    }
+    if (!user.badges.includes('ideatorBeginner')) {
+      user.badges.push('ideatorBeginner');
+    }
+  }
+
+  if (user.projectsJoined > 0) {
+    if (user.projectsJoined > 3) {
+      if (!user.badges.includes('devitPro')) {
+        user.badges.push('devitPro');
+      }
+    }
+    if (!user.badges.includes('devitBeginner')) {
+      user.badges.push('devitBeginner');
+    }
+  }
+};
+
 export function updateUser(id, user, history) {
+  mapCountsToBadges(user);
+
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user);

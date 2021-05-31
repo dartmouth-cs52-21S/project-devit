@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import Badges from '../constants/badges.json';
 
 import ProjectModal from './ProjectModal';
 import { fetchProjects, toggleModalVisibility } from '../store/actions';
@@ -14,9 +18,10 @@ const FindProject = () => {
   const [searchterm, setSearchTerm] = useState('');
   const projects = useSelector(selectAllProjects);
 
-  const [currProjects, setCurrProjects] = useState([]);
+  const [currProjects, setCurrProjects] = useState();
 
   const dispatch = useDispatch();
+  const htmlPart = '<FontAwesomeIcon icon={faLightbulb} />';
 
   const search = (word) => {
     setCurrProjects(projects.filter((project) => {
@@ -32,7 +37,6 @@ const FindProject = () => {
 
   useEffect(() => {
     dispatch(fetchProjects());
-    setCurrProjects(projects);
   }, []);
 
   const hideModal = () => {
@@ -58,15 +62,27 @@ const FindProject = () => {
 
   const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
 
-  const postProjects = currProjects.map((project) => (
-    <div key={project.id} className="findPostsItem">
-      <div> {project.name}</div>
-      <Link key={project.id} to={`/projects/${project.id}`}>
-        <button type="button" className="button">project page</button>
-      </Link>
-      <button type="button" name={project.id} onClick={presentModal} className="button">show modal</button>
-    </div>
-  ));
+  const postProjects = currProjects ? (
+    currProjects.map((project) => (
+      <div key={project.id} className="findPostsItem">
+        <div> {project.name}</div>
+        <Link key={project.id} to={`/projects/${project.id}`}>
+          <button type="button" className="button">project page</button>
+        </Link>
+        <button type="button" name={project.id} onClick={presentModal} className="button">show modal</button>
+      </div>
+    ))
+  ) : (
+    projects.map((project) => (
+      <div key={project.id} className="findPostsItem">
+        <div> {project.name}</div>
+        <Link key={project.id} to={`/projects/${project.id}`}>
+          <button type="button" className="button">project page</button>
+        </Link>
+        <button type="button" name={project.id} onClick={presentModal} className="button">show modal</button>
+      </div>
+    ))
+  );
 
   const industryFilter = industriesList.industries.map((industry) => (
     <Dropdown.Item className="drop-item" eventKey={industry} onSelect={() => filter(industry, 'industry')}>{industry}</Dropdown.Item>
@@ -78,6 +94,9 @@ const FindProject = () => {
 
   return (
     <div id="findPostsOuter">
+      <i className="far fa-lightbulb" />
+      <FontAwesomeIcon icon={faLightbulb} />
+      {/* <i className="fas fa-snowflake"></i> */}
       <div className="search-bar">
         <input onChange={(e) => onSearchChange(e)} value={searchterm} placeholder="Search..." className="search-bar" />
       </div>

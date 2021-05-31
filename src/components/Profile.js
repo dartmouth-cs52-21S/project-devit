@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { selectUser } from '../store/selectors';
 import getCommits from '../services/github-api';
+import Badges from './Badges';
 
 library.add(faMapPin);
 
@@ -95,6 +96,10 @@ const Profile = () => {
           <h2>Recent Activity</h2>
           <div className="activity-container">
             {renderActivity()}
+          </div>
+          <div className="container">
+            <h2>Badges</h2>
+            <Badges user={user} />
           </div>
         </div>
 

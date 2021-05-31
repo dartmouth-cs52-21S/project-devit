@@ -37,6 +37,77 @@ $nav-button-padding: 1.25rem;
     flex-direction: column;
   }
 
+  &__nav-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__link-text {
+    @include transition;
+    display: block;
+    padding: $nav-button-padding;
+    padding-left: calc(1.75rem + #{$nav-button-padding});
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $devit-white;
+    background-color: $devit-black;
+    position: relative;
+
+    &::before {
+      content: "";
+      @include transition;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0.25rem;
+      height: 100%;
+      background-color: $orange-500;
+      opacity: 0;
+      transform: scale(1, 1);
+    }
+
+    &.active::before {
+      background-color: $devit-orange;
+      opacity: 1;
+    }
+
+    &:hover, &.active {
+      background-color: $pure-black;
+    }
+    
+    &:hover {
+      background-color: $pure-black;
+      cursor: pointer;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+
+  &__main-link {
+    display: flex;
+    width: 100%;
+  }
+
+  &__dropdown {
+    @include center;
+    width: 5rem;
+    height: 100%;
+    background-color: $pure-black;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
   &__nav-link {
     @include center;
     @include transition;
@@ -74,10 +145,18 @@ $nav-button-padding: 1.25rem;
       color: $devit-white;
     }
 
+    .dropdown-icon {
+      justify-self: flex-end;
+      margin: 0;
+    }
+
     &.active .icon {
       color: $devit-orange;
     }
 
+    &.with-dropdown {
+      display: flex;
+    }
   }
 
   &__nav-link-label {
@@ -108,11 +187,15 @@ $nav-button-padding: 1.25rem;
     }
   }
 
-  .expand-collapse-icon {
+  .expand-collapse-icon, .dropdown-icon {
     @include transition;
+  }
 
-    &.flip {
-      transform: rotate(180deg);
-    }
+  .flip {
+    transform: rotate(180deg);
+  }
+
+  a.sidebar__link-text {
+    color: $devit-white;
   }
 }

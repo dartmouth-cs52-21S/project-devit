@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { createProject } from '../store/actions/index';
+import { createProject, updateUser } from '../store/actions/index';
+import { selectUser } from '../store/selectors';
+
 import industriesList from '../constants/industries.json';
 
-const NewProject = (props) => {
+const NewProject = () => {
   const [title, setTitle] = useState('');
   const [industry, setIndustry] = useState([]);
   const [editIndustry, setEditIndustry] = useState(false);
@@ -19,8 +21,10 @@ const NewProject = (props) => {
   const [audienceDescription, setAudienceDescription] = useState('');
   const [marketDescription, setMarketDescription] = useState('');
 
-  const dispatch = useDispatch();
   const history = useHistory();
+
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const makeIdea = () => {
     const idea = {
@@ -32,6 +36,13 @@ const NewProject = (props) => {
       audienceDescription,
       marketDescription,
     };
+    if (!user.projectsCreated) {
+      user.projectsCreated = 1;
+    } else {
+      user.projectsCreated += 1;
+    }
+
+    dispatch(updateUser(user.id, user, history));
     dispatch(createProject(idea, history));
   };
 
