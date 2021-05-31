@@ -34,7 +34,7 @@ const Sidebar = () => {
           <SidebarLink route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projectsList} />
         )}
         <SidebarLink route="/find-project" label="Find a Project" leftIcon={<AiOutlineFileSearch />} iconClass="find-icon" />
-        <SidebarLink route="/new-project" label="New Project" leftIcon={<FiPlusSquare />} iconClass="new-idea-icon" />
+        <SidebarLink route="/new-project" label="New Project" leftIcon={<FiPlusSquare />} iconClass="new-project-icon" />
       </ul>
       <div role="button" tabIndex="0" className="sidebar__expand-collapse" onClick={toggleCollapsed}>
         <h4 className="sidebar__nav-link-label collapse-label">Collapse</h4>
