@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { createProject } from '../store/actions/index';
+
+import { createProject } from '../store/actions';
 import industriesList from '../constants/industries.json';
 
-const NewProject = (props) => {
+const NewProject = () => {
   const [title, setTitle] = useState('');
   const [industry, setIndustry] = useState([]);
   const [editIndustry, setEditIndustry] = useState(false);

@@ -1,0 +1,10 @@
+.signed-in-message {
+  text-align: center;
+  background-color: $devit-black;
+  border: 2px solid $devit-orange;
+  padding: 3rem 1rem;
+
+  &__heading {
+    margin-bottom: 0.5rem;
+  }
+}
