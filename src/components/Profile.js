@@ -101,8 +101,8 @@ const Profile = () => {
     );
   };
 
-  // const projects = user.projects.map((projectID) => {
-  //   const project = fetchProject(projectID);
+  // const projects = user.projects.map((projectId) => {
+  //   const project = fetchProject(projectId);
   //   console.log(project);
   //   return '';
   // });
