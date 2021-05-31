@@ -45,7 +45,7 @@ export function updateProject(project, id) {
 }
 
 export function fetchProject(id) {
-  console.log('in fetch');
+  console.log(`${ROOT_URL}/projects/${id}`);
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${ROOT_URL}/projects/${id}`);
