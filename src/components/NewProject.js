@@ -5,9 +5,10 @@ import { createProject, updateUser } from '../store/actions/index';
 import { selectUser } from '../store/selectors';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import industriesList from '../constants/industries.json';
 
-const NewProject = (props) => {
+const NewProject = () => {
   const [title, setTitle] = useState('');
   const [industry, setIndustry] = useState([]);
   const [editIndustry, setEditIndustry] = useState(false);
@@ -21,7 +22,6 @@ const NewProject = (props) => {
   const [audienceDescription, setAudienceDescription] = useState('');
   const [marketDescription, setMarketDescription] = useState('');
 
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const user = useSelector(selectUser);
