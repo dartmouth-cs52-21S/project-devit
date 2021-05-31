@@ -11,6 +11,7 @@ import { selectisAuthenticated, selectUser } from '../store/selectors';
 
 // eslint-disable-next-line no-unused-vars
 import { signOutUser, fetchProject } from '../store/actions/index';
+import Badges from './Badges';
 
 library.add(faMapPin);
 
@@ -123,6 +124,10 @@ const Profile = () => {
           <div className="activity">
             <h3>Joined project</h3>
             <p>4/19, 2:10pm</p>
+          </div>
+          <div className="container">
+            <h2>Badges</h2>
+            <Badges user={user} />
           </div>
         </div>
 

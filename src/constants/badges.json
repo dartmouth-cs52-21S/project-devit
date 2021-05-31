@@ -27,10 +27,10 @@
     },
     "planner": {
         "text": "plan deadlines",
-        "description": "Create 3 events on the calendar"
+        "description": "Create 5 events on the calendar"
     },
     "activeChatter": {
         "text": "active chatter",
-        "description": "send 30 messages in the chat"
+        "description": "send 25 messages in the chat"
     }
 }
