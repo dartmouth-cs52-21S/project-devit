@@ -26,7 +26,7 @@ export function createProject(project, history) {
     try {
       const { data } = await axios.post(`${ROOT_URL}/projects`, project, { headers: { authorization: localStorage.getItem('token') } });
       dispatch({ type: ActionTypes.NEW_PROJECT, payload: data });
-      history.push('/projects');
+      history.push(`/projects/${data.id}`);
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying to create your project.');
@@ -145,7 +145,7 @@ export function updateUser(id, user, history) {
 
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user);
+      const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user, { headers: { authorization: localStorage.getItem('token') } });
       dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('user', JSON.stringify(data.user));
       history.push('/profile');
