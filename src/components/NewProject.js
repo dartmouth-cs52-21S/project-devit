@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { createProject, updateUser } from '../store/actions/index';
 import { selectUser } from '../store/selectors';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 import industriesList from '../constants/industries.json';
 
