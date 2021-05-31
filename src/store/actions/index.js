@@ -46,12 +46,11 @@ export function updateProject(project, id) {
   };
 }
 
-export function fetchProject(id) {
-  console.log('in fetch');
+export function fetchProject(id, callback) {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${ROOT_URL}/projects/${id}`);
-      console.log('data', data);
+      callback(data);
       dispatch({ type: ActionTypes.FETCH_PROJECT, payload: data });
     } catch (error) {
       console.error(error);
