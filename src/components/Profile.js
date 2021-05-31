@@ -1,30 +1,20 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faMapPin,
 } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
-import { selectisAuthenticated, selectUser, selectAllProjects } from '../store/selectors';
+import { selectUser } from '../store/selectors';
 import getCommits from '../services/github-api';
-
-// eslint-disable-next-line no-unused-vars
-import { signOutUser, fetchProject, fetchProjects } from '../store/actions/index';
 
 library.add(faMapPin);
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const user = useSelector(selectUser);
-  const isAuthenticated = useSelector(selectisAuthenticated);
   const [userCommits, setUserCommits] = useState([]);
-
-  const handleSignOut = () => dispatch(signOutUser(history));
 
   const renderPic = () => {
     let classes = 'profile';
@@ -66,7 +56,6 @@ const Profile = () => {
         const repo = git.substring(index);
         getCommits(repo).then((commits) => {
           const newArray = commits.map((com) => {
-            console.log(com);
             const author = com.author ? com.author.login : 'unknown';
             const { message } = com.commit;
             const { date } = com.commit.author;
@@ -79,7 +68,6 @@ const Profile = () => {
   }, []);
 
   const renderActivity = () => {
-    console.log(userCommits, userCommits.length);
     if (userCommits && userCommits.length > 0) {
       const activity = userCommits.map((commit) => {
         const date = commit.date.substring(0, 10);
@@ -140,7 +128,6 @@ const Profile = () => {
         </div>
 
       </div>
-      {/* {isAuthenticated ? <button type="button" onClick={handleSignOut}>Sign Out</button> : <div />} */}
     </div>
   );
 };
