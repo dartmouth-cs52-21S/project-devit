@@ -78,7 +78,6 @@ export function reauthenticateUser(token) {
     try {
       const { data } = await axios.post(`${ROOT_URL}/reauth`, { token });
       dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
-      localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
     } catch (error) {
       console.error(error);
@@ -150,7 +149,6 @@ export function updateUser(id, user, history) {
       const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user);
       dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
       localStorage.setItem('user', JSON.stringify(data.user));
-      localStorage.setItem('token', data.token);
       history.push('/profile');
     } catch (error) {
       console.error(error);
