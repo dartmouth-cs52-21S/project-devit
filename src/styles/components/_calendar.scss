@@ -1,0 +1,46 @@
+.calendar{
+  color: black;
+  .events{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    label{
+      display: flex;
+      flex-direction: row;
+      margin-right: 20px;
+      color: $gray-200;
+      height: 20px;
+    }
+    input{
+      display: inline;
+      background-color: $gray-100;
+      line-height: 20px;
+      padding: 2px;
+      color: black;
+      border:none;
+    }
+    button{
+      border-radius: 0px;
+      background-color: $devit-orange;
+      font-size: 1rem;
+      border:none;
+      color: $devit-white;
+      padding: 2px;
+    }
+
+  }
+  .fc{
+    background-color: $gray-400;
+
+    .fc-list-event-time{
+      display: none;
+    }
+    button{
+      border-radius: 0px;
+      background-color: $devit-orange;
+      border: 2px black;
+    }
+  }
+
+
+}
