@@ -4,39 +4,32 @@ import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { fetchProject, toggleModalVisibility } from '../store/actions';
-// import projectsList from '../data/projects';
 import Chat from './Chat';
-
-// const mapStateToProps = (reduxState) => ({
-//   project: reduxState.initialState.current,
-// });
+import { ModalMessage } from './Modal';
 
 const Project = () => {
   const [project, setProject] = useState();
   //   const [editing, setEditing] = useState(false);
 
   const { projectId } = useParams();
-  // const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // code to run on component mount
     dispatch(fetchProject(projectId, (data) => {
       setProject(data);
     }));
   }, []);
 
-  const industries = project.industry ? (project.industry.map((item) => {
-    return (
-      <p key={item} className="project__industry__tag"> {item}</p>
-    );
-  }))
+  if (!project) return null;
+
+  const industries = project.industry ? (project.industry.map((item) => (
+    <p key={item} className="project__industry__tag">{item}</p>
+  )))
     : null;
 
   const neededTeam = project.neededTeam ? (project.neededTeam.map((item) => {
     const designer = 'designer';
     const developer = 'developer';
-    // const ideator = 'ideator';
 
     if (designer.match(item)) {
       return (
@@ -63,7 +56,14 @@ const Project = () => {
   }))
     : null;
 
-  const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
+  const handleToggleModal = () => dispatch(toggleModalVisibility(
+    <ModalMessage
+      title="Team Best Practices"
+      message="Don't know where to start when building your team? Check out this link to get you started."
+      linkHref="https://yourstory.com/2019/06/build-team-for-startup/amp"
+      linkText="Team Best Practices"
+    />,
+  ));
 
   return (
     <div className="project">
@@ -106,22 +106,3 @@ const Project = () => {
 };
 
 export default Project;
-
-const ModalTestComponent = () => (
-  <div style={{
-    backgroundColor: '#232323',
-    height: '30vh',
-    padding: '2rem',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: '2px solid #ff5D08',
-  }}
-  >
-    <h2 style={{ margin: '0 0 0.75rem' }}>I&apos;m in the modal 🎉</h2>
-    <p>Click outside the border to dismiss me! ✌️</p>
-    <a className="project__links" href="google.com">some ideas!!</a>
-
-  </div>
-);
