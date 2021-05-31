@@ -1,21 +1,21 @@
 {
     "ideatorBeginner": {
-        "text": "ideator-beginner",
+        "text": "ideator beginner",
         "description": "Create a new project",
         "icon": {"c": "fa-lightbulb-o", "l": "Lightbulb o"}
     },
     "ideatorPro": {
-        "text": "ideator-pro",
-        "description": "Create 5 projects"
+        "text": "ideator pro",
+        "description": "Create 3 projects"
     },
     "devitBeginner": {
-        "text": "devit-beginner",
+        "text": "devit beginner",
         "description": "Join a Project",
         "icon": "../../images/badge_icons/cil_badge.png"
     },
     "devitPro": {
-        "text": "devit-beginner",
-        "description": "Join 5 projects"
+        "text": "devit pro",
+        "description": "Join 3 projects"
     },
     "githubCommits": {
         "text": "github-commits",
