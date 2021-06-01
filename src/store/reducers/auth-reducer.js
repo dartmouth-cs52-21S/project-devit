@@ -4,7 +4,7 @@ const storedToken = localStorage.getItem('token');
 const storedUser = localStorage.getItem('user');
 const parsedUser = JSON.parse(storedUser);
 
-const hasAuthCredentials = storedToken.length > 0 && storedUser.length > 0;
+const hasAuthCredentials = storedToken && storedUser;
 
 const initialState = {
   isAuthenticated: hasAuthCredentials,
