@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import { faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { selectUser } from '../store/selectors';
 import getCommits from '../services/github-api';
 import Badges from './Badges';
+import { updateUser } from '../store/actions';
 
 library.add(faMapPin);
 
@@ -15,6 +16,8 @@ const Profile = () => {
   const user = useSelector(selectUser);
 
   if (!user) return null;
+
+  const dispatch = useDispatch();
 
   const renderPic = () => {
     let classes = 'profile';
@@ -52,6 +55,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    let numUserCommits = 0;
     user.projects.map((project) => {
       project.GitHub.map((git) => {
         const index = git.indexOf('github.com/') + 'github.com/'.length;
@@ -60,6 +64,9 @@ const Profile = () => {
         getCommits(repo).then((commits) => {
           const newArray = commits.map((com) => {
             const author = com.author ? com.author.login : 'unknown';
+            if (author === user.githubUsername) {
+              numUserCommits += 1;
+            }
             const { message } = com.commit;
             const { date } = com.commit.author;
             return { author, message, date };
@@ -73,6 +80,8 @@ const Profile = () => {
 
       return '';
     });
+    user.commits = numUserCommits;
+    dispatch(updateUser(user.id, user));
   }, []);
 
   const renderActivity = () => {

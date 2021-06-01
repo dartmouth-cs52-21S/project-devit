@@ -6,7 +6,7 @@ import { MdSend } from 'react-icons/md';
 import dayjs from 'dayjs';
 
 import { UserAvatar } from './UserAvatar';
-import { addChatMessage, getChatMessages } from '../store/actions';
+import { addChatMessage, getChatMessages, updateUser } from '../store/actions';
 import { selectUser, selectChatMessages } from '../store/selectors/index';
 
 const localizedFormat = require('dayjs/plugin/localizedFormat');
@@ -52,6 +52,14 @@ const Chat = () => {
 
     dispatch(addChatMessage(newMessage));
     setMessageText('');
+
+    if (!user.messagesSent) {
+      user.messagesSent = 1;
+    } else {
+      user.messagesSent += 1;
+    }
+
+    dispatch(updateUser(user.id, user));
   };
 
   return (

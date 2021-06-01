@@ -1,36 +1,26 @@
 {
-    "ideatorBeginner": {
-        "text": "ideator beginner",
-        "description": "Create a new project",
-        "icon": {"c": "fa-lightbulb-o", "l": "Lightbulb o"}
+    "ideator": {
+      "thresholds": [1, 3, 5],
+      "value": "projectsCreated"
     },
-    "ideatorPro": {
-        "text": "ideator pro",
-        "description": "Create 3 projects"
+    "devit": {
+        "thresholds": [1, 3, 5],
+        "value": "projectsJoined"
     },
-    "devitBeginner": {
-        "text": "devit beginner",
-        "description": "Join a Project",
-        "icon": "../../images/badge_icons/cil_badge.png"
+    "commit": {
+        "thresholds": [5, 20, 50],
+        "value": "commits"
     },
-    "devitPro": {
-        "text": "devit pro",
-        "description": "Join 3 projects"
-    },
-    "githubCommits": {
-        "text": "github-commits",
-        "description": "Make 15 commits with github"
-    },
-    "pullRequestPro": {
-        "text": "github pull requests",
-        "description": "Make 5 pull requests with github"
+    "pullRequest": {
+        "thresholds": [1, 5, 15],
+        "value": "pullRequests"
     },
     "planner": {
-        "text": "plan deadlines",
-        "description": "Create 5 events on the calendar"
+        "thresholds": [1, 3, 10],
+        "value": "eventsCreated"
     },
-    "activeChatter": {
-        "text": "active chatter",
-        "description": "send 25 messages in the chat"
+    "chatter": {
+        "thresholds": [10, 25, 50],
+        "value": "messagesSent"
     }
 }
