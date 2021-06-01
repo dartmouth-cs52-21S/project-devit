@@ -1,0 +1,62 @@
+.projects {
+  $project-title-size: 1.75rem;
+  $project-item-spacing: 0.75rem;
+
+  &__projects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+    grid-gap: 1rem;
+  }
+  
+  &__project {
+    display: flex;
+    background-color: $gray-900;
+    padding: 1.5rem;
+  }
+
+  &__project-icon {
+    font-size: $project-title-size;
+    margin: 0 $project-item-spacing $project-item-spacing 0;
+  }
+
+  &__project-name {
+    font-size: $project-title-size;
+    margin: 0 0 $project-item-spacing;
+  }
+
+  &__project-details-wrapper {
+    padding-left: 2px;
+
+    & > * {
+      margin-bottom: $project-item-spacing;
+    }
+  }
+
+  &__project-industries {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  &__project-industry {
+    @include boxed;
+
+    & + .projects__project-industry {
+      margin-left: 0.5rem;
+    }
+  }
+
+  &__more-label {
+    margin-left: 0.5rem;
+  }
+
+  &__project-originally-posted {
+    & > *:not(:last-of-type) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__originally-posted-date, &__originally-posted-by {
+     @include boxed(sm);
+  }
+}
