@@ -26,9 +26,14 @@ $devit-black: #111111;
     .container{
       height: 50%;
     }
+    .activity-container{
+      height: 30vh;
+      overflow-y: scroll;
+    }
     .activity{
       background-color: $devit-gray;
       color: $devit-white
+  
     }
     .project{
       background-color: $devit-gray;
@@ -48,15 +53,20 @@ $devit-black: #111111;
       }
       h3{
         background-color: #4c4c4c;
-        margin-left: 20px;
+        margin-right: 20px;
         padding-left: 20px;
         padding-right: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        align-self: center;
       }
       .descriptions{
         height: 60%;
-        width: 70%;
+        width: 100%;
         display: flex;
         justify-content: flex-start;
+        align-items: center;
+
       }
     }
     .right-side{
@@ -118,5 +128,11 @@ $devit-black: #111111;
         background-color: $devit-black;
       }
   
+    }
+    h3.commit{
+      margin-left: 20px;
+    }
+    p.commit{
+      margin-left: 20px;
     }
   }
