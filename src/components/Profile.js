@@ -1,81 +1,20 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faMapPin,
-} from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
-import { selectisAuthenticated, selectUser } from '../store/selectors';
+import { faMapPin } from '@fortawesome/free-solid-svg-icons';
 
-// eslint-disable-next-line no-unused-vars
-import { signOutUser, fetchProject } from '../store/actions/index';
+import { selectUser } from '../store/selectors';
 import Badges from './Badges';
 
 library.add(faMapPin);
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const user = useSelector(selectUser);
-  const isAuthenticated = useSelector(selectisAuthenticated);
 
-  const handleSignOut = () => dispatch(signOutUser(history));
+  if (!user) return null;
 
-  const projectList = [
-    {
-      industry: [
-        'finance',
-      ],
-      tools: [
-        'react-native',
-        'redux',
-        'css',
-      ],
-      neededTeam: [
-        'dev',
-        'designer',
-        'designer',
-      ],
-      team: [
-        null,
-      ],
-      _id: '60b0880171de580fe478c07f',
-      name: 'test project',
-      bio: 'testing',
-      logo: '🐉',
-      __v: 0,
-      id: '60b0880171de580fe478c07f',
-    },
-    {
-      industry: [
-        'finance',
-        'tech',
-      ],
-      tools: [
-        'react',
-        'html',
-        'css',
-      ],
-      neededTeam: [
-        'dev',
-        'dev',
-        'designer',
-      ],
-      team: [
-        null,
-      ],
-      _id: '60b0884971de580fe478c080',
-      name: 'test project 2',
-      bio: 'more testing',
-      logo: '🐉',
-      __v: 0,
-      id: '60b0884971de580fe478c080',
-    },
-  ];
-
-  const projects = projectList.map((project) => {
+  const projects = user.projects.map((project) => {
     const descriptions = project.industry.map((ind) => {
       return <h3 key={ind}>{ind}</h3>;
     });
@@ -83,10 +22,7 @@ const Profile = () => {
       <div className="project" key={project.id}>
         <h1>{project.logo}</h1>
         <h2>{project.name}</h2>
-        <div className="descriptions">
-          {descriptions}
-        </div>
-
+        <div className="descriptions">{descriptions}</div>
       </div>
     );
   });
@@ -96,17 +32,15 @@ const Profile = () => {
     classes = classes.concat(user.roles.includes('designer') ? ' des' : '');
     classes = classes.concat(user.roles.includes('developer') ? ' dev' : '');
     classes = user.roles.includes('designer') && user.roles.includes('developer') ? 'profile both' : classes;
+
     return (
-      // eslint-disable-next-line max-len
-      <img className={classes} src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="profile" />
+      <img
+        className={classes}
+        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        alt="profile"
+      />
     );
   };
-
-  // const projects = user.projects.map((projectId) => {
-  //   const project = fetchProject(projectId);
-  //   console.log(project);
-  //   return '';
-  // });
 
   return (
     <div id="profile">
