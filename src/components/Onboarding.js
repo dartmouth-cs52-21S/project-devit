@@ -34,6 +34,7 @@ const Onboarding = () => {
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
+    githubUsername: '',
     location: '',
     picture: '../images/user.png',
     bio: '',
@@ -102,6 +103,7 @@ const Onboarding = () => {
             <div>
               <input type="text" value={user.firstName} placeholder="First Name" onChange={(e) => setUser({ ...user, firstName: e.target.value })} />
               <input type="text" value={user.lastName} placeholder="Last Name" onChange={(e) => setUser({ ...user, lastName: e.target.value })} />
+              <input type="text" value={user.githubUsername} placeholder="Github Username" onChange={(e) => setUser({ ...user, githubUsername: e.target.value })} />
             </div>
             <label htmlFor="long">
               <input type="text"
