@@ -43,7 +43,6 @@ const Onboarding = () => {
     desSkills: [],
   });
   const [file, setFile] = useState();
-  console.log(Skills.devloper);
 
   const storedUser = useSelector(selectUser);
 

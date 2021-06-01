@@ -32,3 +32,11 @@ const Modal = () => {
 };
 
 export default Modal;
+
+export const ModalMessage = ({ title, message, linkHref, linkText }) => (
+  <div className="modal-message">
+    <h2 className="modal-message__title">{title}</h2>
+    <p className="modal-message__message">{message}</p>
+    <a className="modal-message__text-link" href={linkHref}>{linkText}</a>
+  </div>
+);
