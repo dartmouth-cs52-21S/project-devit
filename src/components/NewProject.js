@@ -35,6 +35,7 @@ const NewProject = () => {
       problemDescription,
       audienceDescription,
       marketDescription,
+      author: user.id,
     };
 
     if (!user.projectsCreated) {
