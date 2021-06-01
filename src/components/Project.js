@@ -9,8 +9,6 @@ import { ModalMessage } from './Modal';
 
 const Project = () => {
   const [project, setProject] = useState();
-  //   const [editing, setEditing] = useState(false);
-
   const { projectId } = useParams();
   const dispatch = useDispatch();
 
@@ -70,10 +68,7 @@ const Project = () => {
       <div className="project__details">
 
         <div id="project__title__container">
-          <div className="project__logo">
-            {/* <img src={project.logo} alt="emoji" /> */}
-            {project.logo}
-          </div>
+          <div className="project__logo">{project.logo}</div>
           <h1 className="project__title">{project.name}</h1>
         </div>
         <p>{project.bio}</p>
