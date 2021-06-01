@@ -20,7 +20,7 @@ const Project = () => {
     }));
   }, []);
 
-  if (!project) return null;
+  if (!project) return 'Sorry, we couldn\'t find that project.';
 
   const industries = project.industry ? (project.industry.map((item) => (
     <p key={item} className="project__industry__tag">{item}</p>
