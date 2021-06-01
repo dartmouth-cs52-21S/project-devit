@@ -111,9 +111,7 @@ const FindProject = () => {
       <Link className="link" key={project.id} to={`/projects/${project.id}`}>
         <div className="findPostsItem">
           <div id="project__title__container">
-            <div className="project__logo">
-              <img src={project.logo} alt="emoji" />
-            </div>
+            <div className="project__logo">{project.logo}</div>
             <h1 className="project__title">{project.name}</h1>
           </div>
           <div className="find-project-content">
