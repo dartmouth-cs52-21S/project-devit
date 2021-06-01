@@ -3,15 +3,18 @@
   $project-item-spacing: 0.75rem;
 
   &__projects-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
-    grid-gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin: calc(-1 * #{$project-item-spacing});
   }
   
   &__project {
+    flex: 1 0 calc(50% - 2rem);
+    margin: $project-item-spacing;
     display: flex;
     background-color: $gray-900;
     padding: 1.5rem;
+    position: relative;
   }
 
   &__project-icon {
@@ -58,5 +61,13 @@
 
   &__originally-posted-date, &__originally-posted-by {
      @include boxed(sm);
+  }
+
+  .view-project-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    border: none;
   }
 }
