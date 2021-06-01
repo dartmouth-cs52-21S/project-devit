@@ -41,37 +41,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  text-decoration: none;
-  position: relative;
+// a {
+//   text-decoration: none;
+//   position: relative;
 
-  &:hover {
-    cursor: pointer;
-  }
+//   &:hover {
+//     cursor: pointer;
+//   }
 
-  &:hover::after {
-    transform: scale(1, 1);
-    transform-origin: 100%;
-  }
+//   &:hover::after {
+//     transform: scale(1, 1);
+//     transform-origin: 100%;
+//   }
 
-  &::after {
-    @include transition;
-    content: "";
-    position: absolute;
-    bottom: -0.1em;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: currentColor;
-    transform: scale(0, 1);
-    transform-origin: 0;
-  }
+//   &::after {
+//     @include transition;
+//     content: "";
+//     position: absolute;
+//     bottom: -0.1em;
+//     left: 0;
+//     width: 100%;
+//     height: 2px;
+//     background-color: currentColor;
+//     transform: scale(0, 1);
+//     transform-origin: 0;
+//   }
 
-  &:visited {
-    color: $devit-orange;
-    text-decoration: none;
-  }
-}
+//   &:visited {
+//     color: $devit-orange;
+//     text-decoration: none;
+//   }
+// }
 
 ul, li {
   margin: 0;
