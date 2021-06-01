@@ -25,8 +25,10 @@ export function createProject(project, history) {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`${ROOT_URL}/projects`, project, { headers: { authorization: localStorage.getItem('token') } });
-      dispatch({ type: ActionTypes.NEW_PROJECT, payload: data });
-      history.push(`/projects/${data.id}`);
+      dispatch({ type: ActionTypes.NEW_PROJECT, payload: data.project });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
+      localStorage.setItem('user', JSON.stringify(data.user));
+      history.push(`/projects/${data.project.id}`);
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying to create your project.');
@@ -171,11 +173,12 @@ export const toggleModalVisibility = (modalContent) => ({
   modalContent,
 });
 
-export function getChatMessages(projectId) {
+export function getChatMessages(projectId, callback) {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${ROOT_URL}/chat-messages/${projectId}`, { headers: { authorization: localStorage.getItem('token') } });
       dispatch({ type: ActionTypes.UPDATE_CHAT_MESSAGES, messages: data });
+      if (callback) callback();
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying to get chat messages.');
