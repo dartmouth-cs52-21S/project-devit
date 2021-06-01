@@ -57,6 +57,10 @@
     margin-left: 35px;
 }
 
+.find-project-content {
+    margin-left: 35px;
+}
+
 .developer__needed.find-project {
     background-color: $devit-gray;
 }
@@ -81,3 +85,20 @@
   .search {
       color: #232324;
   }
+
+  .link {
+    text-decoration: none;
+  }
+
+  .link:visited {
+    color:$devit-white;
+}
+
+  .link:active {
+    color:$devit-white;
+    text-decoration: none;
+} 
+
+.link:focus {
+    box-shadow: none;
+   }
