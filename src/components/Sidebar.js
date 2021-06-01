@@ -25,7 +25,7 @@ const Sidebar = () => {
   return (
     <nav className={`sidebar ${sidebarIsCollapsed ? 'collapsed' : ''}`}>
       <ul className="sidebar__nav-links">
-        {projects.length > 0 ? (
+        {projects?.length > 0 ? (
           <SidebarLinkWithDropdown route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projects} />
         ) : (
           <SidebarLink route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projects} />

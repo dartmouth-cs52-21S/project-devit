@@ -76,6 +76,17 @@ $bp-large: 1180px;
   }
 }
 
+@mixin boxed($size: lg) {
+  background-color: $gray-800;
+  margin: 0.25rem 0;
+  
+  @if $size == lg {
+    padding: 0.5rem 0.75rem;
+  } @else if $size == sm {
+    padding: 0.2rem 0.4rem;
+  }
+}
+
 @mixin shadow {
   $shadow-offset: 1rem;
   position: relative;
