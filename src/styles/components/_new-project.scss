@@ -1,12 +1,11 @@
-#new-idea{
+#new-project {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   color: $devit-white;
-  margin-top: 350px;
 
   button.emoji{
     background-color: $devit-gray;

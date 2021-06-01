@@ -1,12 +1,9 @@
-/* eslint-disable consistent-return */
-/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faMapPin,
-} from '@fortawesome/free-solid-svg-icons';
+import { faMapPin } from '@fortawesome/free-solid-svg-icons';
+
 import { selectUser } from '../store/selectors';
 import getCommits from '../services/github-api';
 import Badges from './Badges';
@@ -14,14 +11,17 @@ import Badges from './Badges';
 library.add(faMapPin);
 
 const Profile = () => {
-  const user = useSelector(selectUser);
   const [userCommits, setUserCommits] = useState([]);
+  const user = useSelector(selectUser);
+
+  if (!user) return null;
 
   const renderPic = () => {
     let classes = 'profile';
     classes = classes.concat(user.roles.includes('designer') ? ' des' : '');
     classes = classes.concat(user.roles.includes('developer') ? ' dev' : '');
     classes = user.roles.includes('designer') && user.roles.includes('developer') ? 'profile both' : classes;
+
     return (
       <img className={classes} src={user.picture} alt="profile" />
     );
@@ -30,24 +30,25 @@ const Profile = () => {
   const renderProjects = () => {
     if (user.projects) {
       const proj = user.projects.map((project) => {
-        if (project.industry) {
-          const descriptions = project.industry.map((ind) => {
-            return <h3 key={ind}>{ind}</h3>;
-          });
-          return (
-            <div className="project" key={project.id}>
-              <h1>{project.logo}</h1>
-              <h2>{project.name}</h2>
-              <div className="descriptions">
-                {descriptions}
-              </div>
+        if (!project.industry) return '';
+
+        const descriptions = project.industry.map((ind) => {
+          return <h3 key={ind}>{ind}</h3>;
+        });
+
+        return (
+          <div className="project" key={project.id}>
+            <h1>{project.logo}</h1>
+            <h2>{project.name}</h2>
+            <div className="descriptions">
+              {descriptions}
             </div>
-          );
-        }
+          </div>
+        );
       });
       return proj;
     }
-    return {};
+    return '';
   };
 
   useEffect(() => {
@@ -55,6 +56,7 @@ const Profile = () => {
       project.GitHub.map((git) => {
         const index = git.indexOf('github.com/') + 'github.com/'.length;
         const repo = git.substring(index);
+
         getCommits(repo).then((commits) => {
           const newArray = commits.map((com) => {
             const author = com.author ? com.author.login : 'unknown';
@@ -62,9 +64,14 @@ const Profile = () => {
             const { date } = com.commit.author;
             return { author, message, date };
           });
+
           setUserCommits(newArray);
         });
+
+        return '';
       });
+
+      return '';
     });
   }, []);
 

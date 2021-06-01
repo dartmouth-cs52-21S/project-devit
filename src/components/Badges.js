@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLightbulb,
   faLaptop,
-  faGithub,
   faCodeBranch,
   faCalendar,
   faComments,
 } from '@fortawesome/free-solid-svg-icons';
+import { FaGithub } from 'react-icons/fa';
 import { Tooltip } from '@material-ui/core';
 
 const badgesObject = {
@@ -28,7 +28,7 @@ const badgesObject = {
     hoverText: 'Join 3 Projects',
   },
   githubCommits: {
-    icon: <FontAwesomeIcon icon={faGithub} />,
+    icon: <FaGithub />,
     hoverText: 'Make 15 commits with github',
   },
   pullRequestPro: {
@@ -47,7 +47,7 @@ const badgesObject = {
 
 const Badges = (props) => {
   return props.user.badges.map((badge) => (
-    <Tooltip title={badgesObject[badge].hoverText}>
+    <Tooltip key={badge} title={badgesObject[badge].hoverText}>
       <span>{badgesObject[badge].icon} </span>
     </Tooltip>
   ));
