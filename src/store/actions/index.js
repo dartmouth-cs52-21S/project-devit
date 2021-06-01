@@ -3,6 +3,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import ActionTypes from '../types';
 
+import Badges from '../../constants/badges.json';
+
 export const ROOT_URL = process.env.REACT_APP_ROOT_URL || 'http://localhost:9090/api';
 
 export const toggleSidebar = () => ({ type: ActionTypes.TOGGLE_SIDEBAR });
@@ -118,28 +120,27 @@ export function signUpUser(user) {
   };
 }
 
-const mapCountsToBadges = (user) => {
-  if (user.projectsCreated > 0) {
-    if (user.projectsCreated > 3) {
-      if (!user.badges.includes('ideatorPro')) {
-        user.badges.push('ideatorPro');
-      }
+const badgesHelper = (user, badgeString) => {
+  const threshold = Badges[badgeString].thresholds;
+  if (user.projectsCreated >= threshold[2]) {
+    if (!user.badges.includes(badgeString.concat('Gold'))) {
+      user.badges.push(badgeString.concat('Gold'));
     }
-    if (!user.badges.includes('ideatorBeginner')) {
-      user.badges.push('ideatorBeginner');
+  } else if (user.projectsCreated >= threshold[1]) {
+    if (!user.badges.includes(badgeString.concat('Silver'))) {
+      user.badges.push(badgeString.concat('Silver'));
+    }
+  } else if (user.projectsCreated >= threshold[0]) {
+    if (!user.badges.includes(badgeString.concat('Bronze'))) {
+      user.badges.push(badgeString.concat('Bronze'));
     }
   }
+};
 
-  if (user.projectsJoined > 0) {
-    if (user.projectsJoined > 3) {
-      if (!user.badges.includes('devitPro')) {
-        user.badges.push('devitPro');
-      }
-    }
-    if (!user.badges.includes('devitBeginner')) {
-      user.badges.push('devitBeginner');
-    }
-  }
+const mapCountsToBadges = (user) => {
+  badgesHelper(user, 'ideator');
+
+  badgesHelper(user, 'devit');
 };
 
 export function updateUser(id, user, history) {
