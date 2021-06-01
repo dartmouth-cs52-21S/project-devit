@@ -22,6 +22,45 @@ export function fetchProjects() {
     }
   };
 }
+const badgesHelper = (user, badgeString) => {
+  const threshold = Badges[badgeString].thresholds;
+  if (user[Badges[badgeString].value] >= threshold[2]) {
+    if (!user.badges.includes(badgeString.concat('Gold'))) {
+      user.badges.push(badgeString.concat('Gold'));
+    }
+  } else if (user[Badges[badgeString].value] >= threshold[1]) {
+    if (!user.badges.includes(badgeString.concat('Silver'))) {
+      user.badges.push(badgeString.concat('Silver'));
+    }
+  } else if (user[Badges[badgeString].value] >= threshold[0]) {
+    if (!user.badges.includes(badgeString.concat('Bronze'))) {
+      user.badges.push(badgeString.concat('Bronze'));
+    }
+  }
+};
+
+const mapCountsToBadges = (user) => {
+  badgesHelper(user, 'ideator');
+  badgesHelper(user, 'devit');
+  badgesHelper(user, 'commit');
+  badgesHelper(user, 'chatter');
+};
+
+export function updateUser(id, user, history) {
+  mapCountsToBadges(user);
+
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user, { headers: { authorization: localStorage.getItem('token') } });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
+      localStorage.setItem('user', JSON.stringify(data.user));
+      history.push('/profile');
+    } catch (error) {
+      console.error(error);
+      toast.dark('Sorry, there was an issue when trying to update user.');
+    }
+  };
+}
 
 export function createProject(project, history) {
   return async (dispatch) => {
@@ -116,46 +155,6 @@ export function signUpUser(user) {
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying to sign you up.');
-    }
-  };
-}
-
-const badgesHelper = (user, badgeString) => {
-  const threshold = Badges[badgeString].thresholds;
-  if (user[Badges[badgeString].value] >= threshold[2]) {
-    if (!user.badges.includes(badgeString.concat('Gold'))) {
-      user.badges.push(badgeString.concat('Gold'));
-    }
-  } else if (user[Badges[badgeString].value] >= threshold[1]) {
-    if (!user.badges.includes(badgeString.concat('Silver'))) {
-      user.badges.push(badgeString.concat('Silver'));
-    }
-  } else if (user[Badges[badgeString].value] >= threshold[0]) {
-    if (!user.badges.includes(badgeString.concat('Bronze'))) {
-      user.badges.push(badgeString.concat('Bronze'));
-    }
-  }
-};
-
-const mapCountsToBadges = (user) => {
-  badgesHelper(user, 'ideator');
-  badgesHelper(user, 'devit');
-  badgesHelper(user, 'commit');
-  badgesHelper(user, 'chatter');
-};
-
-export function updateUser(id, user, history) {
-  mapCountsToBadges(user);
-
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user, { headers: { authorization: localStorage.getItem('token') } });
-      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
-      localStorage.setItem('user', JSON.stringify(data.user));
-      history.push('/profile');
-    } catch (error) {
-      console.error(error);
-      toast.dark('Sorry, there was an issue when trying to update user.');
     }
   };
 }
