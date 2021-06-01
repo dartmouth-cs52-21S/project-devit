@@ -139,8 +139,8 @@ const badgesHelper = (user, badgeString) => {
 
 const mapCountsToBadges = (user) => {
   badgesHelper(user, 'ideator');
-
   badgesHelper(user, 'devit');
+  badgesHelper(user, 'commit');
 };
 
 export function updateUser(id, user, history) {
