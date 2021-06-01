@@ -122,15 +122,15 @@ export function signUpUser(user) {
 
 const badgesHelper = (user, badgeString) => {
   const threshold = Badges[badgeString].thresholds;
-  if (user.projectsCreated >= threshold[2]) {
+  if (user[Badges[badgeString].value] >= threshold[2]) {
     if (!user.badges.includes(badgeString.concat('Gold'))) {
       user.badges.push(badgeString.concat('Gold'));
     }
-  } else if (user.projectsCreated >= threshold[1]) {
+  } else if (user[Badges[badgeString].value] >= threshold[1]) {
     if (!user.badges.includes(badgeString.concat('Silver'))) {
       user.badges.push(badgeString.concat('Silver'));
     }
-  } else if (user.projectsCreated >= threshold[0]) {
+  } else if (user[Badges[badgeString].value] >= threshold[0]) {
     if (!user.badges.includes(badgeString.concat('Bronze'))) {
       user.badges.push(badgeString.concat('Bronze'));
     }
@@ -141,6 +141,7 @@ const mapCountsToBadges = (user) => {
   badgesHelper(user, 'ideator');
   badgesHelper(user, 'devit');
   badgesHelper(user, 'commit');
+  badgesHelper(user, 'chatter');
 };
 
 export function updateUser(id, user, history) {
