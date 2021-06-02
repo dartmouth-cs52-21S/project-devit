@@ -18,6 +18,14 @@
 .toggle-container{
     display: flex;
     flex-direction: row;
+    h3{
+        font-size: 1.6rem;
+        align-self: center;
+    }
+    svg{
+        align-self: center;
+        cursor: pointer;
+    }
     .toggle{
         margin-left: 10px;
     }
@@ -30,6 +38,20 @@
         }
         border: none;
         border-radius: 0;
+    }
+    .drop-menu.dropdown-menu.show{
+        display: flex;
+        flex-direction: column;
+        background-color: $gray-700;
+        a{
+            text-decoration: none;
+            color: $devit-white;
+            padding: 15px;
+            font-size: 1.2rem;
+        }
+        a:active{
+            background-color: $gray-500;
+        }
     }
 
 }
