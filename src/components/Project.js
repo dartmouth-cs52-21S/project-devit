@@ -121,12 +121,27 @@ const Project = () => {
     }
   };
 
+  const renderGithubLink = (project.GitHub === '')
+    ? (<div>add git</div>) : (
+      <a className="project__links" href={project.GitHub}>GitHub</a>
+    );
+
+  const renderFigmaLink = (project.Figma === '')
+    ? (<div>add figma</div>) : (
+      <a className="project__links" href={project.Figma}>Figma</a>
+    );
+
+  const renderSlackLink = (project.Slack === '')
+    ? (<div>add slack</div>) : (
+      <a className="project__links" href={project.Slack}>Slack</a>
+    );
+
   return (
     <div className="project">
       <div className="project__details">
 
         <div id="project__title__container">
-          <div className="project__logo">{project.logo}</div>
+          <img className="project__logo" src={project.logo} alt="emoji" />
           <h1 className="project__title">{project.name}</h1>
         </div>
         <p>{project.bio}</p>
@@ -140,13 +155,13 @@ const Project = () => {
                 Join Team
               </button>
             )
-            : <div> Everything in the world is fine </div>}
+            : <div> </div>}
         </div>
         <ul>
           <FontAwesomeIcon icon={faLink} />
-          <a className="project__links" href={project.GitHub}>GitHub</a>
-          <a className="project__links" href={project.Figma}>Figma</a>
-          <a className="project__links" href={project.Slack}>Slack</a>
+          {renderGithubLink}
+          {renderFigmaLink}
+          {renderSlackLink}
         </ul>
         <div id="best__practices">
           <FontAwesomeIcon className="icon" icon={faLightbulb} />

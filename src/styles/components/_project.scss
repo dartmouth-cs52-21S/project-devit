@@ -53,6 +53,9 @@ p {
   margin: 5px;
   border: 0;
   background-color: $gray-800;
+  font-size: 16px;
+  padding-top:0;
+  padding-left:2px;
 }
 
 .project__links:hover {
@@ -110,6 +113,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  margin-top: 5px;
 }
 
 @include md {
