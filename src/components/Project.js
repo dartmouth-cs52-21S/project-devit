@@ -182,7 +182,7 @@ const Project = () => {
       <div className="project__details">
 
         <div id="project__title__container">
-          <img className="project__logo" src={project.logo} alt="emoji" />
+          <div className="project__logo">{project.logo}</div>
           <h1 className="project__title">{project.name}</h1>
         </div>
         <p>{project.bio}</p>
