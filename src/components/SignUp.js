@@ -18,7 +18,7 @@ const SignUp = () => {
     initialValues: {
       email: '',
       password: '',
-      confirmPassword: '',
+      confirmedPassword: '',
     },
     validationSchema,
   });
