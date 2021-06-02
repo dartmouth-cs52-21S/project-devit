@@ -100,7 +100,7 @@ const Project = () => {
   }))
     : null;
 
-  const team = project.team ? (project.team.map((item) => {
+  const team = (project.team && project.team[0]) ? (project.team.map((item) => {
     return (
       <div className="team__item" key={item.id}>
         <p>{item.firstName} {item.lastName}</p>
@@ -133,7 +133,7 @@ const Project = () => {
 
         console.log('newProj', newProj);
         console.log('user id', user.id);
-        dispatch(updateProject(newProj, newProj.id));
+        dispatch(updateProject({ team: newteam }, newProj.id));
 
         // add the project to the user
         const newUser = user;
