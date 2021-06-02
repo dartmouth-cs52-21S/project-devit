@@ -42,7 +42,6 @@ export function updateProject(project, id) {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`${ROOT_URL}/projects/${id}`, project, { headers: { authorization: localStorage.getItem('token') } });
-      console.log('updated project', data);
       dispatch({ type: ActionTypes.FETCH_PROJECT, payload: data });
     } catch (error) {
       console.error(error);
