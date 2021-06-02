@@ -49,7 +49,7 @@ const Project = () => {
         });
       }
       let i = 0;
-      if (data.author.id === user.id) {
+      if (data?.author?.id === user.id) {
         setIsMember(true);
       } else {
         while (i < data.team.length) {
