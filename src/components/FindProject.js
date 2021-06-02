@@ -125,7 +125,7 @@ const FindProject = () => {
     projects.map((project) => (
       <div key={project.id} role="button" tabIndex="0" className="findPostsItem" onClick={() => handleGoToProjectPage(project.id)}>
         <div id="project__title__container">
-          <img className="project__logo" src={project.logo} alt="emoji" />
+          <div className="project__logo">{project.logo}</div>
           <h1 className="project__title">{project.name}</h1>
         </div>
         <div className="find-project-content">
