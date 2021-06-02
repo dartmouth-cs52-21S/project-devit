@@ -137,8 +137,6 @@ const Project = () => {
         setProject(newProj);
         setIsMember(true);
 
-        console.log('newProj', newProj);
-        console.log('user id', user.id);
         dispatch(updateProject({ team: newteam }, newProj.id));
 
         // add the project to the user
