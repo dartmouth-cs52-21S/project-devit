@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+import { AiOutlineConsoleSql } from 'react-icons/ai';
 import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
 import Chat from './Chat';
 import { ModalMessage } from './Modal';
@@ -12,6 +13,7 @@ import { selectisAuthenticated, selectUser } from '../store/selectors';
 
 const Project = () => {
   const [project, setProject] = useState();
+  const [isMember, setIsMember] = useState(false);
   //   const [editing, setEditing] = useState(false);
 
   const { projectId } = useParams();
@@ -23,6 +25,15 @@ const Project = () => {
   useEffect(() => {
     dispatch(fetchProject(projectId, (data) => {
       setProject(data);
+      let i = 0;
+      while (i < data.team.length) {
+        if (data.team[i].id === user.id || data.team[i] === user.id) {
+          setIsMember(true);
+          break;
+        }
+
+        i += 1;
+      }
     }));
   }, []);
 
@@ -83,15 +94,16 @@ const Project = () => {
   // eslint-disable-next-line no-unused-vars
   const joinProject = () => {
     if (isAuthenticated) {
-      if (project.team.includes(user.id) || user.projects.includes(project.id)) {
+      if (isMember) {
         toast.dark('You are already a member of this project!');
       } else {
         // add the user to the project
         const newProj = project;
         const newteam = project.team;
         newteam.push(user.id);
-        newProj.applicants = newteam;
+        newProj.team = newteam;
         setProject(newProj);
+        setIsMember(true);
         dispatch(updateProject(newProj, project.id));
 
         // add the project to the user
@@ -125,9 +137,15 @@ const Project = () => {
         <ul>
           {industries}
         </ul>
-        <button type="button" onClick={joinProject}>
-          Join Team
-        </button>
+        <div className="row">
+          {(!isMember)
+            ? (
+              <button type="button" onClick={joinProject}>
+                Join Team
+              </button>
+            )
+            : <div> Everything in the world is fine </div>}
+        </div>
         <ul>
           <FontAwesomeIcon icon={faLink} />
           <a className="project__links" href={project.GitHub}>GitHub</a>
