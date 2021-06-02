@@ -105,22 +105,22 @@ const NewProject = () => {
   ];
 
   return (
+    <form className="form__form" onSubmit={makeIdea}>
+      <div id="new-project">
+        {editEmoji
+          ? (
+            <div className="picker">
+              <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
+              <button className="save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
+            </div>
+          )
+          : (
+            <div className="title">
+              <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>
+              <input className="title" placeholder="Project title..." type="text" name="title" value={formik.values.title} onChange={formik.handleChange} />
+            </div>
+          )}
 
-    <div id="new-project">
-      {editEmoji
-        ? (
-          <div className="picker">
-            <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%' }} />
-            <button className="save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
-          </div>
-        )
-        : (
-          <div className="title">
-            <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>
-            <input className="title" placeholder="Project title..." type="text" name="title" value={formik.values.title} onChange={formik.handleChange} />
-          </div>
-        )}
-      <form className="form__form" onSubmit={makeIdea}>
         <div className="selector-container">
           <h1>Description</h1>
           <textarea placeholder="Describe your project" rows="4" columns="50" name="description" value={formik.values.description} onChange={formik.handleChange} />
@@ -181,13 +181,12 @@ const NewProject = () => {
           <h1>Do you plan to market your idea? What is your going to market strategy?</h1>
           <textarea placeholder="Describe your plan" rows="4" columns="50" name="marketDescription" value={formik.values.marketDescription} onChange={formik.handleChange} />
         </div>
-      </form>
-      <div className="buttons">
-        <button className="save" type="submit" onClick={makeIdea}>Save Draft</button>
+        <div className="buttons">
+          <button className="save" type="submit" disabled={!(formik.isValid && formik.dirty)}>Save Draft</button>
+        </div>
+
       </div>
-
-    </div>
-
+    </form>
   );
 };
 

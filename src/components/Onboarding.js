@@ -168,6 +168,7 @@ const Onboarding = () => {
         </div>
 
         <button type="button"
+          disabled={!(formik.isValid && formik.dirty)}
           onClick={() => handleUpdateUser()}
         >Next
         </button>

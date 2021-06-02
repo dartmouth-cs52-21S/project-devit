@@ -73,7 +73,7 @@ const SignUp = () => {
               />
               {formik.errors.confirmedPassword ? formik.errors.confirmedPassword : null}
             </label>
-            <button type="submit" className="button form__button">Sign Up</button>
+            <button type="submit" className="button form__button" disabled={!(formik.isValid && formik.dirty)}>Sign Up</button>
           </form>
           <p>Already have an account? <Link to="/signin">Sign In</Link></p>
         </div>
