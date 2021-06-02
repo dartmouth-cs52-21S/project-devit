@@ -46,6 +46,7 @@ $devit-black: #111111;
       justify-content: space-evenly;
       h1{
         margin-right: 20px;
+        margin-left: 10px;
       }
       h2{
         margin-right: 20px;
@@ -59,6 +60,9 @@ $devit-black: #111111;
         padding-top: 10px;
         padding-bottom: 10px;
         align-self: center;
+      }
+      h3.more{
+        width: 115px;
       }
       .descriptions{
         height: 60%;
@@ -118,14 +122,7 @@ $devit-black: #111111;
       .badges-container{
         width: 80%;
         height: 20%;
-      }
-      .badges{
-        height: 40%;
-        padding: 10px;
-        border: 3px solid $devit-orange;
-        display: flex;
-        justify-content: flex-start;
-        background-color: $devit-black;
+        margin-top: 10%;
       }
   
     }

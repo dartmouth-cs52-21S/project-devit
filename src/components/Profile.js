@@ -33,12 +33,23 @@ const Profile = () => {
 
   const renderProjects = () => {
     if (user.projects) {
+      if (user.projects.length === 0) {
+        return <h3>You currently do not have any projects</h3>;
+      }
       const proj = user.projects.map((project) => {
         if (!project.industry) return '';
 
-        const descriptions = project.industry.map((ind) => {
-          return <h3 key={ind}>{ind}</h3>;
-        });
+        const size = project.industry.length;
+        let descriptions = [];
+        if (size <= 3) {
+          descriptions = project.industry.map((ind) => {
+            return <h3 key={ind}>{ind}</h3>;
+          });
+        } else {
+          descriptions.push(<h3>{project.industry[0]}</h3>);
+          descriptions.push(<h3>{project.industry[1]}</h3>);
+          descriptions.push(<h3 className="more">+{size - 3} more</h3>);
+        }
 
         return (
           <div className="project" key={project.id}>
@@ -94,7 +105,7 @@ const Profile = () => {
         const date = commit.date.substring(0, 10);
         const time = commit.date.substring(commit.date.indexOf('T') + 1, commit.date.indexOf('T') + 9);
         return (
-          <div className="activity">
+          <div className="activity" key={commit.message}>
             <h3 className="commit">Commit from {commit.author}, on {date}, at {time}</h3>
             <p className="commit">{commit.message}</p>
           </div>
@@ -117,10 +128,7 @@ const Profile = () => {
           <div className="activity-container">
             {renderActivity()}
           </div>
-          <div className="container">
-            <h2>Badges</h2>
-            <Badges user={user} />
-          </div>
+
         </div>
 
       </div>
@@ -135,21 +143,9 @@ const Profile = () => {
             <h3>{user.location}</h3>
           </div>
         </div>
-        <div className="badges-container">
-          <h3>Develop</h3>
-          <div className="badges">
-            <img src="../../images/cil_badge.png" alt="badge" />
-            <img src="../../images/cil_badge.png" alt="badge" />
-            <img src="../../images/cil_badge.png" alt="badge" />
-          </div>
-
-        </div>
-        <div className="badges-container">
-          <h3>Design</h3>
-          <div className="badges">
-            <img src="../../images/cil_badge.png" alt="badge" />
-          </div>
-
+        <div className="container badges-container">
+          <h2>Badges</h2>
+          <Badges user={user} />
         </div>
 
       </div>
