@@ -4,29 +4,31 @@ import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
+import { useDispatch } from 'react-redux';
+import { updateProject } from '../store/actions';
 
-const ToDo = () => {
-  const [events, setEvents] = useState([
-    {
-      title: 'Team Meeting',
-      start: '2021-05-30',
-    },
-    {
-      title: 'Dev Site Launch',
-      start: '2021-06-02',
-    },
-  ]);
+const ToDo = (props) => {
+  const { events, id } = props.project;
+  const dispatch = useDispatch();
+
+  const [calEvents, setEvents] = useState(events || []);
   const [title, setTitle] = useState('');
   const [date, setDate] = useState(new Date());
 
   const handleEventClick = (eventClickInfo) => {
-    setEvents(events.filter((e) => {
+    setEvents(calEvents.filter((e) => {
       return e.title !== eventClickInfo.event._def.title;
     }));
   };
 
   const addEvent = () => {
-    setEvents([...events, {
+    dispatch(updateProject({
+      events: [...calEvents, {
+        title,
+        start: date,
+      }],
+    }, id));
+    setEvents([...calEvents, {
       title,
       start: date,
     }]);
@@ -36,13 +38,15 @@ const ToDo = () => {
 
   return (
     <div className="calendar">
-      <h1>Calendar</h1>
       <div className="events">
         <label htmlFor="title">
-          Title:
+          <p>Title:</p>
           <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
         </label>
-        <label htmlFor="date">Date:
+        <label htmlFor="date">
+          <p>
+            Date:
+          </p>
           <input type="date"
             id="date"
             name="trip-start"
@@ -60,7 +64,7 @@ const ToDo = () => {
         editable
         eventClick={handleEventClick}
         defaultAllDay
-        events={events}
+        events={calEvents}
       />
     </div>
   );

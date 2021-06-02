@@ -3,40 +3,33 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import Calendar from './Calendar';
 import { fetchProject, toggleModalVisibility } from '../store/actions';
-// import projectsList from '../data/projects';
 import Chat from './Chat';
-
-// const mapStateToProps = (reduxState) => ({
-//   project: reduxState.initialState.current,
-// });
+import { ModalMessage } from './Modal';
 
 const Project = () => {
   const [project, setProject] = useState();
-  //   const [editing, setEditing] = useState(false);
-
+  const [toggleRecentActivity, setToggleRecentActivity] = useState(true);
   const { projectId } = useParams();
-  // const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // code to run on component mount
     dispatch(fetchProject(projectId, (data) => {
       setProject(data);
     }));
   }, []);
 
-  const industries = project.industry ? (project.industry.map((item) => {
-    return (
-      <p key={item} className="project__industry__tag"> {item}</p>
-    );
-  }))
+  if (!project) return 'Sorry, we couldn\'t find that project.';
+
+  const industries = project.industry ? (project.industry.map((item) => (
+    <p key={item} className="project__industry__tag">{item}</p>
+  )))
     : null;
 
   const neededTeam = project.neededTeam ? (project.neededTeam.map((item) => {
     const designer = 'designer';
     const developer = 'developer';
-    // const ideator = 'ideator';
 
     if (designer.match(item)) {
       return (
@@ -63,17 +56,21 @@ const Project = () => {
   }))
     : null;
 
-  const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
+  const handleToggleModal = () => dispatch(toggleModalVisibility(
+    <ModalMessage
+      title="Team Best Practices"
+      message="Don't know where to start when building your team? Check out this link to get you started."
+      linkHref="https://yourstory.com/2019/06/build-team-for-startup/amp"
+      linkText="Team Best Practices"
+    />,
+  ));
 
   return (
     <div className="project">
       <div className="project__details">
 
         <div id="project__title__container">
-          <div className="project__logo">
-            {/* <img src={project.logo} alt="emoji" /> */}
-            {project.logo}
-          </div>
+          <div className="project__logo">{project.logo}</div>
           <h1 className="project__title">{project.name}</h1>
         </div>
         <p>{project.bio}</p>
@@ -96,6 +93,42 @@ const Project = () => {
         <ul className="applicants__container">
           {project.applicants}
         </ul>
+        <div className="project__tools">
+          <div className="tabs__container">
+            <label className={`form__label checkbox-label ${toggleRecentActivity ? 'checked' : ''}`} htmlFor="Recent Activity">
+              <p className="form__label-text checkbox-label-text">Recent Activity</p>
+              <input
+                id="Recent Activity"
+                className="form__checkbox"
+                type="checkbox"
+                value="Recent Activity"
+                checked={toggleRecentActivity}
+                onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
+              />
+            </label>
+            <label className={`form__label checkbox-label ${!toggleRecentActivity ? 'checked' : ''}`} htmlFor="Calendar">
+              <p className="form__label-text checkbox-label-text">Calendar</p>
+              <input
+                id="Calendar"
+                className="form__checkbox"
+                type="checkbox"
+                value="Calendar"
+                checked={!toggleRecentActivity}
+                onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
+              />
+            </label>
+          </div>
+          <div className="tools__container">
+
+            {
+            toggleRecentActivity ? (
+              <p>Add Github Here!</p>
+            ) : (
+              <Calendar project={project} />
+            )
+          }
+          </div>
+        </div>
       </div>
 
       <div className="project__chat">
@@ -106,22 +139,3 @@ const Project = () => {
 };
 
 export default Project;
-
-const ModalTestComponent = () => (
-  <div style={{
-    backgroundColor: '#232323',
-    height: '30vh',
-    padding: '2rem',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: '2px solid #ff5D08',
-  }}
-  >
-    <h2 style={{ margin: '0 0 0.75rem' }}>I&apos;m in the modal 🎉</h2>
-    <p>Click outside the border to dismiss me! ✌️</p>
-    <a className="project__links" href="google.com">some ideas!!</a>
-
-  </div>
-);

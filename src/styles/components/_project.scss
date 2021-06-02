@@ -36,7 +36,7 @@ p {
   margin: 0;
 }
 
-h1 {
+.proejct h1 {
   margin: 10px;
 }
 
@@ -45,6 +45,7 @@ h1 {
   padding: 6px;
   display:inline-block;
   margin: 10px;
+  margin-left: 0;
 }
 
 .project__links {
@@ -95,6 +96,8 @@ h1 {
 
 .neededTeam__item {
   margin: 10px;
+  margin-left:0;
+  text-align: center;
 }
 
 .project .icon {
@@ -117,5 +120,17 @@ h1 {
   .project__details {
     margin-bottom: 2rem;
     margin-right: 0;
+  }
+}
+
+.project__tools{
+  margin-top: 10%;
+
+  .tabs__container{
+    display: flex;
+    flex-direction: row;
+    label{
+      margin-right: 0rem;
+    }
   }
 }

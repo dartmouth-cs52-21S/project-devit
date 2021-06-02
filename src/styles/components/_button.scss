@@ -37,6 +37,11 @@ $button-height: 2.8rem;
     }
   }
 
+  &.small {
+    padding: 0.25rem 0.75rem;
+    height: 2.3rem;
+  }
+
   & + .button {
     margin-left: 1rem;
   }

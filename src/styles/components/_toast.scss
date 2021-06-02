@@ -1,3 +1,7 @@
 .Toastify__progress-bar--dark {
   background-color: $devit-orange !important;
 }
+
+.Toastify__toast-body {
+  @include ff-body;
+}

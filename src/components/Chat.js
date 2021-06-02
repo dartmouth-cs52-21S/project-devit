@@ -6,7 +6,7 @@ import { MdSend } from 'react-icons/md';
 import dayjs from 'dayjs';
 
 import { UserAvatar } from './UserAvatar';
-import { addChatMessage, getChatMessages } from '../store/actions';
+import { addChatMessage, getChatMessages, updateUser } from '../store/actions';
 import { selectUser, selectChatMessages } from '../store/selectors/index';
 
 const localizedFormat = require('dayjs/plugin/localizedFormat');
@@ -21,11 +21,17 @@ const POLLING_INTERVAL_SECONDS = 1;
 
 const Chat = () => {
   const [messageText, setMessageText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { projectId } = useParams();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   const messages = useSelector(selectChatMessages);
+
+  useEffect(() => {
+    setIsLoading(true);
+    dispatch(getChatMessages(projectId, () => setIsLoading(false)));
+  }, []);
 
   useEffect(() => {
     const pollInterval = setInterval(() => dispatch(getChatMessages(projectId)), POLLING_INTERVAL_SECONDS * 1000);
@@ -46,6 +52,14 @@ const Chat = () => {
 
     dispatch(addChatMessage(newMessage));
     setMessageText('');
+
+    if (!user.messagesSent) {
+      user.messagesSent = 1;
+    } else {
+      user.messagesSent += 1;
+    }
+
+    dispatch(updateUser(user.id, user));
   };
 
   return (
@@ -53,9 +67,9 @@ const Chat = () => {
       <h1 className="chat__title">Chat</h1>
       <div className="chat__chat-window">
         <div className="chat__messages">
-          {messages.length > 0
-            ? (<>{ messages.map((message) => <ChatMessage key={message.id} message={message} />) }</>)
-            : (<p className="chat__loading-message">Retrieving messages...</p>)}
+          {isLoading
+            ? <p className="chat__loading-message">Retrieving messages...</p>
+            : messages.map((message) => <ChatMessage key={message.id} message={message} />)}
         </div>
         <div className="chat__message-input">
           <form className="chat__form form" onSubmit={handleSubmit}>

@@ -6,14 +6,11 @@ import { FiChevronsLeft, FiPlusSquare, FiChevronDown } from 'react-icons/fi';
 import { VscProject } from 'react-icons/vsc';
 import { AiOutlineFileSearch } from 'react-icons/ai';
 import { toggleSidebar, clearChat } from '../store/actions/index';
-import { selectSidebarIsCollapsed } from '../store/selectors';
-// import { selectSidebarIsCollapsed, selectUser } from '../store/selectors';
-import projectsList from '../data/projects';
+import { selectSidebarIsCollapsed, selectUser } from '../store/selectors';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-  // const { projects } = useSelector(selectUser);
-  // console.log('projects:', projects);
+  const { projects } = useSelector(selectUser);
   const { pathname } = useLocation();
 
   const sidebarIsCollapsed = useSelector(selectSidebarIsCollapsed);
@@ -28,13 +25,13 @@ const Sidebar = () => {
   return (
     <nav className={`sidebar ${sidebarIsCollapsed ? 'collapsed' : ''}`}>
       <ul className="sidebar__nav-links">
-        {projectsList.length > 0 ? (
-          <SidebarLinkWithDropdown route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projectsList} />
+        {projects?.length > 0 ? (
+          <SidebarLinkWithDropdown route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projects} />
         ) : (
-          <SidebarLink route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projectsList} />
+          <SidebarLink route="/projects" label="My Projects" leftIcon={<VscProject />} iconClass="project-icon" projects={projects} />
         )}
         <SidebarLink route="/find-project" label="Find a Project" leftIcon={<AiOutlineFileSearch />} iconClass="find-icon" />
-        <SidebarLink route="/new-project" label="New Project" leftIcon={<FiPlusSquare />} iconClass="new-idea-icon" />
+        <SidebarLink route="/new-project" label="New Project" leftIcon={<FiPlusSquare />} iconClass="new-project-icon" />
       </ul>
       <div role="button" tabIndex="0" className="sidebar__expand-collapse" onClick={toggleCollapsed}>
         <h4 className="sidebar__nav-link-label collapse-label">Collapse</h4>

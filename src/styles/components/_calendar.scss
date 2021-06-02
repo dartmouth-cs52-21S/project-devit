@@ -9,15 +9,18 @@
       flex-direction: row;
       margin-right: 20px;
       color: $gray-200;
-      height: 20px;
+      height: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      
     }
     input{
       display: inline;
-      background-color: $gray-100;
-      line-height: 20px;
-      padding: 2px;
-      color: black;
+      font-size: 1rem;
+      padding: 5px;
+      background-color: $gray-900;
       border:none;
+      color: $devit-white;
     }
     button{
       border-radius: 0px;
@@ -25,20 +28,42 @@
       font-size: 1rem;
       border:none;
       color: $devit-white;
-      padding: 2px;
+      padding: 5px;
+      cursor: pointer;
     }
 
   }
   .fc{
-    background-color: $gray-400;
+    background-color: $devit-gray;
 
+    .fc-toolbar-title{
+      color: $devit-white
+    }
     .fc-list-event-time{
       display: none;
+    }
+    button:disabled{
+      background-color: $gray-600;
     }
     button{
       border-radius: 0px;
       background-color: $devit-orange;
       border: 2px black;
+    }
+    table{
+      .fc-list-event-title{
+        color: $devit-white;
+      }
+      .fc-list-event-title:hover{
+        color: $devit-black;
+      }
+      .fc-list-day-cushion{
+        background-color: $gray-700;
+        cursor: pointer;
+      }
+      .fc-list-event.fc-event.fc-event-start.fc-event-end.fc-event-future:hover{
+        background-color: $gray-700;
+      }
     }
   }
 

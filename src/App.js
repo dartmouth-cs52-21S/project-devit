@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import SignIn from './components/SignIn';
 import PrivateRoute from './components/PrivateRoute';
-import Profile from './components/Profile';
 import NewProject from './components/NewProject';
 import Banner from './components/Banner';
 import Sidebar from './components/Sidebar';
+import Profile from './components/Profile';
 import SignUp from './components/SignUp';
 import Onboarding from './components/Onboarding';
 import Projects from './components/Projects';

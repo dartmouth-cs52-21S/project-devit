@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { createProject, updateUser } from '../store/actions/index';
+import { createProject } from '../store/actions/index';
 import { selectUser } from '../store/selectors';
 
 import industriesList from '../constants/industries.json';
@@ -35,14 +35,15 @@ const NewProject = () => {
       problemDescription,
       audienceDescription,
       marketDescription,
+      author: user.id,
     };
+
     if (!user.projectsCreated) {
       user.projectsCreated = 1;
     } else {
       user.projectsCreated += 1;
     }
 
-    dispatch(updateUser(user.id, user, history));
     dispatch(createProject(idea, history));
   };
 
@@ -88,7 +89,7 @@ const NewProject = () => {
   ];
 
   return (
-    <div id="new-idea">
+    <div id="new-project">
       {editEmoji
         ? (
           <div className="picker">

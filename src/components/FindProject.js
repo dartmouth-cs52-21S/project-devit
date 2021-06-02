@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Badges from '../constants/badges.json';
 
 import ProjectModal from './ProjectModal';
@@ -20,6 +20,7 @@ const FindProject = () => {
 
   const [currProjects, setCurrProjects] = useState();
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const htmlPart = '<FontAwesomeIcon icon={faLightbulb} />';
 
@@ -62,24 +63,66 @@ const FindProject = () => {
 
   const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
 
+  const handleGoToProjectPage = (id) => history.push(`/projects/${id}`);
+
+  const industries = (project) => (project.industry ? (project.industry.map((item) => {
+    return (
+      <p key={item} className="project__industry__tag"> {item}</p>
+    );
+  }))
+    : null);
+
+  const tools = (project) => (project.tools ? (project.tools.map((tool) => {
+    return (
+      <p key={tool} className="project__industry__tag"> {tool}</p>
+    );
+  }))
+    : null);
+
+  const neededTeam = (project) => (project.neededTeam ? (project.neededTeam.map((item) => {
+    const designer = 'designer';
+    if (designer.match(item)) {
+      return (
+        <div className="neededTeam__item" key={item}>
+          <p className="designer__needed find-project" />
+          <p>{item}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="neededTeam__item" key={item}>
+          <p className="developer__needed find-project" />
+          <p>{item}</p>
+        </div>
+      );
+    }
+  }))
+    : null);
+
   const postProjects = currProjects ? (
     currProjects.map((project) => (
       <div key={project.id} className="findPostsItem">
         <div> {project.name}</div>
-        <Link key={project.id} to={`/projects/${project.id}`}>
-          <button type="button" className="button">project page</button>
-        </Link>
+        <button type="button" className="button" onClick={() => handleGoToProjectPage(project.id)}>project page</button>
         <button type="button" name={project.id} onClick={presentModal} className="button">show modal</button>
       </div>
     ))
   ) : (
     projects.map((project) => (
-      <div key={project.id} className="findPostsItem">
-        <div> {project.name}</div>
-        <Link key={project.id} to={`/projects/${project.id}`}>
-          <button type="button" className="button">project page</button>
-        </Link>
-        <button type="button" name={project.id} onClick={presentModal} className="button">show modal</button>
+      <div key={project.id} role="button" tabIndex="0" className="findPostsItem" onClick={() => handleGoToProjectPage(project.id)}>
+        <div id="project__title__container">
+          <div className="project__logo">{project.logo}</div>
+          <h1 className="project__title">{project.name}</h1>
+        </div>
+        <div className="find-project-content">
+          <p>{project.bio}</p>
+          <div>{industries(project)}</div>
+          <div>{tools(project)}</div>
+          <div>Needed team:</div>
+          <ul className="neededTeam__container">
+            {neededTeam(project)}
+          </ul>
+        </div>
       </div>
     ))
   );
@@ -94,12 +137,18 @@ const FindProject = () => {
 
   return (
     <div id="findPostsOuter">
-      <i className="far fa-lightbulb" />
-      <FontAwesomeIcon icon={faLightbulb} />
-      {/* <i className="fas fa-snowflake"></i> */}
-      <div className="search-bar">
-        <input onChange={(e) => onSearchChange(e)} value={searchterm} placeholder="Search..." className="search-bar" />
-      </div>
+      <h1>Find a project</h1>
+
+      <label htmlFor="long">
+        <input type="text"
+          id="long"
+          className="search"
+          value={searchterm}
+          placeholder="Search..."
+          onChange={(e) => onSearchChange(e)}
+        />
+        <FontAwesomeIcon icon={faSearch} id="icon" size="lg" />
+      </label>
       <div className="toggle-container">
         <h3>Toggles:</h3>
         <div className="toggle" id="industry">
@@ -107,7 +156,6 @@ const FindProject = () => {
             <Dropdown.Toggle variant="default" id="dropdown-basic" className="drop-toggle">
               Industry
             </Dropdown.Toggle>
-
             <Dropdown.Menu className="drop-menu">
               {industryFilter}
             </Dropdown.Menu>
@@ -125,9 +173,7 @@ const FindProject = () => {
           </Dropdown>
         </div>
       </div>
-      {postProjects}
-      <button type="button" className="button" onClick={handleToggleModal}>Toggle Redux ⚡️ Powered Modal</button>
-      <ProjectModal proj={proj} show={displayModal} handleClose={hideModal} />
+      <div id="find-projects-container">{postProjects}</div>
     </div>
 
   );
