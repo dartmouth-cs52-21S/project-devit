@@ -49,13 +49,17 @@ const Project = () => {
         });
       }
       let i = 0;
-      while (i < data.team.length) {
-        if (data.team[i].id === user.id || data.team[i] === user.id) {
-          setIsMember(true);
-          break;
-        }
+      if (data.author.id === user.id) {
+        setIsMember(true);
+      } else {
+        while (i < data.team.length) {
+          if (data.team[i].id === user.id || data.team[i] === user.id) {
+            setIsMember(true);
+            break;
+          }
 
-        i += 1;
+          i += 1;
+        }
       }
     }));
   }, []);
@@ -126,7 +130,10 @@ const Project = () => {
         newProj.team = newteam;
         setProject(newProj);
         setIsMember(true);
-        dispatch(updateProject(newProj, project.id));
+
+        console.log('newProj', newProj);
+        console.log('user id', user.id);
+        dispatch(updateProject(newProj, newProj.id));
 
         // add the project to the user
         const newUser = user;
