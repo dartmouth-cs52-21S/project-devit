@@ -1,22 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
+import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
 import Calendar from './Calendar';
-import { fetchProject, toggleModalVisibility } from '../store/actions';
 import Chat from './Chat';
 import { ModalMessage } from './Modal';
+import { selectisAuthenticated, selectUser } from '../store/selectors';
 
 const Project = () => {
   const [project, setProject] = useState();
+  const [isMember, setIsMember] = useState(false);
+  //   const [editing, setEditing] = useState(false);
+
   const [toggleRecentActivity, setToggleRecentActivity] = useState(true);
   const { projectId } = useParams();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const isAuthenticated = useSelector(selectisAuthenticated);
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(fetchProject(projectId, (data) => {
       setProject(data);
+      let i = 0;
+      while (i < data.team.length) {
+        if (data.team[i].id === user.id || data.team[i] === user.id) {
+          setIsMember(true);
+          break;
+        }
+
+        i += 1;
+      }
     }));
   }, []);
 
@@ -56,6 +73,15 @@ const Project = () => {
   }))
     : null;
 
+  const team = project.team ? (project.team.map((item) => {
+    return (
+      <div className="team__item" key={item.id}>
+        <p>{item.firstName} {item.lastName}</p>
+      </div>
+    );
+  }))
+    : null;
+
   const handleToggleModal = () => dispatch(toggleModalVisibility(
     <ModalMessage
       title="Team Best Practices"
@@ -64,6 +90,36 @@ const Project = () => {
       linkText="Team Best Practices"
     />,
   ));
+
+  const joinProject = () => {
+    if (isAuthenticated) {
+      if (isMember) {
+        toast.dark('You are already a member of this project!');
+      } else {
+        // add the user to the project
+        const newProj = project;
+        const newteam = project.team;
+        newteam.push(user.id);
+        newProj.team = newteam;
+        setProject(newProj);
+        setIsMember(true);
+        dispatch(updateProject(newProj, project.id));
+
+        // add the project to the user
+        const newUser = user;
+        const newprojects = user.projects;
+        newprojects.push(project.id);
+        newUser.projects = newprojects;
+        if (!user.projectsJoined) {
+          newUser.projectsJoined = 0;
+        }
+        newUser.projectsJoined = user.projectsJoined + 1;
+        dispatch(updateUser(user.id, newUser, history));
+      }
+    } else {
+      history.push('/signup');
+    }
+  };
 
   return (
     <div className="project">
@@ -77,6 +133,15 @@ const Project = () => {
         <ul>
           {industries}
         </ul>
+        <div className="row">
+          {(!isMember)
+            ? (
+              <button type="button" onClick={joinProject}>
+                Join Team
+              </button>
+            )
+            : <div> Everything in the world is fine </div>}
+        </div>
         <ul>
           <FontAwesomeIcon icon={faLink} />
           <a className="project__links" href={project.GitHub}>GitHub</a>
@@ -90,8 +155,8 @@ const Project = () => {
         <ul className="neededTeam__container">
           {neededTeam}
         </ul>
-        <ul className="applicants__container">
-          {project.applicants}
+        <ul className="members__container">
+          {team}
         </ul>
         <div className="project__tools">
           <div className="tabs__container">

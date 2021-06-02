@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -55,33 +56,36 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    let numUserCommits = 0;
-    user.projects.map((project) => {
-      project.GitHub.map((git) => {
-        const index = git.indexOf('github.com/') + 'github.com/'.length;
-        const repo = git.substring(index);
+    console.log(user.projects);
+    if (user.projects) {
+      let numUserCommits = 0;
+      user.projects.map((project) => {
+        project.GitHub.map((git) => {
+          const index = git.indexOf('github.com/') + 'github.com/'.length;
+          const repo = git.substring(index);
 
-        getCommits(repo).then((commits) => {
-          const newArray = commits.map((com) => {
-            const author = com.author ? com.author.login : 'unknown';
-            if (author === user.githubUsername) {
-              numUserCommits += 1;
-            }
-            const { message } = com.commit;
-            const { date } = com.commit.author;
-            return { author, message, date };
+          getCommits(repo).then((commits) => {
+            const newArray = commits.map((com) => {
+              const author = com.author ? com.author.login : 'unknown';
+              if (author === user.githubUsername) {
+                numUserCommits += 1;
+              }
+              const { message } = com.commit;
+              const { date } = com.commit.author;
+              return { author, message, date };
+            });
+
+            setUserCommits(newArray);
           });
 
-          setUserCommits(newArray);
+          return '';
         });
 
         return '';
       });
-
-      return '';
-    });
-    user.commits = numUserCommits;
-    dispatch(updateUser(user.id, user));
+      user.commits = numUserCommits;
+      dispatch(updateUser(user.id, user));
+    }
   }, []);
 
   const renderActivity = () => {

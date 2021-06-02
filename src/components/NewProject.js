@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { createProject } from '../store/actions/index';
+import { createProject, updateUser } from '../store/actions/index';
 import { selectUser } from '../store/selectors';
 
 import industriesList from '../constants/industries.json';
@@ -59,6 +59,8 @@ const NewProject = () => {
     } else {
       user.projectsCreated += 1;
     }
+
+    dispatch(updateUser(user.id, user));
 
     dispatch(createProject(idea, history));
   };
