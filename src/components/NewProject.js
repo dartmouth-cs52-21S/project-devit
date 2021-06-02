@@ -167,7 +167,7 @@ const NewProject = () => {
         <textarea placeholder="Describe your plan" rows="4" columns="50" onChange={(e) => setMarketDescription(e.target.value)} />
       </div>
       <div className="buttons">
-        <button className="save" type="submit" onClick={makeIdea}>Save Draft</button>
+        <button className="save" type="submit" onClick={makeIdea}>Share</button>
       </div>
 
     </div>

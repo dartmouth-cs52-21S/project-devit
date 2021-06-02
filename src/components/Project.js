@@ -27,7 +27,31 @@ const Project = () => {
   useEffect(() => {
     dispatch(fetchProject(projectId, (data) => {
       setProject(data);
+      if (data.GitHub.length === 0) {
+        setProjectCommits(['You have no recent activity']);
+      } else {
+        data.GitHub.map((git) => {
+          console.log('here');
+          const index = git.indexOf('github.com/') + 'github.com/'.length;
+          const repo = git.substring(index);
+
+          getCommits(repo).then((commits) => {
+            const newArray = commits.map((com) => {
+              const author = com.author ? com.author.login : 'unknown';
+              const { message } = com.commit;
+              const { date } = com.commit.author;
+              return { author, message, date };
+            });
+            console.log('newArray', newArray);
+
+            setProjectCommits(newArray);
+          });
+
+          return '';
+        });
+      }
       let i = 0;
+      console.log('data', data);
       while (i < data.team.length) {
         if (data.team[i].id === user.id || data.team[i] === user.id) {
           setIsMember(true);
@@ -37,23 +61,6 @@ const Project = () => {
         i += 1;
       }
     }));
-    project.GitHub.map((git) => {
-      const index = git.indexOf('github.com/') + 'github.com/'.length;
-      const repo = git.substring(index);
-
-      getCommits(repo).then((commits) => {
-        const newArray = commits.map((com) => {
-          const author = com.author ? com.author.login : 'unknown';
-          const { message } = com.commit;
-          const { date } = com.commit.author;
-          return { author, message, date };
-        });
-
-        setProjectCommits(newArray);
-      });
-
-      return '';
-    });
   }, []);
 
   if (!project) return 'Sorry, we couldn\'t find that project.';
@@ -140,7 +147,9 @@ const Project = () => {
     }
   };
   const renderActivity = () => {
-    if (projectCommits && projectCommits.length > 0) {
+    if (projectCommits[0] === 'You have no recent activity') {
+      return <h3>You have no recent activity</h3>;
+    } else if (projectCommits && projectCommits.length > 0) {
       const activity = projectCommits.map((commit) => {
         const date = commit.date.substring(0, 10);
         const time = commit.date.substring(commit.date.indexOf('T') + 1, commit.date.indexOf('T') + 9);
