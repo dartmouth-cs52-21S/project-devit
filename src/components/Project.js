@@ -62,6 +62,15 @@ const Project = () => {
   }))
     : null;
 
+  const team = project.team ? (project.team.map((item) => {
+    return (
+      <div className="team__item" key={item.id}>
+        <p>{item.firstName} {item.lastName}</p>
+      </div>
+    );
+  }))
+    : null;
+
   const handleToggleModal = () => dispatch(toggleModalVisibility(
     <ModalMessage
       title="Team Best Practices"
@@ -129,12 +138,12 @@ const Project = () => {
           <FontAwesomeIcon className="icon" icon={faLightbulb} />
           <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
         </div>
-        {/* <ul className="neededTeam__container">
+        <ul className="neededTeam__container">
           {neededTeam}
         </ul>
-        <ul className="applicants__container">
-          {project.applicants}
-        </ul> */}
+        <ul className="members__container">
+          {team}
+        </ul>
       </div>
 
       <div className="project__chat">
