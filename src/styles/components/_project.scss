@@ -122,3 +122,13 @@ h1 {
     margin-right: 0;
   }
 }
+
+button{
+  cursor: pointer;
+  background-color: $devit-orange;
+  border: none;
+  align-self: flex-end;
+  margin: 20px;
+  padding: 15px;
+  font-size: 1.6rem;
+}
