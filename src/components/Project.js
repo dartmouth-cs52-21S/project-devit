@@ -49,13 +49,17 @@ const Project = () => {
         });
       }
       let i = 0;
-      while (i < data.team.length) {
-        if (data.team[i].id === user.id || data.team[i] === user.id) {
-          setIsMember(true);
-          break;
-        }
+      if (data?.author?.id === user.id) {
+        setIsMember(true);
+      } else {
+        while (i < data.team.length) {
+          if (data.team[i].id === user.id || data.team[i] === user.id) {
+            setIsMember(true);
+            break;
+          }
 
-        i += 1;
+          i += 1;
+        }
       }
     }));
   }, []);
@@ -96,7 +100,7 @@ const Project = () => {
   }))
     : null;
 
-  const team = project.team ? (project.team.map((item) => {
+  const team = (project.team && project.team[0]) ? (project.team.map((item) => {
     return (
       <div className="team__item" key={item.id}>
         <p>{item.firstName} {item.lastName}</p>
@@ -121,12 +125,19 @@ const Project = () => {
       } else {
         // add the user to the project
         const newProj = project;
-        const newteam = project.team;
+        const newteam = [];
+        let i = 0;
+
+        while (i < project.team.length) {
+          newteam.push(project.team[i].id);
+          i += 1;
+        }
         newteam.push(user.id);
         newProj.team = newteam;
         setProject(newProj);
         setIsMember(true);
-        dispatch(updateProject(newProj, project.id));
+
+        dispatch(updateProject({ team: newteam }, newProj.id));
 
         // add the project to the user
         const newUser = user;
