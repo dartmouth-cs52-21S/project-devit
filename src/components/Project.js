@@ -9,10 +9,12 @@ import Calendar from './Calendar';
 import Chat from './Chat';
 import { ModalMessage } from './Modal';
 import { selectisAuthenticated, selectUser } from '../store/selectors';
+import getCommits from '../services/github-api';
 
 const Project = () => {
   const [project, setProject] = useState();
   const [isMember, setIsMember] = useState(false);
+  const [projectCommits, setProjectCommits] = useState([]);
   //   const [editing, setEditing] = useState(false);
 
   const [toggleRecentActivity, setToggleRecentActivity] = useState(true);
@@ -35,6 +37,23 @@ const Project = () => {
         i += 1;
       }
     }));
+    project.GitHub.map((git) => {
+      const index = git.indexOf('github.com/') + 'github.com/'.length;
+      const repo = git.substring(index);
+
+      getCommits(repo).then((commits) => {
+        const newArray = commits.map((com) => {
+          const author = com.author ? com.author.login : 'unknown';
+          const { message } = com.commit;
+          const { date } = com.commit.author;
+          return { author, message, date };
+        });
+
+        setProjectCommits(newArray);
+      });
+
+      return '';
+    });
   }, []);
 
   if (!project) return 'Sorry, we couldn\'t find that project.';
@@ -120,6 +139,22 @@ const Project = () => {
       history.push('/signup');
     }
   };
+  const renderActivity = () => {
+    if (projectCommits && projectCommits.length > 0) {
+      const activity = projectCommits.map((commit) => {
+        const date = commit.date.substring(0, 10);
+        const time = commit.date.substring(commit.date.indexOf('T') + 1, commit.date.indexOf('T') + 9);
+        return (
+          <div className="activity" key={commit.message}>
+            <h3 className="commit">Commit from {commit.author}, on {date}, at {time}</h3>
+            <p className="commit">{commit.message}</p>
+          </div>
+        );
+      });
+      return activity;
+    }
+    return '';
+  };
 
   return (
     <div className="project">
@@ -187,7 +222,9 @@ const Project = () => {
 
             {
             toggleRecentActivity ? (
-              <p>Add Github Here!</p>
+              <div className="activity-container">
+                {renderActivity()}
+              </div>
             ) : (
               <Calendar project={project} />
             )
