@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { FaArrowRight } from 'react-icons/fa';
 import dayjs from 'dayjs';
 
 import { selectUser } from '../store/selectors/index';
@@ -34,10 +33,10 @@ export const ProjectCard = ({ project }) => {
 
   const history = useHistory();
 
-  const handleGoToProject = (id) => history.push(`/projects/${id}`);
+  const handleGoToProject = () => history.push(`/projects/${project.id}`);
 
   return (
-    <li className="projects__project">
+    <li className="projects__project" onClick={handleGoToProject}>
       <div className="projects__project-icon">{project.logo}</div>
       <div className="projects__project-body">
         <h3 className="projects__project-name">{project.name}</h3>
@@ -57,13 +56,6 @@ export const ProjectCard = ({ project }) => {
             <span className="projects__originally-posted-text">by</span>
             {project.author ? <span className="projects__originally-posted-by">{`${project.author.firstName} ${project.author.lastName}`}</span> : <span />}
           </div>
-          <button
-            type="button"
-            className="button view-project-button ghost small"
-            onClick={() => handleGoToProject(project.id)}
-          >
-            <FaArrowRight />
-          </button>
         </div>
       </div>
     </li>
