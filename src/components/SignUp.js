@@ -31,7 +31,7 @@ const SignUp = () => {
     const { email } = formik.values;
     const { password } = formik.values;
     dispatch(signUpUser({ email, password }, history));
-    history.push('/profile');
+    history.push('/onboarding');
   };
 
   return (
