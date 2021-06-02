@@ -192,7 +192,7 @@ const Project = () => {
         <div className="row">
           {(!isMember)
             ? (
-              <button type="button" onClick={joinProject}>
+              <button type="button" className="button" onClick={joinProject}>
                 Join Team
               </button>
             )
@@ -206,7 +206,7 @@ const Project = () => {
         </ul>
         <div id="best__practices">
           <FontAwesomeIcon className="icon" icon={faLightbulb} />
-          <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
+          <button type="button" className="button" onClick={handleToggleModal}>Best Team Practices</button>
         </div>
         <ul className="neededTeam__container">
           {neededTeam}
