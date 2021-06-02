@@ -81,6 +81,7 @@ const Onboarding = () => {
     } else {
       dispatch(updateUser(storedUser.id, { ...user, ...formik.values }, history));
     }
+    history.push('/profile');
   };
 
   const handleUpdateUserArray = (e, userObject, userArrayKey) => {
