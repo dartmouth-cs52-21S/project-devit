@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
+import Calendar from './Calendar';
 import Chat from './Chat';
 import { ModalMessage } from './Modal';
 import { selectisAuthenticated, selectUser } from '../store/selectors';
@@ -14,6 +15,7 @@ const Project = () => {
   const [isMember, setIsMember] = useState(false);
   //   const [editing, setEditing] = useState(false);
 
+  const [toggleRecentActivity, setToggleRecentActivity] = useState(true);
   const { projectId } = useParams();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -124,10 +126,7 @@ const Project = () => {
       <div className="project__details">
 
         <div id="project__title__container">
-          <div className="project__logo">
-            {/* <img src={project.logo} alt="emoji" /> */}
-            {project.logo}
-          </div>
+          <div className="project__logo">{project.logo}</div>
           <h1 className="project__title">{project.name}</h1>
         </div>
         <p>{project.bio}</p>
@@ -159,6 +158,42 @@ const Project = () => {
         <ul className="members__container">
           {team}
         </ul>
+        <div className="project__tools">
+          <div className="tabs__container">
+            <label className={`form__label checkbox-label ${toggleRecentActivity ? 'checked' : ''}`} htmlFor="Recent Activity">
+              <p className="form__label-text checkbox-label-text">Recent Activity</p>
+              <input
+                id="Recent Activity"
+                className="form__checkbox"
+                type="checkbox"
+                value="Recent Activity"
+                checked={toggleRecentActivity}
+                onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
+              />
+            </label>
+            <label className={`form__label checkbox-label ${!toggleRecentActivity ? 'checked' : ''}`} htmlFor="Calendar">
+              <p className="form__label-text checkbox-label-text">Calendar</p>
+              <input
+                id="Calendar"
+                className="form__checkbox"
+                type="checkbox"
+                value="Calendar"
+                checked={!toggleRecentActivity}
+                onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
+              />
+            </label>
+          </div>
+          <div className="tools__container">
+
+            {
+            toggleRecentActivity ? (
+              <p>Add Github Here!</p>
+            ) : (
+              <Calendar project={project} />
+            )
+          }
+          </div>
+        </div>
       </div>
 
       <div className="project__chat">

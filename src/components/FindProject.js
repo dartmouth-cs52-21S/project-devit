@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +20,7 @@ const FindProject = () => {
 
   const [currProjects, setCurrProjects] = useState();
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const htmlPart = '<FontAwesomeIcon icon={faLightbulb} />';
 
@@ -62,6 +63,8 @@ const FindProject = () => {
 
   const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
 
+  const handleGoToProjectPage = (id) => history.push(`/projects/${id}`);
+
   const industries = (project) => (project.industry ? (project.industry.map((item) => {
     return (
       <p key={item} className="project__industry__tag"> {item}</p>
@@ -100,33 +103,27 @@ const FindProject = () => {
     currProjects.map((project) => (
       <div key={project.id} className="findPostsItem">
         <div> {project.name}</div>
-        <Link key={project.id} to={`/projects/${project.id}`}>
-          <button type="button" className="button">project page</button>
-        </Link>
+        <button type="button" className="button" onClick={() => handleGoToProjectPage(project.id)}>project page</button>
         <button type="button" name={project.id} onClick={presentModal} className="button">show modal</button>
       </div>
     ))
   ) : (
     projects.map((project) => (
-      <Link className="link" key={project.id} to={`/projects/${project.id}`}>
-        <div className="findPostsItem">
-          <div id="project__title__container">
-            <div className="project__logo">
-              <img src={project.logo} alt="emoji" />
-            </div>
-            <h1 className="project__title">{project.name}</h1>
-          </div>
-          <div className="find-project-content">
-            <p>{project.bio}</p>
-            <div>{industries(project)}</div>
-            <div>{tools(project)}</div>
-            <div>Needed team:</div>
-            <ul className="neededTeam__container">
-              {neededTeam(project)}
-            </ul>
-          </div>
+      <div key={project.id} role="button" tabIndex="0" className="findPostsItem" onClick={() => handleGoToProjectPage(project.id)}>
+        <div id="project__title__container">
+          <div className="project__logo">{project.logo}</div>
+          <h1 className="project__title">{project.name}</h1>
         </div>
-      </Link>
+        <div className="find-project-content">
+          <p>{project.bio}</p>
+          <div>{industries(project)}</div>
+          <div>{tools(project)}</div>
+          <div>Needed team:</div>
+          <ul className="neededTeam__container">
+            {neededTeam(project)}
+          </ul>
+        </div>
+      </div>
     ))
   );
 
