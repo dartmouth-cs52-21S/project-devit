@@ -66,12 +66,12 @@ const SignUp = () => {
               <p className="form__label-text">Confirm Password<span className="form__required">*</span></p>
               <input className="form__label-input"
                 type="password"
-                name="confirmPassword"
+                name="confirmedPassword"
                 data-lpignore={process.env.NODE_ENV === 'production' ? 'true' : false}
-                value={formik.values.confirmPassword}
+                value={formik.values.confirmedPassword}
                 onChange={formik.handleChange}
               />
-              {formik.errors.confirmPassword ? formik.errors.confirmPassword : null}
+              {formik.errors.confirmedPassword ? formik.errors.confirmedPassword : null}
             </label>
             <button type="submit" className="button form__button">Sign Up</button>
           </form>

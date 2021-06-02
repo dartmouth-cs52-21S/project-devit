@@ -2,13 +2,33 @@ import React, { useState } from 'react';
 import Picker from 'emoji-picker-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { createProject } from '../store/actions/index';
 import { selectUser } from '../store/selectors';
 
 import industriesList from '../constants/industries.json';
 
+const validationSchema = Yup.object({
+  title: Yup.string().required('Required Field'),
+  description: Yup.string().required('Required Field'),
+  problemDescription: Yup.string().max(200),
+  audienceDescription: Yup.string().max(200),
+  marketDescription: Yup.string().max(200),
+});
+
 const NewProject = () => {
-  const [title, setTitle] = useState('');
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      description: '',
+      problemDescription: '',
+      audienceDescription: '',
+      marketDescription: '',
+    },
+    validationSchema,
+  });
+
   const [industry, setIndustry] = useState([]);
   const [editIndustry, setEditIndustry] = useState(false);
   const [workingIndustry, setWorkingIndustry] = useState('');
@@ -16,10 +36,6 @@ const NewProject = () => {
   const [editEmoji, setEditEmoji] = useState(false);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
   const [roles, setRoles] = useState([]);
-  const [description, setDescription] = useState([]);
-  const [problemDescription, setProblemDescription] = useState('');
-  const [audienceDescription, setAudienceDescription] = useState('');
-  const [marketDescription, setMarketDescription] = useState('');
 
   const history = useHistory();
 
@@ -28,13 +44,13 @@ const NewProject = () => {
 
   const makeIdea = () => {
     const idea = {
-      name: title,
+      name: formik.values.title,
       industry: industry.concat(selectedIndustries),
       logo: chosenEmoji.emoji,
-      bio: description,
-      problemDescription,
-      audienceDescription,
-      marketDescription,
+      bio: formik.values.description,
+      problemDescription: formik.values.problemDescription,
+      audienceDescription: formik.values.audienceDescription,
+      marketDescription: formik.values.marketDescription,
       author: user.id,
     };
 
@@ -89,6 +105,7 @@ const NewProject = () => {
   ];
 
   return (
+
     <div id="new-project">
       {editEmoji
         ? (
@@ -100,75 +117,77 @@ const NewProject = () => {
         : (
           <div className="title">
             <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>
-            <input className="title" placeholder="Project title..." type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <input className="title" placeholder="Project title..." type="text" name="title" value={formik.values.title} onChange={formik.handleChange} />
           </div>
         )}
-
-      <div className="selector-container">
-        <h1>Description</h1>
-        <textarea placeholder="Describe your project" rows="4" columns="50" onChange={(e) => setDescription(e.target.value)} />
-      </div>
-      <div className="selector-container">
-        <h1>Industry</h1>
-        <div className="selector">
-          {industriesList.industries.map((single) => {
-            const checked = selectedIndustries?.includes(single);
-            return (
-              <div key={single}>
-                <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={single}>
-                  <p className="form__label-text checkbox-label-text">{single}</p>
-                  <input className="form__checkbox" type="checkbox" id={single} onChange={() => addIndustry(single)} />
-                </label>
-              </div>
-
-            );
-          })}
-
-          {industries}
-          {editIndustry
-            ? (
-              <div className="add-ind">
-                <input className="add" placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
-                <button className="add" type="submit" onClick={handleIndustry}>Add</button>
-              </div>
-            )
-            : <button className="add" type="button" onClick={() => setEditIndustry(true)}>+</button>}
+      <form className="form__form" onSubmit={makeIdea}>
+        <div className="selector-container">
+          <h1>Description</h1>
+          <textarea placeholder="Describe your project" rows="4" columns="50" name="description" value={formik.values.description} onChange={formik.handleChange} />
         </div>
-      </div>
-      <div className="selector-container">
-        <h1>I need...</h1>
-        <div className="selector">
-          {rolesFields.map(({ fieldName, label }) => {
-            const checked = roles?.includes(fieldName);
-            return (
-              <div key={fieldName}>
-                <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
-                  <p className="form__label-text checkbox-label-text">{label}</p>
-                  <input className="form__checkbox" type="checkbox" id={fieldName} onChange={() => addRole(fieldName)} />
-                </label>
-              </div>
+        <div className="selector-container">
+          <h1>Industry</h1>
+          <div className="selector">
+            {industriesList.industries.map((single) => {
+              const checked = selectedIndustries?.includes(single);
+              return (
+                <div key={single}>
+                  <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={single}>
+                    <p className="form__label-text checkbox-label-text">{single}</p>
+                    <input className="form__checkbox" type="checkbox" id={single} onChange={() => addIndustry(single)} />
+                  </label>
+                </div>
 
-            );
-          })}
+              );
+            })}
+
+            {industries}
+            {editIndustry
+              ? (
+                <div className="add-ind">
+                  <input className="add" placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
+                  <button className="add" type="submit" onClick={handleIndustry}>Add</button>
+                </div>
+              )
+              : <button className="add" type="button" onClick={() => setEditIndustry(true)}>+</button>}
+          </div>
         </div>
-      </div>
-      <div className="selector-container">
-        <h1>What is the problem you are solving? Why is it important?</h1>
-        <textarea placeholder="Describe your idea" rows="4" columns="50" onChange={(e) => setProblemDescription(e.target.value)} />
-      </div>
-      <div className="selector-container">
-        <h1>What is your target audience?</h1>
-        <textarea placeholder="Describe your customers" rows="4" columns="50" onChange={(e) => setAudienceDescription(e.target.value)} />
-      </div>
-      <div className="selector-container">
-        <h1>Do you plan to market your idea? What is your going to market strategy?</h1>
-        <textarea placeholder="Describe your plan" rows="4" columns="50" onChange={(e) => setMarketDescription(e.target.value)} />
-      </div>
+        <div className="selector-container">
+          <h1>I need...</h1>
+          <div className="selector">
+            {rolesFields.map(({ fieldName, label }) => {
+              const checked = roles?.includes(fieldName);
+              return (
+                <div key={fieldName}>
+                  <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
+                    <p className="form__label-text checkbox-label-text">{label}</p>
+                    <input className="form__checkbox" type="checkbox" id={fieldName} onChange={() => addRole(fieldName)} />
+                  </label>
+                </div>
+
+              );
+            })}
+          </div>
+        </div>
+        <div className="selector-container">
+          <h1>What is the problem you are solving? Why is it important?</h1>
+          <textarea placeholder="Describe your idea" rows="4" columns="50" name="problemDescription" value={formik.values.problemDescription} onChange={formik.handleChange} />
+        </div>
+        <div className="selector-container">
+          <h1>What is your target audience?</h1>
+          <textarea placeholder="Describe your customers" rows="4" columns="50" name="audienceDescription" value={formik.values.audienceDescription} onChange={formik.handleChange} />
+        </div>
+        <div className="selector-container">
+          <h1>Do you plan to market your idea? What is your going to market strategy?</h1>
+          <textarea placeholder="Describe your plan" rows="4" columns="50" name="marketDescription" value={formik.values.marketDescription} onChange={formik.handleChange} />
+        </div>
+      </form>
       <div className="buttons">
         <button className="save" type="submit" onClick={makeIdea}>Save Draft</button>
       </div>
 
     </div>
+
   );
 };
 
