@@ -55,7 +55,7 @@ export const ProjectCard = ({ project }) => {
             <span className="projects__originally-posted-text">Originally posted</span>
             <span className="projects__originally-posted-date">{dayjs(project.createdAt).fromNow()}</span>
             <span className="projects__originally-posted-text">by</span>
-            <span className="projects__originally-posted-by">{`${project.author.firstName} ${project.author.lastName}`}</span>
+            {project.author ? <span className="projects__originally-posted-by">{`${project.author.firstName} ${project.author.lastName}`}</span> : <span />}
           </div>
           <button
             type="button"

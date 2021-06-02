@@ -63,6 +63,8 @@ const NewProject = () => {
     dispatch(updateUser(user.id, user));
 
     dispatch(createProject(idea, history));
+
+    history.push('/projects');
   };
 
   const industries = industry.map((single) => {
