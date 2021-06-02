@@ -31,7 +31,6 @@ const Project = () => {
         setProjectCommits(['You have no recent activity']);
       } else {
         data.GitHub.map((git) => {
-          console.log('here');
           const index = git.indexOf('github.com/') + 'github.com/'.length;
           const repo = git.substring(index);
 
@@ -42,7 +41,6 @@ const Project = () => {
               const { date } = com.commit.author;
               return { author, message, date };
             });
-            console.log('newArray', newArray);
 
             setProjectCommits(newArray);
           });
@@ -51,7 +49,6 @@ const Project = () => {
         });
       }
       let i = 0;
-      console.log('data', data);
       while (i < data.team.length) {
         if (data.team[i].id === user.id || data.team[i] === user.id) {
           setIsMember(true);
