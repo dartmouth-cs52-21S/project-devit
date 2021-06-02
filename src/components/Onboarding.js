@@ -3,12 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { selectUser } from '../store/selectors';
 
 import { updateUser } from '../store/actions';
 import { uploadImage } from '../store/s3';
 import Skills from '../constants/skills.json';
 import DarkBG from './DarkBG';
+
+const validationSchema = Yup.object({
+  firstName: Yup.string().required('Required Field'),
+  lastName: Yup.string().required('Required Field'),
+  githubUsername: Yup.string(),
+  location: Yup.string(),
+  bio: Yup.string().max(200),
+});
 
 const SelectField = ({
   user, userArrayKey, handleUpdateUserArray, fieldName, label,
@@ -31,13 +41,19 @@ const SelectField = ({
 };
 
 const Onboarding = () => {
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      githubUsername: '',
+      location: '',
+      bio: '',
+    },
+    validationSchema,
+  });
+
   const [user, setUser] = useState({
-    firstName: '',
-    lastName: '',
-    githubUsername: '',
-    location: '',
     picture: '../images/user.png',
-    bio: '',
     roles: [],
     devSkills: [],
     desSkills: [],
@@ -58,13 +74,14 @@ const Onboarding = () => {
   const handleUpdateUser = () => {
     if (file) {
       uploadImage(file).then((url) => {
-        dispatch(updateUser(storedUser.id, { ...user, picture: url }, history));
+        dispatch(updateUser(storedUser.id, { ...user, ...formik.values, picture: url }, history));
       }).catch((error) => {
         console.error(error);
       });
     } else {
-      dispatch(updateUser(storedUser.id, user, history));
+      dispatch(updateUser(storedUser.id, { ...user, ...formik.values }, history));
     }
+    history.push('/profile');
   };
 
   const handleUpdateUserArray = (e, userObject, userArrayKey) => {
@@ -97,24 +114,32 @@ const Onboarding = () => {
             <img src={user.picture} alt="user avatar" />
             <input type="file" name="coverImage" onChange={(e) => onImageUpload(e)} />
           </div>
-          <div className="user-details">
-            <h1>User Details</h1>
-            <div>
-              <input type="text" value={user.firstName} placeholder="First Name" onChange={(e) => setUser({ ...user, firstName: e.target.value })} />
-              <input type="text" value={user.lastName} placeholder="Last Name" onChange={(e) => setUser({ ...user, lastName: e.target.value })} />
-              <input type="text" value={user.githubUsername} placeholder="Github Username" onChange={(e) => setUser({ ...user, githubUsername: e.target.value })} />
+          <form className="form__form" onSubmit={handleUpdateUser}>
+            <div className="user-details">
+              <h1>User Details</h1>
+              <div>
+                <input type="text" name="firstName" value={formik.values.firstName} placeholder="First Name" onChange={formik.handleChange} />
+                {/* {formik.errors.firstName ? formik.errors.firstName : null} */}
+                <input type="text" name="lastName" value={formik.values.lastName} placeholder="Last Name" onChange={formik.handleChange} />
+                {/* {formik.errors.lastName ? formik.errors.lastName : null} */}
+                <input type="text" name="githubUsername" value={formik.values.githubUsername} placeholder="Github Username" onChange={formik.handleChange} />
+                {/* {formik.errors.githubUsername ? formik.errors.githubUsername : null} */}
+              </div>
+              <label htmlFor="long">
+                <input type="text"
+                  id="long"
+                  name="location"
+                  value={formik.values.location}
+                  placeholder="Add Location"
+                  onChange={formik.handleChange}
+                />
+                <FontAwesomeIcon icon={faMapMarkerAlt} id="icon" size="lg" />
+              </label>
+              {/* {formik.errors.location ? formik.errors.location : null} */}
+              <textarea type="text" name="bio" value={formik.values.bio} placeholder="Bio" onChange={formik.handleChange} />
+              {/* {formik.errors.bio ? formik.errors.bio : null} */}
             </div>
-            <label htmlFor="long">
-              <input type="text"
-                id="long"
-                value={user.location}
-                placeholder="Add Location"
-                onChange={(e) => setUser({ ...user, location: e.target.value })}
-              />
-              <FontAwesomeIcon icon={faMapMarkerAlt} id="icon" size="lg" />
-            </label>
-            <textarea type="text" value={user.bio} placeholder="Bio" onChange={(e) => setUser({ ...user, bio: e.target.value })} />
-          </div>
+          </form>
         </div>
         <div className="user-attributes">
           <section className="form__section">
@@ -144,6 +169,7 @@ const Onboarding = () => {
         </div>
 
         <button type="button"
+          disabled={!(formik.isValid && formik.dirty)}
           onClick={() => handleUpdateUser()}
         >Next
         </button>

@@ -61,7 +61,7 @@ const SignIn = () => {
               />
               {formik.errors.password ? formik.errors.password : null}
             </label>
-            <button type="submit" className="button form__button">Sign In</button>
+            <button type="submit" className="button form__button" disabled={!(formik.isValid && formik.dirty)}>Sign In</button>
           </form>
           <p>Do not have an account? <Link to="/signup">Sign Up</Link></p>
         </div>
