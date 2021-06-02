@@ -122,3 +122,15 @@ p {
     margin-right: 0;
   }
 }
+
+.project__tools{
+  margin-top: 10%;
+
+  .tabs__container{
+    display: flex;
+    flex-direction: row;
+    label{
+      margin-right: 0rem;
+    }
+  }
+}

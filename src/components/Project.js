@@ -3,12 +3,14 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import Calendar from './Calendar';
 import { fetchProject, toggleModalVisibility } from '../store/actions';
 import Chat from './Chat';
 import { ModalMessage } from './Modal';
 
 const Project = () => {
   const [project, setProject] = useState();
+  const [toggleRecentActivity, setToggleRecentActivity] = useState(true);
   const { projectId } = useParams();
   const dispatch = useDispatch();
 
@@ -91,6 +93,42 @@ const Project = () => {
         <ul className="applicants__container">
           {project.applicants}
         </ul>
+        <div className="project__tools">
+          <div className="tabs__container">
+            <label className={`form__label checkbox-label ${toggleRecentActivity ? 'checked' : ''}`} htmlFor="Recent Activity">
+              <p className="form__label-text checkbox-label-text">Recent Activity</p>
+              <input
+                id="Recent Activity"
+                className="form__checkbox"
+                type="checkbox"
+                value="Recent Activity"
+                checked={toggleRecentActivity}
+                onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
+              />
+            </label>
+            <label className={`form__label checkbox-label ${!toggleRecentActivity ? 'checked' : ''}`} htmlFor="Calendar">
+              <p className="form__label-text checkbox-label-text">Calendar</p>
+              <input
+                id="Calendar"
+                className="form__checkbox"
+                type="checkbox"
+                value="Calendar"
+                checked={!toggleRecentActivity}
+                onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
+              />
+            </label>
+          </div>
+          <div className="tools__container">
+
+            {
+            toggleRecentActivity ? (
+              <p>Add Github Here!</p>
+            ) : (
+              <Calendar project={project} />
+            )
+          }
+          </div>
+        </div>
       </div>
 
       <div className="project__chat">
