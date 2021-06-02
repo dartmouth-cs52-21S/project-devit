@@ -143,3 +143,18 @@ button{
     }
   }
 }
+.activity-container{
+  height: 30vh;
+  overflow-y: scroll;
+}
+.activity{
+  background-color: $devit-gray;
+  color: $devit-white
+}
+h3.commit{
+  margin-left: 20px;
+}
+p.commit{
+  margin-left: 20px;
+}
+

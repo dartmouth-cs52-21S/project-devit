@@ -184,9 +184,8 @@ const NewProject = () => {
           <textarea placeholder="Describe your plan" rows="4" columns="50" name="marketDescription" value={formik.values.marketDescription} onChange={formik.handleChange} />
         </div>
         <div className="buttons">
-          <button className="save" type="submit" disabled={!(formik.isValid && formik.dirty)}>Save Draft</button>
+          <button className="save" type="submit" disabled={!(formik.isValid && formik.dirty)}>Share</button>
         </div>
-
       </div>
     </form>
   );
