@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Badges from '../constants/badges.json';
 
 import ProjectModal from './ProjectModal';
@@ -34,6 +34,10 @@ const FindProject = () => {
     setCurrProjects(projects.filter((project) => {
       return project[field].includes(word);
     }));
+  };
+
+  const clearFilter = () => {
+    setCurrProjects(projects);
   };
 
   useEffect(() => {
@@ -101,10 +105,20 @@ const FindProject = () => {
 
   const postProjects = currProjects ? (
     currProjects.map((project) => (
-      <div key={project.id} className="findPostsItem">
-        <div> {project.name}</div>
-        <button type="button" className="button" onClick={() => handleGoToProjectPage(project.id)}>project page</button>
-        <button type="button" name={project.id} onClick={presentModal} className="button">show modal</button>
+      <div key={project.id} role="button" tabIndex="0" className="findPostsItem" onClick={() => handleGoToProjectPage(project.id)}>
+        <div id="project__title__container">
+          <div className="project__logo">{project.logo}</div>
+          <h1 className="project__title">{project.name}</h1>
+        </div>
+        <div className="find-project-content">
+          <p>{project.bio}</p>
+          <div>{industries(project)}</div>
+          <div>{tools(project)}</div>
+          <div>Needed team:</div>
+          <ul className="neededTeam__container">
+            {neededTeam(project)}
+          </ul>
+        </div>
       </div>
     ))
   ) : (
@@ -168,10 +182,12 @@ const FindProject = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="drop-menu">
-              {teamFilter}
+              <Dropdown.Item className="drop-item" eventKey="developer" onSelect={() => filter('developer', 'neededTeam')}>Developer</Dropdown.Item>
+              <Dropdown.Item className="drop-item" eventKey="designer" onSelect={() => filter('designer', 'neededTeam')}>Designer</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
+        <FontAwesomeIcon icon={faTimes} size="2x" onClick={clearFilter} />
       </div>
       <div id="find-projects-container">{postProjects}</div>
     </div>
