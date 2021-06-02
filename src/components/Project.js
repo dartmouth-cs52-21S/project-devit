@@ -125,7 +125,13 @@ const Project = () => {
       } else {
         // add the user to the project
         const newProj = project;
-        const newteam = project.team;
+        const newteam = [];
+        let i = 0;
+
+        while (i < project.team.length) {
+          newteam.push(project.team[i].id);
+          i += 1;
+        }
         newteam.push(user.id);
         newProj.team = newteam;
         setProject(newProj);
