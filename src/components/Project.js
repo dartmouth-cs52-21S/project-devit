@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
 import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
 import Chat from './Chat';
 import { ModalMessage } from './Modal';
@@ -91,7 +89,6 @@ const Project = () => {
     />,
   ));
 
-  // eslint-disable-next-line no-unused-vars
   const joinProject = () => {
     if (isAuthenticated) {
       if (isMember) {
