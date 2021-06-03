@@ -13,38 +13,14 @@ import Skills from '../constants/skills.json';
 import DarkBG from './DarkBG';
 
 const validationSchema = Yup.object({
-  firstName: Yup.string().required('Required Field'),
-  lastName: Yup.string().required('Required Field'),
   githubUsername: Yup.string(),
   location: Yup.string(),
   bio: Yup.string().max(200),
 });
 
-const SelectField = ({
-  user, userArrayKey, handleUpdateUserArray, fieldName, label,
-}) => {
-  const checked = user[userArrayKey]?.includes(fieldName);
-
-  return (
-    <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
-      <p className="form__label-text checkbox-label-text">{label}</p>
-      <input
-        id={fieldName}
-        className="form__checkbox"
-        type="checkbox"
-        value={fieldName}
-        checked={checked}
-        onChange={(e) => handleUpdateUserArray(e, user, userArrayKey)}
-      />
-    </label>
-  );
-};
-
 const Onboarding = () => {
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
       githubUsername: '',
       location: '',
       bio: '',
@@ -117,14 +93,7 @@ const Onboarding = () => {
           <form className="form__form" onSubmit={handleUpdateUser}>
             <div className="user-details">
               <h1>User Details</h1>
-              <div>
-                <input type="text" name="firstName" value={formik.values.firstName} placeholder="First Name" onChange={formik.handleChange} />
-                {/* {formik.errors.firstName ? formik.errors.firstName : null} */}
-                <input type="text" name="lastName" value={formik.values.lastName} placeholder="Last Name" onChange={formik.handleChange} />
-                {/* {formik.errors.lastName ? formik.errors.lastName : null} */}
-                <input type="text" name="githubUsername" value={formik.values.githubUsername} placeholder="Github Username" onChange={formik.handleChange} />
-                {/* {formik.errors.githubUsername ? formik.errors.githubUsername : null} */}
-              </div>
+              <input type="text" name="githubUsername" value={formik.values.githubUsername} placeholder="Github Username" onChange={formik.handleChange} />
               <label htmlFor="long">
                 <input type="text"
                   id="long"
@@ -170,7 +139,7 @@ const Onboarding = () => {
 
         <button type="button"
           disabled={!(formik.isValid && formik.dirty)}
-          onClick={() => handleUpdateUser()}
+          onClick={handleUpdateUser}
         >Next
         </button>
       </div>
@@ -179,3 +148,23 @@ const Onboarding = () => {
 };
 
 export default Onboarding;
+
+const SelectField = ({
+  user, userArrayKey, handleUpdateUserArray, fieldName, label,
+}) => {
+  const checked = user[userArrayKey]?.includes(fieldName);
+
+  return (
+    <label className={`form__label checkbox-label ${checked ? 'checked' : ''}`} htmlFor={fieldName}>
+      <p className="form__label-text checkbox-label-text">{label}</p>
+      <input
+        id={fieldName}
+        className="form__checkbox"
+        type="checkbox"
+        value={fieldName}
+        checked={checked}
+        onChange={(e) => handleUpdateUserArray(e, user, userArrayKey)}
+      />
+    </label>
+  );
+};
