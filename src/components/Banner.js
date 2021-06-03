@@ -11,12 +11,16 @@ const Banner = () => {
   const history = useHistory();
   const isAuthenticated = useSelector(selectisAuthenticated);
 
-  const handleGoHome = () => history.push('/');
+  const handleRedirect = () => {
+    if (isAuthenticated) return history.push('/profile');
+    return history.push('/');
+  };
+
   const handleGoToProfile = () => history.push('/profile');
 
   return (
     <header className="banner">
-      <div className="banner__logo" role="button" tabIndex="0" onClick={handleGoHome}>
+      <div className="banner__logo" role="button" tabIndex="0" onClick={handleRedirect}>
         <Logo />
       </div>
       {isAuthenticated && (
