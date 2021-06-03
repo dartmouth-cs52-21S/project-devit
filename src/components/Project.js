@@ -217,7 +217,7 @@ const Project = () => {
         </ul>
         <div id="best__practices">
           <FontAwesomeIcon className="icon" icon={faLightbulb} />
-          <button type="button" className="button" onClick={handleToggleModal}>Best Team Practices</button>
+          <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
         </div>
         <ul className="neededTeam__container">
           {neededTeam}
