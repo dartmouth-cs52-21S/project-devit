@@ -29,7 +29,7 @@ const Onboarding = () => {
   });
 
   const [user, setUser] = useState({
-    picture: '../images/user.png',
+    picture: '../images/user.svg',
     roles: [],
     devSkills: [],
     desSkills: [],
@@ -39,7 +39,7 @@ const Onboarding = () => {
   const storedUser = useSelector(selectUser);
 
   useEffect(() => {
-    let url = '../images/user.png';
+    let url = '../images/user.svg';
     if (file) { url = window.URL.createObjectURL(file); }
     setUser({ ...user, picture: url });
   }, [file]);
