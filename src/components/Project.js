@@ -189,70 +189,71 @@ const Project = () => {
     );
 
   return (
-    <div className="project">
-      <div className="project__details">
+    <div>
+      <div>
+        <div className="project">
+          <div className="project__details">
+            <div id="project__title__container">
+              <img className="project__logo" src={project.logo} alt="emoji" />
+              <h1 className="project__title">{project.name}</h1>
+            </div>
+            <p>{project.bio}</p>
+            <ul>
+              {industries}
+            </ul>
+            <div className="row">
+              {(!isMember)
+                ? (
+                  <button type="button" className="button" onClick={joinProject}>
+                    Join Team
+                  </button>
+                )
+                : <div> </div>}
+            </div>
+            <ul>
+              <FontAwesomeIcon icon={faLink} />
+              {renderGithubLink}
+              {renderFigmaLink}
+              {renderSlackLink}
+            </ul>
+            <div id="best__practices">
+              <FontAwesomeIcon className="icon" icon={faLightbulb} />
+              <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
+            </div>
+            <ul className="neededTeam__container">
+              {neededTeam}
+            </ul>
+            <ul className="members__container">
+              {team}
+            </ul>
+            <div className="project__tools">
+              <div className="tabs__container">
+                <label className={`form__label checkbox-label ${toggleRecentActivity ? 'checked' : ''}`} htmlFor="Recent Activity">
+                  <p className="form__label-text checkbox-label-text">Recent Activity</p>
+                  <input
+                    id="Recent Activity"
+                    className="form__checkbox"
+                    type="checkbox"
+                    value="Recent Activity"
+                    checked={toggleRecentActivity}
+                    onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
+                  />
+                </label>
+                <label className={`form__label checkbox-label ${!toggleRecentActivity ? 'checked' : ''}`} htmlFor="Calendar">
+                  <p className="form__label-text checkbox-label-text">Calendar</p>
+                  <input
+                    id="Calendar"
+                    className="form__checkbox"
+                    type="checkbox"
+                    value="Calendar"
+                    checked={!toggleRecentActivity}
+                    onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
+                  />
+                </label>
+              </div>
+              <div className="tools__container">
 
-        <div id="project__title__container">
-          <div className="project__logo">{project.logo}</div>
-          <h1 className="project__title">{project.name}</h1>
-        </div>
-        <p>{project.bio}</p>
-        <ul>
-          {industries}
-        </ul>
-        <div className="row">
-          {(!isMember)
-            ? (
-              <button type="button" className="button" onClick={joinProject}>
-                Join Team
-              </button>
-            )
-            : <div> </div>}
-        </div>
-        <ul>
-          <FontAwesomeIcon icon={faLink} />
-          {renderGithubLink}
-          {renderFigmaLink}
-          {renderSlackLink}
-        </ul>
-        <div id="best__practices">
-          <FontAwesomeIcon className="icon" icon={faLightbulb} />
-          <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
-        </div>
-        <ul className="neededTeam__container">
-          {neededTeam}
-        </ul>
-        <ul className="members__container">
-          {team}
-        </ul>
-        <div className="project__tools">
-          <div className="tabs__container">
-            <label className={`form__label checkbox-label ${toggleRecentActivity ? 'checked' : ''}`} htmlFor="Recent Activity">
-              <p className="form__label-text checkbox-label-text">Recent Activity</p>
-              <input
-                id="Recent Activity"
-                className="form__checkbox"
-                type="checkbox"
-                value="Recent Activity"
-                checked={toggleRecentActivity}
-                onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
-              />
-            </label>
-            <label className={`form__label checkbox-label ${!toggleRecentActivity ? 'checked' : ''}`} htmlFor="Calendar">
-              <p className="form__label-text checkbox-label-text">Calendar</p>
-              <input
-                id="Calendar"
-                className="form__checkbox"
-                type="checkbox"
-                value="Calendar"
-                checked={!toggleRecentActivity}
-                onChange={() => setToggleRecentActivity(!toggleRecentActivity)}
-              />
-            </label>
-          </div>
-          <div className="tools__container">
-
-            {
+                {
             toggleRecentActivity ? (
               <div className="activity-container">
                 {renderActivity()}
@@ -261,12 +262,28 @@ const Project = () => {
               <Calendar project={project} />
             )
           }
+              </div>
+            </div>
+          </div>
+
+          <div className="project__chat">
+            <Chat />
           </div>
         </div>
       </div>
-
-      <div className="project__chat">
-        <Chat />
+      <div className="project-questions">
+        <h2>What is the problem you are solving? Why is it important?</h2>
+        <div className="project-question-container">
+          {project.problemDescription}
+        </div>
+        <h2>What is your target audience?</h2>
+        <div className="project-question-container">
+          {project.audienceDescription}
+        </div>
+        <h2>Do you plan to market your idea? What is your going to market strategy?</h2>
+        <div className="project-question-container">
+          {project.marketDescription}
+        </div>
       </div>
     </div>
   );
