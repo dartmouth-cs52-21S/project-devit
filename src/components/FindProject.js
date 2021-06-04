@@ -26,7 +26,7 @@ const FindProject = () => {
 
   const search = (word) => {
     setCurrProjects(projects.filter((project) => {
-      return project.name.includes(word);
+      return project.name.toLowerCase().includes(word.toLowerCase());
     }));
   };
 
@@ -187,7 +187,9 @@ const FindProject = () => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        <FontAwesomeIcon icon={faTimes} size="2x" onClick={clearFilter} />
+        <p onClick={clearFilter}>
+          <span>Clear Filter</span> <FontAwesomeIcon icon={faTimes} size="2x" />
+        </p>
       </div>
       <div id="find-projects-container">{postProjects}</div>
     </div>
