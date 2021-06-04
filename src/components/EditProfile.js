@@ -92,19 +92,23 @@ const EditProfile = () => {
           <form className="form__form" onSubmit={handleUpdateUser}>
             <div className="user-details">
               <h1>User Details</h1>
-              <input type="text" value={user.firstName} placeholder="First Name" onChange={(e) => setUser({ ...user, firstName: e.target.value })} />
-              <input type="text" value={user.lastName} placeholder="Last Name" onChange={(e) => setUser({ ...user, lastName: e.target.value })} />
-              <input type="text" value={user.githubUsername} placeholder="Github Username" onChange={(e) => setUser({ ...user, githubUsername: e.target.value })} />
-              <label htmlFor="long">
-                <input type="text"
-                  id="long"
-                  name="location"
-                  value={user.location}
-                  placeholder="Add Location"
-                  onChange={(e) => setUser({ ...user, location: e.target.value })}
-                />
-                <FontAwesomeIcon icon={faMapMarkerAlt} id="icon" size="lg" />
-              </label>
+              <div className="input-container">
+                <input className="input-line" type="text" value={user.firstName} placeholder="First Name" onChange={(e) => setUser({ ...user, firstName: e.target.value })} />
+                <input className="input-line" type="text" value={user.lastName} placeholder="Last Name" onChange={(e) => setUser({ ...user, lastName: e.target.value })} />
+              </div>
+              <div className="input-container">
+                <input className="input-line" type="text" value={user.githubUsername} placeholder="Github Username" onChange={(e) => setUser({ ...user, githubUsername: e.target.value })} />
+                <label htmlFor="long">
+                  <input type="text"
+                    id="long"
+                    name="location"
+                    value={user.location}
+                    placeholder="Add Location"
+                    onChange={(e) => setUser({ ...user, location: e.target.value })}
+                  />
+                  <FontAwesomeIcon icon={faMapMarkerAlt} id="icon" size="lg" />
+                </label>
+              </div>
               <textarea type="text" name="bio" value={user.bio} placeholder="Bio" onChange={(e) => setUser({ ...user, bio: e.target.value })} />
             </div>
           </form>
@@ -137,6 +141,7 @@ const EditProfile = () => {
         </div>
 
         <button type="button"
+          className="save"
           onClick={handleUpdateUser}
         >Save
         </button>
