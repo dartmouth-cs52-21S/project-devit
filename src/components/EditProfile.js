@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { selectUser } from '../store/selectors';
 
 import { updateUser } from '../store/actions';
@@ -12,21 +10,7 @@ import { uploadImage } from '../store/s3';
 import Skills from '../constants/skills.json';
 import DarkBG from './DarkBG';
 
-const validationSchema = Yup.object({
-  githubUsername: Yup.string(),
-  location: Yup.string(),
-  bio: Yup.string().max(200),
-});
-
 const EditProfile = () => {
-  const formik = useFormik({
-    initialValues: {
-      githubUsername: '',
-      location: '',
-      bio: '',
-    },
-    validationSchema,
-  });
   const storedUser = useSelector(selectUser);
 
   const [user, setUser] = useState({
@@ -49,12 +33,12 @@ const EditProfile = () => {
   const handleUpdateUser = () => {
     if (file) {
       uploadImage(file).then((url) => {
-        dispatch(updateUser(storedUser.id, { ...user, ...formik.values, picture: url }, history));
+        dispatch(updateUser(storedUser.id, { ...user, picture: url }, history));
       }).catch((error) => {
         console.error(error);
       });
     } else {
-      dispatch(updateUser(storedUser.id, { ...user, ...formik.values }, history));
+      dispatch(updateUser(storedUser.id, { ...user }, history));
     }
     history.push('/profile');
   };

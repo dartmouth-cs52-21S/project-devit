@@ -94,8 +94,7 @@ const Profile = () => {
 
         return '';
       });
-      user.commits = numUserCommits;
-      dispatch(updateUser(user.id, user));
+      dispatch(updateUser(user.id, { commits: numUserCommits }));
     }
   }, []);
 

@@ -49,17 +49,13 @@ const Project = () => {
         });
       }
       let i = 0;
-      if (data?.author?.id === user.id) {
-        setIsMember(true);
-      } else {
-        while (i < data.team.length) {
-          if (data.team[i].id === user.id || data.team[i] === user.id) {
-            setIsMember(true);
-            break;
-          }
-
-          i += 1;
+      while (i < data.team.length) {
+        if (data.team[i].id === user.id || data.team[i] === user.id) {
+          setIsMember(true);
+          break;
         }
+
+        i += 1;
       }
     }));
   }, []);
@@ -99,15 +95,18 @@ const Project = () => {
     }
   }))
     : null;
-
-  const team = (project.team && project.team[0]) ? (project.team.map((item) => {
-    return (
-      <div className="team__item" key={item.id}>
-        <p>{item.firstName} {item.lastName}</p>
-      </div>
-    );
-  }))
-    : null;
+  const renderTeam = () => {
+    const team = (project.team && project.team[0])
+      ? (project.team.map((item) => {
+        return (
+          <div className="team__item" key={item.id}>
+            <p>{item.firstName} {item.lastName}</p>
+          </div>
+        );
+      }))
+      : null;
+    return team;
+  };
 
   const handleToggleModal = () => dispatch(toggleModalVisibility(
     <ModalMessage
@@ -125,19 +124,12 @@ const Project = () => {
       } else {
         // add the user to the project
         const newProj = project;
-        const newteam = [];
-        let i = 0;
-
-        while (i < project.team.length) {
-          newteam.push(project.team[i].id);
-          i += 1;
-        }
+        const newteam = project.team;
         newteam.push(user.id);
         newProj.team = newteam;
         setProject(newProj);
         setIsMember(true);
-
-        dispatch(updateProject({ team: newteam }, newProj.id));
+        dispatch(updateProject(newProj, project.id));
 
         // add the project to the user
         const newUser = user;
@@ -193,7 +185,7 @@ const Project = () => {
       <div className="project__details">
 
         <div id="project__title__container">
-          <div className="project__logo">{project.logo}</div>
+          <img className="project__logo" src={project.logo} alt="emoji" />
           <h1 className="project__title">{project.name}</h1>
         </div>
         <p>{project.bio}</p>
@@ -203,7 +195,7 @@ const Project = () => {
         <div className="row">
           {(!isMember)
             ? (
-              <button type="button" className="button" onClick={joinProject}>
+              <button type="button" onClick={joinProject}>
                 Join Team
               </button>
             )
@@ -223,7 +215,7 @@ const Project = () => {
           {neededTeam}
         </ul>
         <ul className="members__container">
-          {team}
+          {renderTeam()}
         </ul>
         <div className="project__tools">
           <div className="tabs__container">
