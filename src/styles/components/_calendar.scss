@@ -1,5 +1,22 @@
 .calendar{
   color: black;
+
+  .cal-event{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    width:100%;
+    h4{
+      margin: 5px;
+    }
+    svg{
+      align-self: center;
+      justify-self: flex-end;
+      cursor: pointer;
+    }
+  }
+
+
   .events{
     display: flex;
     flex-direction: row;
@@ -39,7 +56,7 @@
     .fc-toolbar-title{
       color: $devit-white
     }
-    .fc-list-event-time{
+    .fc-list-event-time, .fc-list-event-graphic{
       display: none;
     }
     button:disabled{
@@ -59,7 +76,6 @@
       }
       .fc-list-day-cushion{
         background-color: $gray-700;
-        cursor: pointer;
       }
       .fc-list-event.fc-event.fc-event-start.fc-event-end.fc-event-future:hover{
         background-color: $gray-700;

@@ -5,6 +5,8 @@ import FullCalendar from '@fullcalendar/react';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { updateProject } from '../store/actions';
 
 const ToDo = (props) => {
@@ -17,9 +19,16 @@ const ToDo = (props) => {
 
   const handleEventClick = (eventClickInfo) => {
     setEvents(calEvents.filter((e) => {
-      return e.title !== eventClickInfo.event._def.title;
+      return e.title !== eventClickInfo.event.title;
     }));
   };
+
+  const renderEvent = (event) => (
+    <div className="cal-event">
+      <h4>{event.event.title}</h4>
+      <FontAwesomeIcon icon={faTimes} size="lg" onClick={() => handleEventClick(event)} />
+    </div>
+  );
 
   const addEvent = () => {
     dispatch(updateProject({
@@ -56,15 +65,15 @@ const ToDo = (props) => {
             onChange={(e) => setDate(e.target.value)}
           />
         </label>
-        <button type="button" onClick={addEvent}>Add Event</button>
+        <button type="button" onClick={addEvent} disabled={title.length < 1}>Add Event</button>
       </div>
       <FullCalendar
         plugins={[listPlugin, interactionPlugin]}
         initialView="listWeek"
         editable
-        eventClick={handleEventClick}
         defaultAllDay
         events={calEvents}
+        eventContent={renderEvent}
       />
     </div>
   );
