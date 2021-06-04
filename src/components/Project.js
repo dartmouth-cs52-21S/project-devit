@@ -224,6 +224,7 @@ const Project = () => {
               {neededTeam}
             </ul>
             <ul className="members__container">
+              <h2>Current Team Members:</h2>
               {team}
             </ul>
             <div className="project__tools">
