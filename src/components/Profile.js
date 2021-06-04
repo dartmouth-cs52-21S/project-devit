@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
-
+import { useHistory } from 'react-router-dom';
 import { selectUser } from '../store/selectors';
 import getCommits from '../services/github-api';
 import Badges from './Badges';
@@ -19,6 +19,7 @@ const Profile = () => {
   if (!user) return null;
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const renderPic = () => {
     let classes = 'profile';
@@ -67,7 +68,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    console.log(user.projects);
     if (user.projects) {
       let numUserCommits = 0;
       user.projects.map((project) => {
@@ -142,10 +142,14 @@ const Profile = () => {
             <FontAwesomeIcon icon={['fas', 'map-pin']} size="lg" />
             <h3>{user.location}</h3>
           </div>
+          <p>{user.bio}</p>
         </div>
         <div className="container badges-container">
           <h2>Badges</h2>
           <Badges user={user} />
+        </div>
+        <div className="container">
+          <button type="button" className="banner__button button" onClick={() => history.push('/edit-profile')}>Edit Profile</button>
         </div>
 
       </div>
