@@ -142,6 +142,16 @@ p {
   height: 30vh;
   overflow-y: scroll;
 }
+
+#members__container{
+  div p{
+    width: fit-content;
+  }
+  div p:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
 .activity{
   background-color: $devit-gray;
   color: $devit-white
