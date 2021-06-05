@@ -171,6 +171,18 @@ export function signOutUser(history) {
   };
 }
 
+export function fetchUser(id, callback) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${ROOT_URL}/users/${id}`);
+      callback(data);
+    } catch (error) {
+      console.error(error);
+      toast.dark('Sorry, there was an issue when trying find that user.');
+    }
+  };
+}
+
 export const toggleModalVisibility = (modalContent) => ({
   type: ActionTypes.TOGGLE_MODAL_VISIBILITY,
   modalContent,

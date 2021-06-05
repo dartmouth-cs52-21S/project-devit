@@ -19,6 +19,8 @@ import Modal from './components/Modal';
 import { selectModalContentExists } from './store/selectors';
 import Chat from './components/Chat';
 import Calendar from './components/Calendar';
+import AlternateProfile from './components/AlternateProfile';
+import EditProfile from './components/EditProfile';
 
 const App = () => {
   const modalContentExists = useSelector(selectModalContentExists);
@@ -37,12 +39,14 @@ const App = () => {
               <Route path="/signin" component={SignIn} />
               <Route path="/onboarding" component={Onboarding} />
               <PrivateRoute path="/profile" component={Profile} />
+              <Route path="/users/:userId" component={AlternateProfile} />
               <Route exact path="/projects" component={Projects} />
               <Route exact path="/projects/:projectId" component={Project} />
               <Route exact path="/find-project" component={FindProject} />
               <Route path="/new-project" component={NewProject} />
               <Route path="/chat" component={Chat} />
               <Route path="/calendar" component={Calendar} />
+              <Route path="/edit-profile" component={EditProfile} />
               <Route component={ErrorNotFound} />
             </Switch>
           </div>

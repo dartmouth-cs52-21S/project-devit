@@ -74,6 +74,7 @@ const Project = () => {
     }));
   }, []);
 
+
   const editMode = () => {
     setEditing(true);
   };
@@ -102,6 +103,10 @@ const Project = () => {
     setGitHubEdit('');
     dispatch(updateProject({ GitHub: newGitHub }, project.id));
     setEditing(false);
+
+  const clickUser = (id) => {
+    history.push(`/users/${id}`);
+
   };
 
   if (!project) return 'Sorry, we couldn\'t find that project.';
@@ -141,13 +146,35 @@ const Project = () => {
     : null;
 
   const team = (project.team && project.team[0]) ? (project.team.map((item) => {
-    return (
-      <div className="team__item" key={item.id}>
-        <p>{item.firstName} {item.lastName}</p>
-      </div>
-    );
+    if (item.id !== project.author?.id) {
+      return (
+        <div className="team__item" key={item.id}>
+          <p onClick={() => clickUser(item.id)}>{item.firstName} {item.lastName}</p>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }))
     : null;
+
+  const fullteam = () => {
+    if (project.author) {
+      return (
+        <ul id="members__container">
+          <h2>Author:</h2>
+          <div className="team__item" key={project.author.id}>
+            <p onClick={() => clickUser(project.author.id)}>{project.author.firstName} {project.author.lastName}</p>
+          </div>
+          <h2>Current Team Members:</h2>
+          {team}
+        </ul>
+
+      );
+    } else {
+      return null;
+    }
+  };
 
   const handleToggleModal = () => dispatch(toggleModalVisibility(
     <ModalMessage
@@ -189,6 +216,8 @@ const Project = () => {
         }
         newUser.projectsJoined = user.projectsJoined + 1;
         dispatch(updateUser(user.id, newUser, history));
+
+        toast.dark('You have joined the project! Refresh to see updates');
       }
     } else {
       history.push('/signup');
@@ -277,7 +306,7 @@ const Project = () => {
         <div className="project">
           <div className="project__details">
             <div id="project__title__container">
-              <img className="project__logo" src={project.logo} alt="emoji" />
+              <div className="project__logo">{project.logo}</div>
               <h1 className="project__title">{project.name}</h1>
             </div>
             <p>{project.bio}</p>
@@ -301,9 +330,7 @@ const Project = () => {
             <ul className="neededTeam__container">
               {neededTeam}
             </ul>
-            <ul className="members__container">
-              {team}
-            </ul>
+            {fullteam()}
             <div className="project__tools">
               <div className="tabs__container">
                 <label className={`form__label checkbox-label ${toggleRecentActivity ? 'checked' : ''}`} htmlFor="Recent Activity">
