@@ -64,6 +64,10 @@ const Project = () => {
     }));
   }, []);
 
+  const clickUser = (id) => {
+    history.push(`/users/${id}`);
+  };
+
   if (!project) return 'Sorry, we couldn\'t find that project.';
 
   const industries = project.industry ? (project.industry.map((item) => (
@@ -101,13 +105,35 @@ const Project = () => {
     : null;
 
   const team = (project.team && project.team[0]) ? (project.team.map((item) => {
-    return (
-      <div className="team__item" key={item.id}>
-        <p>{item.firstName} {item.lastName}</p>
-      </div>
-    );
+    if (item.id !== project.author?.id) {
+      return (
+        <div className="team__item" key={item.id}>
+          <p onClick={() => clickUser(item.id)}>{item.firstName} {item.lastName}</p>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }))
     : null;
+
+  const fullteam = () => {
+    if (project.author) {
+      return (
+        <ul id="members__container">
+          <h2>Author:</h2>
+          <div className="team__item" key={project.author.id}>
+            <p onClick={() => clickUser(project.author.id)}>{project.author.firstName} {project.author.lastName}</p>
+          </div>
+          <h2>Current Team Members:</h2>
+          {team}
+        </ul>
+
+      );
+    } else {
+      return null;
+    }
+  };
 
   const handleToggleModal = () => dispatch(toggleModalVisibility(
     <ModalMessage
@@ -223,9 +249,7 @@ const Project = () => {
             <ul className="neededTeam__container">
               {neededTeam}
             </ul>
-            <ul className="members__container">
-              {team}
-            </ul>
+            {fullteam()}
             <div className="project__tools">
               <div className="tabs__container">
                 <label className={`form__label checkbox-label ${toggleRecentActivity ? 'checked' : ''}`} htmlFor="Recent Activity">
