@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+// import { map } from 'jquery';
 import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
 import Calendar from './Calendar';
 import Chat from './Chat';
@@ -17,9 +18,9 @@ const Project = () => {
   const [projectCommits, setProjectCommits] = useState([]);
 
   const [editing, setEditing] = useState(false);
-  const [SlackEdit, setSlackEdit] = useState();
-  const [FigmaEdit, setFigmaEdit] = useState();
-  const [GitEdit, setGitEdit] = useState();
+  const [SlackEdit, setSlackEdit] = useState('');
+  const [FigmaEdit, setFigmaEdit] = useState('');
+  const [GitHubEdit, setGitHubEdit] = useState('');
 
   const [toggleRecentActivity, setToggleRecentActivity] = useState(true);
   const { projectId } = useParams();
@@ -32,9 +33,9 @@ const Project = () => {
   useEffect(() => {
     dispatch(fetchProject(projectId, (data) => {
       setProject(data);
-      setSlackEdit(data.Slack);
-      setFigmaEdit(data.Figma);
-      setGitEdit(data.GitHub);
+      setSlackEdit('');
+      setFigmaEdit('');
+      setGitHubEdit('');
 
       if (data.GitHub.length === 0) {
         setProjectCommits(['You have no recent activity']);
@@ -77,13 +78,29 @@ const Project = () => {
     setEditing(true);
   };
 
-  const submitEdits = () => {
-    const updatedProject = {
-      Figma: FigmaEdit,
+  const submitFigmaEdits = () => {
+    const newfig = project.Figma;
+    newfig.push(FigmaEdit);
+    setFigmaEdit('');
+    dispatch(updateProject({ Figma: newfig }, project.id));
+    setEditing(false);
+  };
+
+  const submitSlackEdits = () => {
+    const newSlack = project.Slack.push(SlackEdit);
+    setSlackEdit('');
+    dispatch(updateProject({
+      Figma: newSlack,
       Slack: SlackEdit,
-      Git: GitEdit,
-    };
-    updateProject(updatedProject, project.id);
+      GitHub: GitHubEdit,
+    }, project.id));
+    setEditing(false);
+  };
+
+  const submitGitHubEdits = () => {
+    const newGitHub = project.GitHub.push(GitHubEdit);
+    setGitHubEdit('');
+    dispatch(updateProject({ GitHub: newGitHub }, project.id));
     setEditing(false);
   };
 
@@ -196,32 +213,61 @@ const Project = () => {
     return '';
   };
 
-  const renderGithubLink = (project.GitHub.length === 0)
-    ? (<div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add git</div>) : (
-      <a className="project__links" href={project.GitHub}>GitHub</a>
-    );
+  const renderFigmaLink = (project.Figma.length === 0) ? null : (
+    project.Figma.map((link) => (
+      <a key={link} className="project__links" href={link}>{link}</a>
+    ))
+  );
 
-  const renderFigmaLink = (project.Figma.length === 0)
-    ? (<div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add figma</div>) : (
-      <a className="project__links" href={project.Figma}>Figma</a>
-    );
+  const renderGitHubLink = (project.GitHub.length === 0) ? null : (
+    project.GitHub.map((link) => (
+      <a key={link} className="project__links" href={link}>{link}</a>
+    ))
+  );
 
-  const renderSlackLink = (project.Slack.length === 0)
-    ? (<div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add slack</div>) : (
-      <a className="project__links" href={project.Slack}>Slack</a>
-    );
+  const renderSlackLink = (project.Slack.length === 0) ? null : (
+    project.Slack.map((link) => (
+      <a key={link} className="project__links" href={link}>{link}</a>
+    ))
+  );
 
   const renderLinks = (editing)
     ? (
       <div>
-        <p>editing</p>
-        <button type="button" onClick={submitEdits}>Done</button>
+        <div className="link-flex-container">
+          {renderFigmaLink}
+          Figma: <textarea value={FigmaEdit} onChange={(e) => setFigmaEdit(e.target.value)} />
+          <button type="button" onClick={submitFigmaEdits}>Done</button>
+        </div>
+        <div className="link-flex-container">
+          {renderSlackLink}
+          Slack: <textarea value={SlackEdit} onChange={(e) => setSlackEdit(e.target.value)} />
+          <button type="button" onClick={submitSlackEdits}>Done</button>
+        </div>
+        <div className="link-flex-container">
+          {renderGitHubLink}
+          GitHub: <textarea value={GitHubEdit} onChange={(e) => setGitHubEdit(e.target.value)} />
+          <button type="button" onClick={submitGitHubEdits}>Done</button>
+        </div>
       </div>
     ) : (
       <div>
-        {renderGithubLink}
-        {renderFigmaLink}
-        {renderSlackLink}
+        <div className="link-flex-container">
+          <FontAwesomeIcon icon={faLink} id="link" />
+          <h4> Links:</h4>
+        </div>
+        <div className="link-flex-container">
+          {renderFigmaLink}
+          <div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add Figma</div>
+        </div>
+        <div className="link-flex-container">
+          {renderSlackLink}
+          <div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add Slack</div>
+        </div>
+        <div className="link-flex-container">
+          {renderGitHubLink}
+          <div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add GitHub</div>
+        </div>
       </div>
     );
 
@@ -247,17 +293,9 @@ const Project = () => {
                 )
                 : <div> </div>}
             </div>
-            <ul>
-              {renderLinks}
-              <div className="link-flex-container">
-                <FontAwesomeIcon icon={faLink} />
-                {renderGithubLink}
-                {renderFigmaLink}
-                {renderSlackLink}
-              </div>
-            </ul>
+            {renderLinks}
             <div id="best__practices">
-              <FontAwesomeIcon className="icon" icon={faLightbulb} />
+              <FontAwesomeIcon className="icon" id="light" icon={faLightbulb} />
               <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
             </div>
             <ul className="neededTeam__container">
