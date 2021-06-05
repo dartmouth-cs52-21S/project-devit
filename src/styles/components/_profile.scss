@@ -136,3 +136,13 @@ $devit-black: #111111;
       display: flex;
     }
   }
+
+  @media only screen and (max-width: 1500px){
+    #profile{
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+      align-items: center;
+
+    }
+  }
