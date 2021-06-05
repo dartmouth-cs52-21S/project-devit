@@ -38,7 +38,10 @@ const Profile = () => {
         return (
           <div>
             <h3>You currently do not have any projects</h3>
-
+            <div className="buttons">
+              <button type="button" className="banner__button button" onClick={() => history.push('/find-project')}>Find a Project</button>
+              <button type="button" className="banner__button button" onClick={() => history.push('/new-project')}>Create a Project</button>
+            </div>
           </div>
         );
       }
