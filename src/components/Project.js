@@ -175,6 +175,8 @@ const Project = () => {
         }
         newUser.projectsJoined = user.projectsJoined + 1;
         dispatch(updateUser(user.id, newUser, history));
+
+        toast.dark('You have joined the project! Refresh to see updates');
       }
     } else {
       history.push('/signup');
