@@ -35,7 +35,12 @@ const Profile = () => {
   const renderProjects = () => {
     if (user.projects) {
       if (user.projects.length === 0) {
-        return <h3>You currently do not have any projects</h3>;
+        return (
+          <div>
+            <h3>You currently do not have any projects</h3>
+
+          </div>
+        );
       }
       const proj = user.projects.map((project) => {
         if (!project.industry) return '';
