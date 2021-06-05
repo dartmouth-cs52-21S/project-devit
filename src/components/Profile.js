@@ -35,7 +35,15 @@ const Profile = () => {
   const renderProjects = () => {
     if (user.projects) {
       if (user.projects.length === 0) {
-        return <h3>You currently do not have any projects</h3>;
+        return (
+          <div>
+            <h3>You currently do not have any projects</h3>
+            <div className="buttons">
+              <button type="button" className="banner__button button" onClick={() => history.push('/find-project')}>Find a Project</button>
+              <button type="button" className="banner__button button" onClick={() => history.push('/new-project')}>Create a Project</button>
+            </div>
+          </div>
+        );
       }
       const proj = user.projects.map((project) => {
         if (!project.industry) return '';
@@ -49,7 +57,7 @@ const Profile = () => {
         } else {
           descriptions.push(<h3>{project.industry[0]}</h3>);
           descriptions.push(<h3>{project.industry[1]}</h3>);
-          descriptions.push(<h3 className="more">+{size - 3} more</h3>);
+          descriptions.push(<h3 className="more">+{size - 2} more</h3>);
         }
 
         return (
