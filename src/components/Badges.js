@@ -108,7 +108,7 @@ const badgesObject = {
 const Badges = (props) => {
   return props.user.badges.map((badge) => (
     <Tooltip key={badge} title={badgesObject[badge].hoverText}>
-      <span>{badgesObject[badge].icon} </span>
+      <span className="badge-icon">{badgesObject[badge].icon} </span>
     </Tooltip>
   ));
 };
