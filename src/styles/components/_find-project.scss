@@ -53,6 +53,15 @@
             background-color: $gray-500;
         }
     }
+    p{
+        cursor: pointer;
+        align-self: center;
+        span{
+            font-size: 1.2rem;
+            padding: 5px;
+        }
+
+    }
 
 }
 
