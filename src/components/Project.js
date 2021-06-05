@@ -15,7 +15,11 @@ const Project = () => {
   const [project, setProject] = useState();
   const [isMember, setIsMember] = useState(false);
   const [projectCommits, setProjectCommits] = useState([]);
-  //   const [editing, setEditing] = useState(false);
+
+  const [editing, setEditing] = useState(false);
+  const [SlackEdit, setSlackEdit] = useState();
+  const [FigmaEdit, setFigmaEdit] = useState();
+  const [GitEdit, setGitEdit] = useState();
 
   const [toggleRecentActivity, setToggleRecentActivity] = useState(true);
   const { projectId } = useParams();
@@ -24,9 +28,14 @@ const Project = () => {
   const isAuthenticated = useSelector(selectisAuthenticated);
   const history = useHistory();
 
+  // should I be using data.Slack here or project.Slack??
   useEffect(() => {
     dispatch(fetchProject(projectId, (data) => {
       setProject(data);
+      setSlackEdit(data.Slack);
+      setFigmaEdit(data.Figma);
+      setGitEdit(data.GitHub);
+
       if (data.GitHub.length === 0) {
         setProjectCommits(['You have no recent activity']);
       } else {
@@ -63,6 +72,20 @@ const Project = () => {
       }
     }));
   }, []);
+
+  const editMode = () => {
+    setEditing(true);
+  };
+
+  const submitEdits = () => {
+    const updatedProject = {
+      Figma: FigmaEdit,
+      Slack: SlackEdit,
+      Git: GitEdit,
+    };
+    updateProject(updatedProject, project.id);
+    setEditing(false);
+  };
 
   if (!project) return 'Sorry, we couldn\'t find that project.';
 
@@ -173,19 +196,33 @@ const Project = () => {
     return '';
   };
 
-  const renderGithubLink = (project.GitHub === '')
-    ? (<div>add git</div>) : (
+  const renderGithubLink = (project.GitHub.length === 0)
+    ? (<div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add git</div>) : (
       <a className="project__links" href={project.GitHub}>GitHub</a>
     );
 
-  const renderFigmaLink = (project.Figma === '')
-    ? (<div>add figma</div>) : (
+  const renderFigmaLink = (project.Figma.length === 0)
+    ? (<div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add figma</div>) : (
       <a className="project__links" href={project.Figma}>Figma</a>
     );
 
-  const renderSlackLink = (project.Slack === '')
-    ? (<div>add slack</div>) : (
+  const renderSlackLink = (project.Slack.length === 0)
+    ? (<div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add slack</div>) : (
       <a className="project__links" href={project.Slack}>Slack</a>
+    );
+
+  const renderLinks = (editing)
+    ? (
+      <div>
+        <p>editing</p>
+        <button type="button" onClick={submitEdits}>Done</button>
+      </div>
+    ) : (
+      <div>
+        {renderGithubLink}
+        {renderFigmaLink}
+        {renderSlackLink}
+      </div>
     );
 
   return (
@@ -211,10 +248,13 @@ const Project = () => {
                 : <div> </div>}
             </div>
             <ul>
-              <FontAwesomeIcon icon={faLink} />
-              {renderGithubLink}
-              {renderFigmaLink}
-              {renderSlackLink}
+              {renderLinks}
+              <div className="link-flex-container">
+                <FontAwesomeIcon icon={faLink} />
+                {renderGithubLink}
+                {renderFigmaLink}
+                {renderSlackLink}
+              </div>
             </ul>
             <div id="best__practices">
               <FontAwesomeIcon className="icon" icon={faLightbulb} />
