@@ -77,8 +77,11 @@ export function createProject(project, history) {
 }
 
 export function updateProject(project, id) {
+  console.log('updated fields:');
+  console.log(project);
   return async (dispatch) => {
     try {
+      console.log('yikes');
       const { data } = await axios.put(`${ROOT_URL}/projects/${id}`, project, { headers: { authorization: localStorage.getItem('token') } });
       dispatch({ type: ActionTypes.FETCH_PROJECT, payload: data });
     } catch (error) {
