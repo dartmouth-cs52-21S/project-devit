@@ -143,6 +143,19 @@ $devit-black: #111111;
       flex-direction: column-reverse;
       justify-content: flex-end;
       align-items: center;
+      width: 100%;
+
+      .left-side{
+        width: 50%;
+      }
+      .right-side{
+        width: 50%;
+      }
+
+      // .project{
+      //   width: 100%;
+      // }
 
     }
+    
   }

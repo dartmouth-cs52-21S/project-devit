@@ -57,7 +57,7 @@ const Profile = () => {
         } else {
           descriptions.push(<h3>{project.industry[0]}</h3>);
           descriptions.push(<h3>{project.industry[1]}</h3>);
-          descriptions.push(<h3 className="more">+{size - 3} more</h3>);
+          descriptions.push(<h3 className="more">+{size - 2} more</h3>);
         }
 
         return (
