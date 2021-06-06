@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
-import { faSlack, faGithub, faFigma } from '@fortawesome/free-brands-svg-icons';
+import { faLink, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 // import { map } from 'jquery';
 import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
@@ -18,14 +17,10 @@ const Project = () => {
   const [isMember, setIsMember] = useState(false);
   const [projectCommits, setProjectCommits] = useState([]);
 
-  const [editingSlack, setEditingSlack] = useState(false);
-  const [editingFigma, setEditingFigma] = useState(false);
-  const [editingGitHub, setEditingGitHub] = useState(false);
-
+  const [editing, setEditing] = useState(false);
   const [SlackEdit, setSlackEdit] = useState('');
   const [FigmaEdit, setFigmaEdit] = useState('');
   const [GitHubEdit, setGitHubEdit] = useState('');
-  const [GitHubLabelEdit, setGitHubLabelEdit] = useState('');
 
   const [toggleRecentActivity, setToggleRecentActivity] = useState(true);
   const { projectId } = useParams();
@@ -41,7 +36,6 @@ const Project = () => {
       setSlackEdit('');
       setFigmaEdit('');
       setGitHubEdit('');
-      setGitHubLabelEdit('');
 
       if (data.GitHub.length === 0) {
         setProjectCommits(['You have no recent activity']);
@@ -80,51 +74,41 @@ const Project = () => {
     }));
   }, []);
 
-  const editModeSlack = () => { setEditingSlack(true); };
+  if (!project) return 'Sorry, we couldn\'t find that project.';
 
-  const disableEditModeSlack = () => { setEditingSlack(false); };
-
-  const editModeFigma = () => { setEditingFigma(true); };
-
-  const disableEditModeFigma = () => { setEditingFigma(false); };
-
-  const editModeGitHub = () => { setEditingGitHub(true); };
-
-  const disableEditModeGitHub = () => { setEditingGitHub(false); };
+  const editMode = () => {
+    setEditing(true);
+  };
 
   const submitFigmaEdits = () => {
     const newfig = project.Figma;
     newfig.push(FigmaEdit);
     setFigmaEdit('');
     dispatch(updateProject({ Figma: newfig }, project.id));
-    setEditingFigma(false);
+    setEditing(false);
   };
 
   const submitSlackEdits = () => {
-    const newSlack = project.Slack;
-    newSlack.push(SlackEdit);
+    const newSlack = project.Slack.push(SlackEdit);
     setSlackEdit('');
     dispatch(updateProject({
-      Slack: newSlack,
+      Figma: newSlack,
+      Slack: SlackEdit,
+      GitHub: GitHubEdit,
     }, project.id));
-    setEditingSlack(false);
+    setEditing(false);
   };
 
   const submitGitHubEdits = () => {
-    const newGitHub = project.GitHub;
-    newGitHub.push(GitHubEdit);
-    const newGitHubLabel = project.GitHubLabel;
-    newGitHubLabel.push(GitHubLabelEdit);
+    const newGitHub = project.GitHub.push(GitHubEdit);
     setGitHubEdit('');
-    setGitHubLabelEdit('');
-    dispatch(updateProject({
-      GitHub: newGitHub,
-      GitHubLabel: newGitHubLabel,
-    }, project.id));
-    setEditingGitHub(false);
+    dispatch(updateProject({ GitHub: newGitHub }, project.id));
+    setEditing(false);
   };
 
-  if (!project) return 'Sorry, we couldn\'t find that project.';
+  const clickUser = (id) => {
+    history.push(`/users/${id}`);
+  };
 
   const industries = project.industry ? (project.industry.map((item) => (
     <p key={item} className="project__industry__tag">{item}</p>
@@ -161,13 +145,35 @@ const Project = () => {
     : null;
 
   const team = (project.team && project.team[0]) ? (project.team.map((item) => {
-    return (
-      <div className="team__item" key={item.id}>
-        <p>{item.firstName} {item.lastName}</p>
-      </div>
-    );
+    if (item.id !== project.author?.id) {
+      return (
+        <div className="team__item" key={item.id}>
+          <p onClick={() => clickUser(item.id)}>{item.firstName} {item.lastName}</p>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }))
     : null;
+
+  const fullteam = () => {
+    if (project.author) {
+      return (
+        <ul id="members__container">
+          <h2>Author:</h2>
+          <div className="team__item" key={project.author.id}>
+            <p onClick={() => clickUser(project.author.id)}>{project.author.firstName} {project.author.lastName}</p>
+          </div>
+          <h2>Current Team Members:</h2>
+          {team}
+        </ul>
+
+      );
+    } else {
+      return null;
+    }
+  };
 
   const handleToggleModal = () => dispatch(toggleModalVisibility(
     <ModalMessage
@@ -209,6 +215,8 @@ const Project = () => {
         }
         newUser.projectsJoined = user.projectsJoined + 1;
         dispatch(updateUser(user.id, newUser, history));
+
+        toast.dark('You have joined the project! Refresh to see updates');
       }
     } else {
       history.push('/signup');
@@ -233,86 +241,60 @@ const Project = () => {
     return '';
   };
 
-  const renderFigmaLink = (project.Figma.length === 0)
-    ? <div role="button" tabIndex={0} className="add__link" onClick={editModeFigma}>Add Figma Link</div>
-    : (project.Figma.map((link) => (
-      <a key={link} className="project__links" target="_blank" href={link} rel="noreferrer">Figma</a>
-    ))
-    );
-
-  const renderGitHubLink = (project.GitHub.length === 0) ? null : (
-    project.GitHub.map((link, i) => (
-      <a key={link} className="project__links" target="_blank" href={link} rel="noreferrer">{project.GitHubLabel[i]}</a>
+  const renderFigmaLink = (project.Figma.length === 0) ? null : (
+    project.Figma.map((link) => (
+      <a key={link} className="project__links" href={link}>{link}</a>
     ))
   );
 
-  const renderSlackLink = (project.Slack.length === 0)
-    ? <div role="button" tabIndex={0} className="add__link" onClick={editModeSlack}>Add Slack Link</div>
-    : (
-      project.Slack.map((link) => (
-        <a key={link} className="project__links" target="_blank" href={link} rel="noreferrer">Slack</a>
-      ))
-    );
+  const renderGitHubLink = (project.GitHub.length === 0) ? null : (
+    project.GitHub.map((link) => (
+      <a key={link} className="project__links" href={link}>{link}</a>
+    ))
+  );
 
-  const renderLinksSlack = (editingSlack)
+  const renderSlackLink = (project.Slack.length === 0) ? null : (
+    project.Slack.map((link) => (
+      <a key={link} className="project__links" href={link}>{link}</a>
+    ))
+  );
+
+  const renderLinks = (editing)
     ? (
       <div>
         <div className="link-flex-container">
-          <FontAwesomeIcon icon={faSlack} className="link" />
-          <textarea rows="1" value={SlackEdit} className="input-new-link" placeholder="Add a Slack Channel" onChange={(e) => setSlackEdit(e.target.value)} />
-          <button type="button" className="link-add-button" onClick={submitSlackEdits}>Add</button>
-          <button type="button" className="link-add-button" onClick={disableEditModeSlack}>Cancel</button>
-
-        </div>
-      </div>
-    ) : (
-      <div>
-        <div className="link-flex-container">
-          <FontAwesomeIcon icon={faSlack} className="link" />
-          {renderSlackLink}
-        </div>
-      </div>
-    );
-
-  const renderLinksFigma = (editingFigma)
-    ? (
-      <div>
-        <div className="link-flex-container">
-          <FontAwesomeIcon icon={faFigma} className="link" />
-          <textarea value={FigmaEdit} className="input-new-link" placeholder="Add a Figma Link" onChange={(e) => setFigmaEdit(e.target.value)} />
-          <button type="button" className="link-add-button" onClick={submitFigmaEdits}>Add</button>
-          <button type="button" className="link-add-button" onClick={disableEditModeFigma}>Cancel</button>
-        </div>
-      </div>
-    ) : (
-      <div>
-        <div className="link-flex-container">
-          <FontAwesomeIcon icon={faFigma} className="link" />
           {renderFigmaLink}
+          Figma: <textarea value={FigmaEdit} onChange={(e) => setFigmaEdit(e.target.value)} />
+          <button type="button" onClick={submitFigmaEdits}>Done</button>
         </div>
-      </div>
-    );
-
-  const renderLinksGitHub = (editingGitHub)
-    ? (
-      <div>
         <div className="link-flex-container">
-          <FontAwesomeIcon icon={faGithub} className="link" />
+          {renderSlackLink}
+          Slack: <textarea value={SlackEdit} onChange={(e) => setSlackEdit(e.target.value)} />
+          <button type="button" onClick={submitSlackEdits}>Done</button>
+        </div>
+        <div className="link-flex-container">
           {renderGitHubLink}
-          <textarea className="input-new-link" value={GitHubEdit} placeholder="Add a public GitHub Repository" onChange={(e) => setGitHubEdit(e.target.value)} />
-          <textarea className="input-new-link" value={GitHubLabelEdit} placeholder="Add Repository Title" onChange={(e) => setGitHubLabelEdit(e.target.value)} />
-
-          <button type="button" className="link-add-button" onClick={submitGitHubEdits}>Add</button>
-          <button type="button" className="link-add-button" onClick={disableEditModeGitHub}>Cancel</button>
-
+          GitHub: <textarea value={GitHubEdit} onChange={(e) => setGitHubEdit(e.target.value)} />
+          <button type="button" onClick={submitGitHubEdits}>Done</button>
         </div>
       </div>
     ) : (
       <div>
         <div className="link-flex-container">
-          <FontAwesomeIcon icon={faGithub} className="link" />
+          <FontAwesomeIcon icon={faLink} id="link" />
+          <h4> Links:</h4>
+        </div>
+        <div className="link-flex-container">
+          {renderFigmaLink}
+          <div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add Figma</div>
+        </div>
+        <div className="link-flex-container">
+          {renderSlackLink}
+          <div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add Slack</div>
+        </div>
+        <div className="link-flex-container">
           {renderGitHubLink}
-          <div role="button" tabIndex={0} className="add__link" onClick={editModeGitHub}>Add GitHub Link</div>
+          <div role="button" tabIndex={0} className="add__link" onClick={editMode}>Add GitHub</div>
         </div>
       </div>
     );
@@ -323,7 +305,7 @@ const Project = () => {
         <div className="project">
           <div className="project__details">
             <div id="project__title__container">
-              <img className="project__logo" src={project.logo} alt="emoji" />
+              <div className="project__logo">{project.logo}</div>
               <h1 className="project__title">{project.name}</h1>
             </div>
             <p>{project.bio}</p>
@@ -339,20 +321,13 @@ const Project = () => {
                 )
                 : <div> </div>}
             </div>
-            <div className="link-flex-container">
-              <h4> Links:</h4>
-            </div>
-            {renderLinksSlack}
-            {renderLinksFigma}
-            {renderLinksGitHub}
+            {renderLinks}
             <div id="best__practices">
               <FontAwesomeIcon className="icon" id="light" icon={faLightbulb} />
               <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
             </div>
-            <h3>Current Team:</h3>
-            <ul className="members__container">
-              {team}
-            </ul>
+            <h3>Current team:</h3>
+            {fullteam()}
             <ul className="neededTeam__container">
               {neededTeam}
             </ul>
