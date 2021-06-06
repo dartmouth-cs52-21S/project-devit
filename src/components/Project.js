@@ -174,6 +174,7 @@ const Project = () => {
       title="Team Best Practices"
       message="Don't know where to start when building your team? Check out this link to get you started."
       linkHref="https://yourstory.com/2019/06/build-team-for-startup/amp"
+      target="_blank"
       linkText="Team Best Practices"
     />,
   ));
@@ -236,13 +237,13 @@ const Project = () => {
   const renderFigmaLink = (project.Figma.length === 0)
     ? <div role="button" tabIndex={0} className="add__link" onClick={editModeFigma}>Add Figma Link</div>
     : (project.Figma.map((link) => (
-      <a key={link} className="project__links" href={link}>Figma</a>
+      <a key={link} className="project__links" target="_blank" href={link} rel="noreferrer">Figma</a>
     ))
     );
 
   const renderGitHubLink = (project.GitHub.length === 0) ? null : (
     project.GitHub.map((link, i) => (
-      <a key={link} className="project__links" href={link}>{project.GitHubLabel[i]}</a>
+      <a key={link} className="project__links" target="_blank" href={link} rel="noreferrer">{project.GitHubLabel[i]}</a>
     ))
   );
 
@@ -250,7 +251,7 @@ const Project = () => {
     ? <div role="button" tabIndex={0} className="add__link" onClick={editModeSlack}>Add Slack Link</div>
     : (
       project.Slack.map((link) => (
-        <a key={link} className="project__links" href={link}>Slack</a>
+        <a key={link} className="project__links" target="_blank" href={link} rel="noreferrer">Slack</a>
       ))
     );
 
