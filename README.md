@@ -5,8 +5,6 @@
 ## The Team
 ![Team Photo](./images/team-photo/team_meeting.png)
 
-_TODO: short project description, some sample screenshots or mockups_
-
 ### Project Description
 
 Devit is a community platform focused on facilitating connections between developers, desginers and innovators. The platform aims at forming teams to help budding designers and engineers gain project experience as well as to help innovators' ideas come to life. The platform consists of a Project page where users are able to post project ideas as well as join onto exisiting projects. Devit also provides a platform for users to keep track of their projects and earn badges as they make more progress. 
@@ -20,8 +18,6 @@ Devit is a community platform focused on facilitating connections between develo
 
 ## Architecture
 
-_TODO: descriptions of code organization and tools and libraries used_
-
 ### Tools
 | Purpose                   | Library                        | Comments                                                                                             |
 |---------------------------|--------------------------------|------------------------------------------------------------------------------------------------------|
@@ -32,14 +28,11 @@ _TODO: descriptions of code organization and tools and libraries used_
 
 ## Setup
 
-_TODO: how to get the project dev environment up and running, npm install etc_
 1. Clone Project
 2. Run `npm i` to install project dependencies
 3. Run `npm start` to start the project at `http://localhost:8080`
 
 ## Deployment
-
-_TODO: how to deploy the project_
 
 ### Deploying the Client
 
