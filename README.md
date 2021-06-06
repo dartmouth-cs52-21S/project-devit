@@ -4,7 +4,6 @@
 
 ## The Team
 ![Team Photo](./images/team-photo/team_meeting.png)
-[*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
 _TODO: short project description, some sample screenshots or mockups_
 
