@@ -181,6 +181,7 @@ const Project = () => {
       title="Team Best Practices"
       message="Don't know where to start when building your team? Check out this link to get you started."
       linkHref="https://yourstory.com/2019/06/build-team-for-startup/amp"
+      target="_blank"
       linkText="Team Best Practices"
     />,
   ));
