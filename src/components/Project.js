@@ -349,11 +349,12 @@ const Project = () => {
               <FontAwesomeIcon className="icon" id="light" icon={faLightbulb} />
               <button type="button" className="project__links" onClick={handleToggleModal}>Best Team Practices</button>
             </div>
-            <ul className="neededTeam__container">
-              {neededTeam}
-            </ul>
+            <h3>Current Team:</h3>
             <ul className="members__container">
               {team}
+            </ul>
+            <ul className="neededTeam__container">
+              {neededTeam}
             </ul>
             <div className="project__tools">
               <div className="tabs__container">
