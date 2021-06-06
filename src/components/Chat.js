@@ -17,7 +17,7 @@ dayjs.extend(localizedFormat);
 dayjs.extend(isYesterday);
 dayjs.extend(isToday);
 
-// const POLLING_INTERVAL_SECONDS = 1;
+const POLLING_INTERVAL_SECONDS = 1;
 
 const Chat = () => {
   const [messageText, setMessageText] = useState('');
@@ -34,8 +34,8 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    // const pollInterval = setInterval(() => dispatch(getChatMessages(projectId)), POLLING_INTERVAL_SECONDS * 1000);
-    // return () => clearInterval(pollInterval);
+    const pollInterval = setInterval(() => dispatch(getChatMessages(projectId)), POLLING_INTERVAL_SECONDS * 1000);
+    return () => clearInterval(pollInterval);
   }, [projectId]);
 
   const handleUpdateMessageText = (e) => setMessageText(e.target.value);
