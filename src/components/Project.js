@@ -74,6 +74,7 @@ const Project = () => {
     }));
   }, []);
 
+  if (!project) return 'Sorry, we couldn\'t find that project.';
 
   const editMode = () => {
     setEditing(true);
@@ -103,13 +104,11 @@ const Project = () => {
     setGitHubEdit('');
     dispatch(updateProject({ GitHub: newGitHub }, project.id));
     setEditing(false);
+  };
 
   const clickUser = (id) => {
     history.push(`/users/${id}`);
-
   };
-
-  if (!project) return 'Sorry, we couldn\'t find that project.';
 
   const industries = project.industry ? (project.industry.map((item) => (
     <p key={item} className="project__industry__tag">{item}</p>
@@ -359,14 +358,14 @@ const Project = () => {
               <div className="tools__container">
 
                 {
-            toggleRecentActivity ? (
-              <div className="activity-container">
-                {renderActivity()}
-              </div>
-            ) : (
-              <Calendar project={project} />
-            )
-          }
+                  toggleRecentActivity ? (
+                    <div className="activity-container">
+                      {renderActivity()}
+                    </div>
+                  ) : (
+                    <Calendar project={project} />
+                  )
+                }
               </div>
             </div>
           </div>
