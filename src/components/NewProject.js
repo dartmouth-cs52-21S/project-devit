@@ -114,7 +114,7 @@ const NewProject = () => {
         {editEmoji
           ? (
             <div className="picker">
-              <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%', 'background-color': '#3B3B3B' }} />
+              <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%', backgroundColor: '#3B3B3B' }} />
               <button className="save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
             </div>
           )
