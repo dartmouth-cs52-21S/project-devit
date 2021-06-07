@@ -34,7 +34,7 @@ export const ProjectCard = ({ project }) => {
 
   const handleGoToProject = () => history.push(`/projects/${project.id}`);
 
-  const upperCase = (string) => [string.slice(0, 1).toUpperCase(), string.slice(1)].join('');
+  const toTitleCase = (string) => [string.slice(0, 1).toUpperCase(), string.slice(1)].join('');
 
   return (
     <li className="projects__project" onClick={handleGoToProject}>
@@ -58,15 +58,12 @@ export const ProjectCard = ({ project }) => {
             {project.author ? <span className="projects__originally-posted-by">{`${project.author.firstName} ${project.author.lastName}`}</span> : <span />}
           </div>
           {project.neededTeam.length > 0 && (
-            <ul className="projects__project-needed-roles">
-              <p className="projects__project-needed-title">Needs:</p>
+            <p className="projects__project-needed-roles">
+              <span className="projects__project-needed-label">Needs:</span>
               {project.neededTeam.map((role) => (
-                <li key={role} className="projects__project-needed-role">
-                  <div className={`projects__project-needed-icon ${role}`} />
-                  <span className="projects__project-needed-label">{`${upperCase(role)}s`}</span>
-                </li>
+                <span key={role} className={`projects__project-needed-role ${role}`}>{`${toTitleCase(role)}s`}</span>
               ))}
-            </ul>
+            </p>
           )}
         </div>
       </div>

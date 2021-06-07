@@ -70,38 +70,19 @@
      @include boxed(sm);
   }
 
-  &__project-needed-roles {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  &__project-needed-title {
+  &__project-needed-label {
     margin-right: 0.5rem;
-    margin-bottom: 1rem;
   }
 
   &__project-needed-role {
-    @include center;
-    flex-direction: column;
-  }
+    margin-right: 0.5rem;
 
-  &__project-needed-icon {
-    @include square-span(3.5rem);
-    border-radius: 50%;
-    margin-bottom: 0.5rem;
-
-    &.developer {
-      box-shadow: 0 0 0 2px rgba($devit-orange, 1);  
+    &.developer::before {
+      content: "💻";
     }
 
-    &.designer {
-      box-shadow: 0 0 0 2px rgba($devit-green, 1);
+    &.designer::before {
+      content: "🎨";
     }
-  }
-
-  &__project-needed-label {
-    font-size: 0.8rem;
-    letter-spacing: 0.2px;
   }
 }
