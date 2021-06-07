@@ -16,6 +16,10 @@
     background-color: $gray-900;
     padding: 1.5rem;
     position: relative;
+
+    &:hover {
+      outline: 2px solid $devit-orange;
+    }
   }
 
   &__project-icon {
@@ -55,6 +59,8 @@
   }
 
   &__project-originally-posted {
+    line-height: 1.75;
+
     & > *:not(:last-of-type) {
       margin-right: 0.5rem;
     }
@@ -62,5 +68,21 @@
 
   &__originally-posted-date, &__originally-posted-by {
      @include boxed(sm);
+  }
+
+  &__project-needed-label {
+    margin-right: 0.5rem;
+  }
+
+  &__project-needed-role {
+    margin-right: 0.5rem;
+
+    &.developer::before {
+      content: "💻";
+    }
+
+    &.designer::before {
+      content: "🎨";
+    }
   }
 }
