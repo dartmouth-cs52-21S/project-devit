@@ -51,6 +51,7 @@ const NewProject = () => {
       problemDescription: formik.values.problemDescription,
       audienceDescription: formik.values.audienceDescription,
       marketDescription: formik.values.marketDescription,
+      neededTeam: roles,
       author: user.id,
     };
 

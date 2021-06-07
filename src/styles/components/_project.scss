@@ -67,7 +67,7 @@ p {
 }
 
 .designer__needed {
-  border: 2px solid red;
+  border: 2px solid #039001;
   background-color: $gray-800;
   height: 60px;
   border-radius:50%;
@@ -76,7 +76,7 @@ p {
 }
 
 .developer__needed {
-  border: 2px solid blue;
+  border: 2px solid $devit-orange;
   background-color:$gray-800;
   height: 60px;
   border-radius:50%;
