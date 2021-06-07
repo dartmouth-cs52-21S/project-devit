@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useHistory } from 'react-router-dom';
+import { selectUser } from '../store/selectors';
 
 import getCommits from '../services/github-api';
 import Badges from './Badges';
@@ -17,8 +18,13 @@ const AlternateProfile = () => {
   const [user, setUser] = useState();
   const { userId } = useParams();
   const dispatch = useDispatch();
+  const viewingUser = useSelector(selectUser);
+  const history = useHistory();
 
   useEffect(() => {
+    if (viewingUser.id === userId) {
+      history.push('/profile');
+    }
     dispatch(fetchUser(userId, (data) => {
       setUser(data);
       if (data.projects) {
