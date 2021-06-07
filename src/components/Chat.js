@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdSend } from 'react-icons/md';
-// import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { UserAvatar } from './UserAvatar';
@@ -16,8 +15,6 @@ const isToday = require('dayjs/plugin/isToday');
 dayjs.extend(localizedFormat);
 dayjs.extend(isYesterday);
 dayjs.extend(isToday);
-
-// const POLLING_INTERVAL_SECONDS = 1;
 
 const Chat = () => {
   const [messageText, setMessageText] = useState('');
