@@ -173,10 +173,9 @@ const AlternateProfile = () => {
           <h2>Badges</h2>
           <Badges user={user} />
         </div>
-        <button type="submit" onClick={endorse}>
-          Endorse Teammate
-        </button>
-
+        <div className="container">
+          <button type="button" className="banner__button button" onClick={endorse}>Endorse Teammate</button>
+        </div>
       </div>
     </div>
   );
