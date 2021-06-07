@@ -24,7 +24,6 @@ const AlternateProfile = () => {
 
   useEffect(() => {
     if (viewingUser.id === userId) {
-      console.log('ids match');
       history.push('/profile');
     }
     dispatch(fetchUser(userId, (data) => {
@@ -57,7 +56,7 @@ const AlternateProfile = () => {
         });
         const newUser = data;
         newUser.commits = numUserCommits;
-        dispatch(updateUser(userId, newUser));
+        dispatch(updateUser(userId, newUser, false));
       }
     }));
   }, []);
@@ -72,7 +71,7 @@ const AlternateProfile = () => {
         user.endorsements += 1;
       }
       user.endorsedBy.push(viewingUser.id);
-      dispatch(updateUser(user.id, user));
+      dispatch(updateUser(user.id, user, false));
     }
   };
 
