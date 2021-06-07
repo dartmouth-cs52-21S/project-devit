@@ -42,8 +42,8 @@ const NewProject = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const makeIdea = () => {
-    const idea = {
+  const makeProject = () => {
+    const newProject = {
       name: formik.values.title,
       industry: industry.concat(selectedIndustries),
       logo: chosenEmoji.emoji,
@@ -52,6 +52,7 @@ const NewProject = () => {
       audienceDescription: formik.values.audienceDescription,
       marketDescription: formik.values.marketDescription,
       author: user.id,
+      neededTeam: roles,
     };
 
     if (!user.projectsCreated) {
@@ -62,7 +63,7 @@ const NewProject = () => {
 
     dispatch(updateUser(user.id, user));
 
-    dispatch(createProject(idea, history));
+    dispatch(createProject(newProject, history));
 
     history.push('/projects');
   };
@@ -109,7 +110,7 @@ const NewProject = () => {
   ];
 
   return (
-    <form className="form__form" onSubmit={makeIdea}>
+    <form className="form__form" onSubmit={makeProject}>
       <div id="new-project">
         {editEmoji
           ? (
