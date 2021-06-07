@@ -16,6 +16,10 @@ $message-input-height: 3rem;
     flex-direction: column;
     height: 0;
     background-color: $devit-gray;
+
+    @include md {
+      min-height: 300px;
+    }
   }
 
   &__messages {
