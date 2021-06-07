@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { updateProject } from '../store/actions';
+import { updateProject, updateUser } from '../store/actions';
+import { selectUser } from '../store/selectors';
 
 const ToDo = (props) => {
   const { events, id } = props.project;
@@ -16,6 +17,7 @@ const ToDo = (props) => {
   const [calEvents, setEvents] = useState(events || []);
   const [title, setTitle] = useState('');
   const [date, setDate] = useState(new Date());
+  const user = useSelector(selectUser);
 
   const handleEventClick = (eventClickInfo) => {
     setEvents(calEvents.filter((e) => {
@@ -43,6 +45,13 @@ const ToDo = (props) => {
     }]);
     setTitle('');
     setDate(new Date());
+
+    if (!user.eventsCreated) {
+      user.eventsCreated = 1;
+    } else {
+      user.eventsCreated += 1;
+    }
+    dispatch(updateUser(user.id, user));
   };
 
   return (
