@@ -55,6 +55,8 @@
   }
 
   &__project-originally-posted {
+    line-height: 1.75;
+
     & > *:not(:last-of-type) {
       margin-right: 0.5rem;
     }
