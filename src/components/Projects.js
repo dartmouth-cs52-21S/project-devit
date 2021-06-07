@@ -35,6 +35,16 @@ export const ProjectCard = ({ project }) => {
 
   const handleGoToProject = () => history.push(`/projects/${project.id}`);
 
+  const makePlural = (string) => `${string}s`;
+
+  const getNeededTeam = () => {
+    if (project.neededTeam.length === 0) return '';
+
+    return project.neededTeam.length > 0
+      ? (<p className="projects__project-needed-roles">{`Needs ${project.neededTeam.map((role) => makePlural(role)).join(' and ')}`}</p>)
+      : (<p className="projects__project-needed-roles">{`Needs ${makePlural(project.neededTeam[0])}`}</p>);
+  };
+
   return (
     <li className="projects__project" onClick={handleGoToProject}>
       <div className="projects__project-icon">{project.logo}</div>
@@ -56,6 +66,7 @@ export const ProjectCard = ({ project }) => {
             <span className="projects__originally-posted-text">by</span>
             {project.author ? <span className="projects__originally-posted-by">{`${project.author.firstName} ${project.author.lastName}`}</span> : <span />}
           </div>
+          {getNeededTeam()}
         </div>
       </div>
     </li>
