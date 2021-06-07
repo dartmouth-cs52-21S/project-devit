@@ -80,7 +80,6 @@ const Project = () => {
     }));
   }, []);
 
-
   if (!project) return 'Sorry, we couldn\'t find that project.';
 
   const editModeSlack = () => { setEditingSlack(true); };
