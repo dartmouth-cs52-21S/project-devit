@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { selectUser } from '../store/selectors';
-
 
 import getCommits from '../services/github-api';
 import Badges from './Badges';
