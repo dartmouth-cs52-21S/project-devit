@@ -4,66 +4,86 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   color: $devit-white;
+  padding: 0 3vw;
 
-  button.emoji{
+  button.emoji {
     background-color: $devit-gray;
+    margin: 0;
     height: 70px;
     width: 70px;
     border-radius: 50%;
-    font-size: 40px;
+    font-size: 2.5rem;
   }
-  .title{
+
+  .title {
+    @include center;
+    flex: 1;
+  }
+
+  .picker {
     display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
-  }
-    .picker{
-      margin-top: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      input{
-        background-color: $devit-gray;
-        color: $devit-white;
-      }
-      ul.skin-tones-list{
-        display: none;
-      }
-      .emoji-picker-react .emoji-group:before {
+    flex-direction: column;
+    align-items: center;
+
+    input {
+      background-color: $devit-gray;
+      color: $devit-white;
+    }
+
+    ul.skin-tones-list {
+      display: none;
+    }
+
+    .emoji-picker-react {
+      background: $devit-gray;
+      box-shadow: none;
+      border-color: $devit-orange;
+      border-radius: 0;
+
+      .emoji-group:before {
         background: $devit-gray;
       }
       
+      .emoji-categories button[class^="icn-"] {
+        filter: invert(1);
+      }
+
+      input.emoji-search {
+        border-color: $devit-orange;
+      }
+    }
   }
 
-  input.title{
-    width: 35%;
-    height: 80%;
-    font-size: 40px;
-    margin-left: 20px;
+  input.title {
+    // height: 80%;
+    font-size: 2.5rem;
+    margin-left: 1rem;
     background-color: $devit-gray;
-    
   }
-  h1{
+
+  h1 {
     align-self: flex-start;
   }
-  textarea{
+
+  textarea {
     background-color: $devit-gray;
   }
-  label{
+
+  label {
     border-radius: 20px;
     margin-right: 20px;
     padding: 20px;
   }
-  .selector{
+
+  .selector {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
     flex-wrap: wrap;
-    button.add{
+
+    button.add {
       background-color: $devit-gray;
       padding: 20px;
       font-size: 1.2rem;
@@ -75,56 +95,41 @@
      height: 70px;
 
     }
-    p.new{
+
+    p.new {
       background-color: $devit-orange;
       border-radius: 20px;
       margin-right: 20px;
       padding: 20px;
       align-self: flex-start;
     }
-    button:hover{
+
+    button:hover {
       cursor: pointer;
     }
-    
   }
-  .selector-container{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    align-self: center;
-    width: 80%;
-    margin-top: 50px;
 
+  .selector-container {
+    width: 100%;
+    margin-top: 2.5rem;
   }
-  .buttons{
+
+  .buttons {
     width: 30%;
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
   }
-  button{
-
-    border: none;
-    color: $devit-white;
-  }
-  button.save{
-    background-color: $devit-gray;
-    width: 200px;
-    height: 60px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    align-self: center;
-  }
 }
 
-.add-ind{
+.add-ind {
   display: flex;
   align-self: flex-start;
 }
-input.add{
+
+input.add {
   background-color: $devit-gray;
   border-radius: 20px;
   margin-right: 20px;
   padding: 20px;
-  
 }
