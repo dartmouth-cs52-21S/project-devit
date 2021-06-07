@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { faSlack, faGithub, faFigma } from '@fortawesome/free-brands-svg-icons';
 import { toast } from 'react-toastify';
-
 import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
 import Calendar from './Calendar';
 import Chat from './Chat';
