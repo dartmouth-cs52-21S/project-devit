@@ -98,8 +98,7 @@ export function fetchProject(id, callback) {
       callback(data);
       dispatch({ type: ActionTypes.FETCH_PROJECT, payload: data });
     } catch (error) {
-      console.log(error);
-      console.error('here', error);
+      console.error(error);
       toast.dark('Sorry, there was an issue when trying find that project.');
     }
   };
