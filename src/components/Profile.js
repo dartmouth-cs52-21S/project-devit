@@ -60,13 +60,14 @@ const Profile = () => {
         }
 
         return (
-          <div className="project" key={project.id}>
+          <div className="project" key={project.id} onClick={() => { history.push(`/projects/${project.id}`); }} role="button" tabIndex={0}>
             <h1>{project.logo}</h1>
             <h2>{project.name}</h2>
             <div className="descriptions">
               {descriptions}
             </div>
           </div>
+
         );
       });
       return proj;
@@ -122,6 +123,17 @@ const Profile = () => {
     return '';
   };
 
+  const renderSkills = () => {
+    if (user.devSkills && user.desSkills) {
+      const skills = user.devSkills.concat(user.desSkills);
+      return skills.map((skill) => {
+        return <h3 key={skill}>{skill}</h3>;
+      });
+    } else {
+      return '';
+    }
+  };
+
   return (
     <div id="profile">
       <div className="left-side">
@@ -149,6 +161,13 @@ const Profile = () => {
             <h3>{user.location}</h3>
           </div>
           <p>{user.bio}</p>
+        </div>
+        <div className="container badges-container">
+          <h2>Skills</h2>
+          <div className="skills-container">
+            {renderSkills()}
+          </div>
+
         </div>
         <div className="container badges-container">
           <h2>Badges</h2>
