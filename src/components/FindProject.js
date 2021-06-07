@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
-
 import { fetchProjects } from '../store/actions';
 import { selectAllProjects } from '../store/selectors';
 import industriesList from '../constants/industries.json';
