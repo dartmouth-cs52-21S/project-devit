@@ -30,10 +30,11 @@ export default Projects;
 
 export const ProjectCard = ({ project }) => {
   dayjs.extend(relativeTime);
-
   const history = useHistory();
 
   const handleGoToProject = () => history.push(`/projects/${project.id}`);
+
+  const toTitleCase = (string) => [string.slice(0, 1).toUpperCase(), string.slice(1)].join('');
 
   return (
     <li className="projects__project" onClick={handleGoToProject}>
@@ -56,6 +57,14 @@ export const ProjectCard = ({ project }) => {
             <span className="projects__originally-posted-text">by</span>
             {project.author ? <span className="projects__originally-posted-by">{`${project.author.firstName} ${project.author.lastName}`}</span> : <span />}
           </div>
+          {project.neededTeam.length > 0 && (
+            <p className="projects__project-needed-roles">
+              <span className="projects__project-needed-label">Needs:</span>
+              {project.neededTeam.map((role) => (
+                <span key={role} className={`projects__project-needed-role ${role}`}>{`${toTitleCase(role)}s`}</span>
+              ))}
+            </p>
+          )}
         </div>
       </div>
     </li>
