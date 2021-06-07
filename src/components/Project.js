@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { faSlack, faGithub, faFigma } from '@fortawesome/free-brands-svg-icons';
 import { toast } from 'react-toastify';
-// import { map } from 'jquery';
+
 import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
 import Calendar from './Calendar';
 import Chat from './Chat';
@@ -406,16 +406,9 @@ const Project = () => {
                 </label>
               </div>
               <div className="tools__container">
-
-                {
-            toggleRecentActivity ? (
-              <div className="activity-container">
-                {renderActivity()}
-              </div>
-            ) : (
-              <Calendar project={project} />
-            )
-          }
+                {toggleRecentActivity
+                  ? (<div className="activity-container">{renderActivity()}</div>)
+                  : (<Calendar project={project} />)}
               </div>
             </div>
           </div>

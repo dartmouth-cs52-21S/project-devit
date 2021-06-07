@@ -42,8 +42,8 @@ const NewProject = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const makeIdea = () => {
-    const idea = {
+  const makeProject = () => {
+    const newProject = {
       name: formik.values.title,
       industry: industry.concat(selectedIndustries),
       logo: chosenEmoji.emoji,
@@ -52,6 +52,7 @@ const NewProject = () => {
       audienceDescription: formik.values.audienceDescription,
       marketDescription: formik.values.marketDescription,
       author: user.id,
+      neededTeam: roles,
     };
 
     if (!user.projectsCreated) {
@@ -62,7 +63,7 @@ const NewProject = () => {
 
     dispatch(updateUser(user.id, user));
 
-    dispatch(createProject(idea, history));
+    dispatch(createProject(newProject, history));
 
     history.push('/projects');
   };
@@ -107,20 +108,19 @@ const NewProject = () => {
     { fieldName: 'developer', label: 'Developers' },
     { fieldName: 'designer', label: 'Designers' },
   ];
-
   return (
-    <form className="form__form" onSubmit={makeIdea}>
+    <form className="form__form" onSubmit={makeProject}>
       <div id="new-project">
         {editEmoji
           ? (
             <div className="picker">
-              <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '40%', 'background-color': '#3B3B3B' }} />
-              <button className="save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
+              <Picker onEmojiClick={onEmojiClick} />
+              <button className="button save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
             </div>
           )
           : (
             <div className="title">
-              <button type="button" className="emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>
+              <button type="button" className="button emoji" onClick={() => setEditEmoji(true)}>{chosenEmoji.emoji}</button>
               <input className="title" placeholder="Project title..." type="text" name="title" value={formik.values.title} onChange={formik.handleChange} />
             </div>
           )}
@@ -150,7 +150,7 @@ const NewProject = () => {
               ? (
                 <div className="add-ind">
                   <input className="add" placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
-                  <button className="add" type="submit" onClick={handleIndustry}>Add</button>
+                  <button className="button add" type="submit" onClick={handleIndustry}>Add</button>
                 </div>
               )
               : <button className="add" type="button" onClick={() => setEditIndustry(true)}>+</button>}
@@ -168,7 +168,6 @@ const NewProject = () => {
                     <input className="form__checkbox" type="checkbox" id={fieldName} onChange={() => addRole(fieldName)} />
                   </label>
                 </div>
-
               );
             })}
           </div>
@@ -186,7 +185,7 @@ const NewProject = () => {
           <textarea placeholder="Describe your plan" rows="4" columns="50" name="marketDescription" value={formik.values.marketDescription} onChange={formik.handleChange} />
         </div>
         <div className="buttons">
-          <button className="save" type="submit" disabled={!(formik.isValid && formik.dirty)}>Share</button>
+          <button className="button save" type="submit" disabled={!(formik.isValid && formik.dirty)}>Share</button>
         </div>
       </div>
     </form>
