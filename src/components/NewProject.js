@@ -114,7 +114,7 @@ const NewProject = () => {
         {editEmoji
           ? (
             <div className="picker">
-              <Picker onEmojiClick={onEmojiClick} preload />
+              <Picker onEmojiClick={onEmojiClick} />
               <button className="button save" type="button" onClick={() => setEditEmoji(false)}>Done!</button>
             </div>
           )
