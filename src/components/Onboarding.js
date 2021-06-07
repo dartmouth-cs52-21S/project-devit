@@ -50,12 +50,12 @@ const Onboarding = () => {
   const handleUpdateUser = () => {
     if (file) {
       uploadImage(file).then((url) => {
-        dispatch(updateUser(storedUser.id, { ...user, ...formik.values, picture: url }, history));
+        dispatch(updateUser(storedUser.id, { ...user, ...formik.values, picture: url }));
       }).catch((error) => {
         console.error(error);
       });
     } else {
-      dispatch(updateUser(storedUser.id, { ...user, ...formik.values }, history));
+      dispatch(updateUser(storedUser.id, { ...user, ...formik.values }));
     }
     history.push('/profile');
   };

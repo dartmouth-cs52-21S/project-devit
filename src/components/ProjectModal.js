@@ -58,7 +58,7 @@ const ProjectModal = ({
           newUser.projectsJoined = 0;
         }
         newUser.projectsJoined = user.projectsJoined + 1;
-        dispatch(updateUser(user.id, newUser, history));
+        dispatch(updateUser(user.id, newUser));
       }
     } else {
       history.push('/signup');
