@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLightbulb,
   faLaptop,
-  faCodeBranch,
+  faUserPlus,
   faCalendar,
   faComments,
 } from '@fortawesome/free-solid-svg-icons';
@@ -58,21 +58,6 @@ const badgesObject = {
     icon: <FontAwesomeIcon icon={faGithub} color="gold" />,
     hoverText: 'Make 50 commits with github',
   },
-  pullRequest: {
-    thresholds: [1, 5, 15],
-  },
-  pullRequestBronze: {
-    icon: <FontAwesomeIcon icon={faCodeBranch} color="sienna" />,
-    hoverText: 'Make 1 pull request with github',
-  },
-  pullRequestSilver: {
-    icon: <FontAwesomeIcon icon={faCodeBranch} color="silver" />,
-    hoverText: 'Make 5 pull requests with github',
-  },
-  pullRequestGold: {
-    icon: <FontAwesomeIcon icon={faCodeBranch} color="gold" />,
-    hoverText: 'Make 15 pull requests with github',
-  },
   planner: {
     thresholds: [1, 3, 10],
   },
@@ -102,6 +87,21 @@ const badgesObject = {
   chatterGold: {
     icon: <FontAwesomeIcon icon={faComments} color="gold" />,
     hoverText: 'Send 50 messages in the chat',
+  },
+  teammate: {
+    thresholds: [1, 3, 5],
+  },
+  teammateBronze: {
+    icon: <FontAwesomeIcon icon={faUserPlus} color="sienna" />,
+    hoverText: 'Get endorsed by 1 teammate',
+  },
+  teammateSilver: {
+    icon: <FontAwesomeIcon icon={faUserPlus} color="silver" />,
+    hoverText: 'Get endorsed by 3 teammates',
+  },
+  teammateGold: {
+    icon: <FontAwesomeIcon icon={faUserPlus} color="gold" />,
+    hoverText: 'Get endorsed by 5 teammates',
   },
 };
 
