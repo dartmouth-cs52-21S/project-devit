@@ -72,6 +72,7 @@ const AlternateProfile = () => {
       }
       user.endorsedBy.push(viewingUser.id);
       dispatch(updateUser(user.id, user, false));
+      toast.dark('Endorsement successful!');
     }
   };
 
