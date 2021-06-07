@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { selectUser } from '../store/selectors';
 
 import getCommits from '../services/github-api';
@@ -23,6 +24,7 @@ const AlternateProfile = () => {
 
   useEffect(() => {
     if (viewingUser.id === userId) {
+      console.log('ids match');
       history.push('/profile');
     }
     dispatch(fetchUser(userId, (data) => {
@@ -59,6 +61,20 @@ const AlternateProfile = () => {
       }
     }));
   }, []);
+
+  const endorse = () => {
+    if (user.endorsedBy.includes(viewingUser.id)) {
+      toast.dark('You have already endorsed this user!');
+    } else {
+      if (!user.endorsement) {
+        user.endorsements = 1;
+      } else {
+        user.endorsements += 1;
+      }
+      user.endorsedBy.push(viewingUser.id);
+      dispatch(updateUser(user.id, user));
+    }
+  };
 
   const renderActivity = () => {
     if (userCommits && userCommits.length > 0) {
@@ -157,6 +173,9 @@ const AlternateProfile = () => {
           <h2>Badges</h2>
           <Badges user={user} />
         </div>
+        <button type="submit" onClick={endorse}>
+          Endorse Teammate
+        </button>
 
       </div>
     </div>
