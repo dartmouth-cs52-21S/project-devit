@@ -30,20 +30,11 @@ export default Projects;
 
 export const ProjectCard = ({ project }) => {
   dayjs.extend(relativeTime);
-
   const history = useHistory();
 
   const handleGoToProject = () => history.push(`/projects/${project.id}`);
 
-  const makePlural = (string) => `${string}s`;
-
-  const getNeededTeam = () => {
-    if (project.neededTeam.length === 0) return '';
-
-    return project.neededTeam.length > 0
-      ? (<p className="projects__project-needed-roles">{`Needs ${project.neededTeam.map((role) => makePlural(role)).join(' and ')}`}</p>)
-      : (<p className="projects__project-needed-roles">{`Needs ${makePlural(project.neededTeam[0])}`}</p>);
-  };
+  const upperCase = (string) => [string.slice(0, 1).toUpperCase(), string.slice(1)].join('');
 
   return (
     <li className="projects__project" onClick={handleGoToProject}>
@@ -66,7 +57,17 @@ export const ProjectCard = ({ project }) => {
             <span className="projects__originally-posted-text">by</span>
             {project.author ? <span className="projects__originally-posted-by">{`${project.author.firstName} ${project.author.lastName}`}</span> : <span />}
           </div>
-          {getNeededTeam()}
+          {project.neededTeam.length > 0 && (
+            <ul className="projects__project-needed-roles">
+              <p className="projects__project-needed-title">Needs:</p>
+              {project.neededTeam.map((role) => (
+                <li key={role} className="projects__project-needed-role">
+                  <div className={`projects__project-needed-icon ${role}`} />
+                  <span className="projects__project-needed-label">{`${upperCase(role)}s`}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </li>

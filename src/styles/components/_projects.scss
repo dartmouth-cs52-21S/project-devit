@@ -16,6 +16,10 @@
     background-color: $gray-900;
     padding: 1.5rem;
     position: relative;
+
+    &:hover {
+      outline: 2px solid $devit-orange;
+    }
   }
 
   &__project-icon {
@@ -64,5 +68,40 @@
 
   &__originally-posted-date, &__originally-posted-by {
      @include boxed(sm);
+  }
+
+  &__project-needed-roles {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  &__project-needed-title {
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__project-needed-role {
+    @include center;
+    flex-direction: column;
+  }
+
+  &__project-needed-icon {
+    @include square-span(3.5rem);
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+
+    &.developer {
+      box-shadow: 0 0 0 2px rgba($devit-orange, 1);  
+    }
+
+    &.designer {
+      box-shadow: 0 0 0 2px rgba($devit-green, 1);
+    }
+  }
+
+  &__project-needed-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.2px;
   }
 }
