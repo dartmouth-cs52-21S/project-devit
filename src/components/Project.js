@@ -69,7 +69,7 @@ const Project = () => {
         setIsMember(true);
       } else {
         while (i < data.team.length) {
-          if (data.team[i].id === user.id || data.team[i] === user.id) {
+          if ((data.team[i] && user) && (data.team[i].id === user.id || data.team[i] === user.id)) {
             setIsMember(true);
             break;
           }
