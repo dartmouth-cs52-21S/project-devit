@@ -7,14 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Badges from '../constants/badges.json';
 
-import ProjectModal from './ProjectModal';
 import { fetchProjects, toggleModalVisibility } from '../store/actions';
 import { selectAllProjects } from '../store/selectors';
 import industriesList from '../constants/industries.json';
 
 const FindProject = () => {
-  const [displayModal, showModal] = useState(false);
-  const [proj, setProj] = useState('');
   const [searchterm, setSearchTerm] = useState('');
   const projects = useSelector(selectAllProjects);
 
@@ -44,28 +41,10 @@ const FindProject = () => {
     dispatch(fetchProjects());
   }, []);
 
-  const hideModal = () => {
-    showModal(false);
-  };
-
-  const presentModal = (event) => {
-    let i = 0;
-    while (i < currProjects.length) {
-      if (currProjects[i].id === event.target.name) {
-        setProj(currProjects[i]);
-        break;
-      }
-      i += 1;
-    }
-    showModal(true);
-  };
-
   const onSearchChange = (event) => {
     setSearchTerm(event.target.value);
     search(event.target.value);
   };
-
-  const handleToggleModal = () => dispatch(toggleModalVisibility(<ModalTestComponent />));
 
   const handleGoToProjectPage = (id) => history.push(`/projects/${id}`);
 
