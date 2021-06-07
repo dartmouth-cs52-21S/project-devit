@@ -74,7 +74,6 @@ const Project = () => {
     }));
   }, []);
 
-
   const editMode = () => {
     setEditing(true);
   };
@@ -103,10 +102,10 @@ const Project = () => {
     setGitHubEdit('');
     dispatch(updateProject({ GitHub: newGitHub }, project.id));
     setEditing(false);
+  };
 
   const clickUser = (id) => {
     history.push(`/users/${id}`);
-
   };
 
   if (!project) return 'Sorry, we couldn\'t find that project.';
