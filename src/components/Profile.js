@@ -122,6 +122,13 @@ const Profile = () => {
     return '';
   };
 
+  const renderSkills = () => {
+    const skills = user.devSkills.concat(user.desSkills);
+    return skills.map((skill) => {
+      return <h3 key={skill}>{skill}</h3>;
+    });
+  };
+
   return (
     <div id="profile">
       <div className="left-side">
@@ -149,6 +156,13 @@ const Profile = () => {
             <h3>{user.location}</h3>
           </div>
           <p>{user.bio}</p>
+        </div>
+        <div className="container badges-container">
+          <h2>Skills</h2>
+          <div className="skills-container">
+            {renderSkills()}
+          </div>
+
         </div>
         <div className="container badges-container">
           <h2>Badges</h2>
