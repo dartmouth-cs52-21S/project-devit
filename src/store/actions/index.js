@@ -44,16 +44,19 @@ const mapCountsToBadges = (user) => {
   badgesHelper(user, 'devit');
   badgesHelper(user, 'commit');
   badgesHelper(user, 'chatter');
+  badgesHelper(user, 'teammate');
 };
 
-export function updateUser(id, user, history) {
+export function updateUser(id, user, auth = true) {
   mapCountsToBadges(user);
 
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`${ROOT_URL}/users/${id}`, user, { headers: { authorization: localStorage.getItem('token') } });
-      dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
-      localStorage.setItem('user', JSON.stringify(data.user));
+      if (auth) {
+        dispatch({ type: ActionTypes.AUTH_USER, payload: data.user });
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
     } catch (error) {
       console.error(error);
       toast.dark('Sorry, there was an issue when trying to update user.');
