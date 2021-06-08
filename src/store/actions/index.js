@@ -44,6 +44,7 @@ const mapCountsToBadges = (user) => {
   badgesHelper(user, 'devit');
   badgesHelper(user, 'commit');
   badgesHelper(user, 'chatter');
+  badgesHelper(user, 'planner');
   badgesHelper(user, 'teammate');
 };
 
