@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
+
 import { selectUser } from '../store/selectors';
 import getCommits from '../services/github-api';
 import Badges from './Badges';
+import Skills from './Skills';
 import { updateUser } from '../store/actions';
 
 library.add(faMapPin);
@@ -19,61 +21,6 @@ const Profile = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const renderPic = () => {
-    let classes = 'profile';
-    classes = classes.concat(user.roles.includes('designer') ? ' des' : '');
-    classes = classes.concat(user.roles.includes('developer') ? ' dev' : '');
-    classes = user.roles.includes('designer') && user.roles.includes('developer') ? 'profile both' : classes;
-
-    return (
-      <img className={classes} src={user.picture} alt="profile" />
-    );
-  };
-
-  const renderProjects = () => {
-    if (user.projects) {
-      if (user.projects.length === 0) {
-        return (
-          <div>
-            <h3>You currently do not have any projects</h3>
-            <div className="buttons">
-              <button type="button" className="banner__button button" onClick={() => history.push('/find-project')}>Find a Project</button>
-              <button type="button" className="banner__button button" onClick={() => history.push('/new-project')}>Create a Project</button>
-            </div>
-          </div>
-        );
-      }
-      const proj = user.projects.map((project) => {
-        if (!project.industry) return '';
-
-        const size = project.industry.length;
-        let descriptions = [];
-        if (size <= 3) {
-          descriptions = project.industry.map((ind) => {
-            return <h3 key={ind}>{ind}</h3>;
-          });
-        } else {
-          descriptions.push(<h3>{project.industry[0]}</h3>);
-          descriptions.push(<h3>{project.industry[1]}</h3>);
-          descriptions.push(<h3 className="more">+{size - 2} more</h3>);
-        }
-
-        return (
-          <div className="project" key={project.id} onClick={() => { history.push(`/projects/${project.id}`); }} role="button" tabIndex={0}>
-            <h1>{project.logo}</h1>
-            <h2>{project.name}</h2>
-            <div className="descriptions">
-              {descriptions}
-            </div>
-          </div>
-
-        );
-      });
-      return proj;
-    }
-    return '';
-  };
 
   useEffect(() => {
     if (user.projects) {
@@ -123,60 +70,64 @@ const Profile = () => {
     return '';
   };
 
-  const renderSkills = () => {
-    if (user.devSkills && user.desSkills) {
-      const skills = user.devSkills.concat(user.desSkills);
-      return skills.map((skill) => {
-        return <h3 key={skill}>{skill}</h3>;
-      });
-    } else {
-      return '';
-    }
-  };
-
   return (
-    <div id="profile">
-      <div className="left-side">
-        <div className="container">
+    <div className="profile">
+      <div className="profile__team-actions">
+        <div className="profile__projects">
           <h2>Current Projects</h2>
-          {renderProjects()}
+          {user.projects.length > 0 ? (
+            user.projects.map((project) => (
+              <div key={project.id} className="profile__project" onClick={() => { history.push(`/projects/${project.id}`); }} role="button" tabIndex={0}>
+                <header className="profile__project-header-row">
+                  <span className="profile__project-logo">{project.logo}</span>
+                  <h3 className="profile__project-name">{project.name}</h3>
+                </header>
+                <ul className="profile__project-industries">
+                  {project.industry.slice(0, 3).map((industry) => (
+                    <li key={industry} className="profile__project-industry">{industry}</li>
+                  ))}
+                  {project.industry.slice(3).length > 0 && (
+                    <li className="profile__more-label">{`+${project.industry.slice(3).length} more`}</li>
+                  )}
+                </ul>
+              </div>
+            ))
+          ) : (
+            <>
+              <h3 className="profile__no-projects-note">You currently do not have any projects</h3>
+              <div className="button-group">
+                <button type="button" className="button" onClick={() => history.push('/find-project')}>Find a Project</button>
+                <button type="button" className="button" onClick={() => history.push('/new-project')}>Create a Project</button>
+              </div>
+            </>
+          )}
         </div>
-        <div className="continer">
+        <div className="profile__activity">
           <h2>Recent Activity</h2>
           <div className="activity-container">
             {renderActivity()}
           </div>
-
         </div>
-
       </div>
-      <div className="right-side">
-        <div className="container profile-container">
-          <div className="circular--landscape">
-            {renderPic()}
+      <div className="profile__user-profile">
+        <img className={['profile__user-image', ...user.roles].join(' ')} src={user.picture} alt="profile" />
+        <div className="profile__user-details">
+          <h1 className="profile__user-name">{user.firstName} {user.lastName}</h1>
+          <div className="profile__user-location-wrapper">
+            <FontAwesomeIcon icon={['fas', 'map-pin']} size="lg" className="profile__location-icon" />
+            <h3 className="profile__user-location">{user.location}</h3>
           </div>
-          <h1>{user.firstName} {user.lastName}</h1>
-          <div className="location">
-            <FontAwesomeIcon icon={['fas', 'map-pin']} size="lg" />
-            <h3>{user.location}</h3>
-          </div>
-          <p>{user.bio}</p>
+          <p className="profile__user-bio">{user.bio}</p>
         </div>
-        <div className="container badges-container">
-          <h2>Skills</h2>
-          <div className="skills-container">
-            {renderSkills()}
-          </div>
-
+        <div className="profile__user-skills">
+          <h2 className="profile__user-skills-title">Skills</h2>
+          <Skills user={user} />
         </div>
-        <div className="container badges-container">
-          <h2>Badges</h2>
+        <div className="profile__user-badges">
+          <h2 className="profile__user-badges-title">Badges</h2>
           <Badges user={user} />
         </div>
-        <div className="container">
-          <button type="button" className="banner__button button" onClick={() => history.push('/edit-profile')}>Edit Profile</button>
-        </div>
-
+        <button type="button" className="button" onClick={() => history.push('/edit-profile')}>Edit Profile</button>
       </div>
     </div>
   );
