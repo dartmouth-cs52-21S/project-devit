@@ -126,7 +126,11 @@ const Project = () => {
   };
 
   const clickUser = (id) => {
-    history.push(`/users/${id}`);
+    if (id === user.id) {
+      history.push('/profile');
+    } else {
+      history.push(`/users/${id}`);
+    }
   };
 
   const industries = project.industry ? (project.industry.map((item) => (
