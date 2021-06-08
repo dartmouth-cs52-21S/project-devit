@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { faSlack, faGithub, faFigma } from '@fortawesome/free-brands-svg-icons';
 import { toast } from 'react-toastify';
-
 import { fetchProject, toggleModalVisibility, updateProject, updateUser } from '../store/actions';
 import Calendar from './Calendar';
 import Chat from './Chat';
@@ -69,7 +68,7 @@ const Project = () => {
         setIsMember(true);
       } else {
         while (i < data.team.length) {
-          if (data.team[i].id === user.id || data.team[i] === user.id) {
+          if ((data.team[i] && user) && (data.team[i].id === user.id || data.team[i] === user.id)) {
             setIsMember(true);
             break;
           }
@@ -127,7 +126,11 @@ const Project = () => {
   };
 
   const clickUser = (id) => {
-    history.push(`/users/${id}`);
+    if (id === user.id) {
+      history.push('/profile');
+    } else {
+      history.push(`/users/${id}`);
+    }
   };
 
   const industries = project.industry ? (project.industry.map((item) => (
@@ -235,7 +238,7 @@ const Project = () => {
           newUser.projectsJoined = 0;
         }
         newUser.projectsJoined = user.projectsJoined + 1;
-        dispatch(updateUser(user.id, newUser, history));
+        dispatch(updateUser(user.id, newUser));
 
         toast.dark('You have joined the project! Refresh to see updates');
       }

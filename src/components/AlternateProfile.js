@@ -1,10 +1,11 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { selectUser } from '../store/selectors';
 
 import getCommits from '../services/github-api';
 import Badges from './Badges';
@@ -17,8 +18,13 @@ const AlternateProfile = () => {
   const [user, setUser] = useState();
   const { userId } = useParams();
   const dispatch = useDispatch();
+  const viewingUser = useSelector(selectUser);
+  const history = useHistory();
 
   useEffect(() => {
+    if (viewingUser.id === userId) {
+      history.push('/profile');
+    }
     dispatch(fetchUser(userId, (data) => {
       setUser(data);
       if (data.projects) {
@@ -49,10 +55,25 @@ const AlternateProfile = () => {
         });
         const newUser = data;
         newUser.commits = numUserCommits;
-        dispatch(updateUser(userId, newUser));
+        dispatch(updateUser(userId, newUser, false));
       }
     }));
   }, []);
+
+  const endorse = () => {
+    if (user.endorsedBy.includes(viewingUser.id)) {
+      toast.dark('You have already endorsed this user!');
+    } else {
+      if (!user.endorsement) {
+        user.endorsements = 1;
+      } else {
+        user.endorsements += 1;
+      }
+      user.endorsedBy.push(viewingUser.id);
+      dispatch(updateUser(user.id, user, false));
+      toast.dark('Endorsement successful!');
+    }
+  };
 
   const renderActivity = () => {
     if (userCommits && userCommits.length > 0) {
@@ -151,7 +172,9 @@ const AlternateProfile = () => {
           <h2>Badges</h2>
           <Badges user={user} />
         </div>
-
+        <div className="container">
+          <button type="button" className="banner__button button" onClick={endorse}>Endorse Teammate</button>
+        </div>
       </div>
     </div>
   );

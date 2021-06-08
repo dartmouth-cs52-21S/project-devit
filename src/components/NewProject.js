@@ -51,8 +51,8 @@ const NewProject = () => {
       problemDescription: formik.values.problemDescription,
       audienceDescription: formik.values.audienceDescription,
       marketDescription: formik.values.marketDescription,
-      author: user.id,
       neededTeam: roles,
+      author: user.id,
     };
 
     if (!user.projectsCreated) {
