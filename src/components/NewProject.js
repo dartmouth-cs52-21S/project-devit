@@ -76,10 +76,12 @@ const NewProject = () => {
     setChosenEmoji(emojiObject);
   };
 
-  const handleIndustry = () => {
+  const handleAddCustomIndustry = () => {
     setEditIndustry(false);
-    setIndustry([...industry, workingIndustry]);
     setWorkingIndustry('');
+
+    if (workingIndustry.length === 0) return;
+    setIndustry([...industry, workingIndustry]);
   };
 
   const addIndustry = (ind) => {
@@ -150,7 +152,7 @@ const NewProject = () => {
               ? (
                 <div className="add-ind">
                   <input className="add" placeholder="industry" type="text" onChange={(e) => setWorkingIndustry(e.target.value)} />
-                  <button className="button add" type="submit" onClick={handleIndustry}>Add</button>
+                  <button className="add" type="submit" onClick={handleAddCustomIndustry}>Add</button>
                 </div>
               )
               : <button className="add" type="button" onClick={() => setEditIndustry(true)}>+</button>}

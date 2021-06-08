@@ -1,0 +1,12 @@
+.skills {
+  @include center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: -0.25rem;
+
+  &__skill {
+    @include boxed;
+    background-color: $gray-900;
+    margin: 0.25rem;
+  }
+}
