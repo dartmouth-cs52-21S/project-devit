@@ -137,8 +137,8 @@ const Profile = () => {
   return (
     <div id="profile">
       <div className="left-side">
-        <div className="container">
-          <h2>Current Projects</h2>
+        <h2>Current Projects</h2>
+        <div className="project-container container">
           {renderProjects()}
         </div>
         <div className="continer">
