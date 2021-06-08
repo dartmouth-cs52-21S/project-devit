@@ -27,9 +27,18 @@ $devit-black: #111111;
       height: 50%;
 
     }
+    .project-container{
+      overflow-y: scroll;
+    }
+    .project-container::-webkit-scrollbar {
+      display: none;
+    }
     .activity-container{
       height: 30vh;
       overflow-y: scroll;
+    }
+    .activity-container::-webkit-scrollbar {
+      display: none;
     }
     .activity{
       background-color: $devit-gray;
@@ -128,11 +137,24 @@ $devit-black: #111111;
       .skills-container{
         display: flex;
         justify-content: space-evenly;
-        flex-wrap: wrap;
+        overflow-x: scroll;
+        align-content: center;
+        text-align: center;
+
+        
+      
+        
         h3{
           background-color: $devit-orange;
-          padding: 10px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          padding-left: 20px;
+          padding-right: 20px;
+          margin: 10px;
         }
+      }
+      .skills-container::-webkit-scrollbar {
+        display: none;
       }
 
   
@@ -169,4 +191,30 @@ $devit-black: #111111;
 
     }
     
+  }
+
+  @media only screen and (max-height: 800px){
+    #profile{
+      .project{
+        h1{
+          font-size: 20px;
+        }
+        h2, h3{
+          font-size: 15px
+        }
+
+      }
+      
+      .container.profile-container{
+        h1{
+          font-size: 30px !important;
+        }
+        img.profile.dev{
+          width: 200px !important;
+          height: 200px !important;
+        }
+  
+      }
+    }
+  
   }
