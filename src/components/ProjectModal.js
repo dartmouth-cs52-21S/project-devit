@@ -5,28 +5,6 @@ import { toast } from 'react-toastify';
 import { updateProject, updateUser } from '../store/actions';
 import { selectisAuthenticated, selectUser } from '../store/selectors';
 
-// const ProjectModal = (props) => {
-//   // const [showModal, toggleModal]
-
-//   return (
-//     <div id="project__modal__content">
-//       <div id="project__title__container">
-//         <div className="project__logo">
-//           <img src={props.project.logo} alt="confused emoji" />
-//         </div>
-//         <h1 className="project__title">{props.project.name}</h1>
-//       </div>
-//       <p>{props.project.bio}</p>
-//       <p>{props.project.tools}</p>
-//       <p>{props.project.neededTeam}</p>
-//     </div>
-//   );
-// };
-
-// export default ProjectModal;
-
-// // wrap entire find a project page in project__modal
-
 const ProjectModal = ({
   handleClose, show, children, proj,
 }) => {
@@ -58,7 +36,7 @@ const ProjectModal = ({
           newUser.projectsJoined = 0;
         }
         newUser.projectsJoined = user.projectsJoined + 1;
-        dispatch(updateUser(user.id, newUser, history));
+        dispatch(updateUser(user.id, newUser));
       }
     } else {
       history.push('/signup');

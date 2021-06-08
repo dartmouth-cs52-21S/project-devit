@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-alert */
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from '@fullcalendar/list';
